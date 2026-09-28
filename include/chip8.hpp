@@ -17,7 +17,7 @@ private:
 	
 	// TODO: Perhaps change this to a set of ints to pack, or even bools for easier use
 	// NOTE: Only have the display update when an instruction is said
-	unsigned bool gfx[64 * 32];		// Display in monochrome; ie black and white
+	bool gfx[64 * 32];		// Display in monochrome; ie black and white
 
 	unsigned short stack[16];		// Stack; only for returning from subroutines; limited to 16 2-byte entries
 	unsigned short sp;				// Stack pointer
@@ -107,7 +107,7 @@ private:
 // [ ]	8XY7		Set register VX to the value of VY minus VX. Set VF to 00 if a borrow occurs. Set VF to 01 if a borrow does not occur
 // [ ]	8XYE		Store the value of register VY shifted left one bit in register VX Set register VF to the most significant bit prior to the shift VY is unchanged
 // [ ]	9XY0		Skip the following instruction if the value of register VX is not equal to the value of register VY
-// [ ]	ANNN		Store memory address NNN in register I
+// [X]	ANNN		Store memory address NNN in register I
 // [ ]	BNNN		Jump to address NNN + V0
 // [ ]	CXNN		Set VX to a random number with a mask of NN
 // [ ]	DXYN		Draw a sprite at position VX, VY with N bytes of sprite data starting at the address stored in I. Set VF to 01 if any set pixels are changed to unset, and 00 otherwise. Sprites are drawn as an XOR where it will flip the bit if the sprite has a one.

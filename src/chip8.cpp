@@ -46,7 +46,7 @@ void Chip8::emulateCycle()
 	// Define them ahead of time in case the opcode uses them
 	// Look up value in register
 	int XInd = (opcode & 0x0F00) >> 8;
-	int Yind = (opcode & 0x00F0) >> 4;
+	int YInd = (opcode & 0x00F0) >> 4;
 	int X    = V[XInd];
 	int Y    = V[YInd];
 
