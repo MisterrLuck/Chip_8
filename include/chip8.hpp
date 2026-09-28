@@ -3,16 +3,23 @@ class Chip8
 public:
 	bool drawFlag = false;
 
+	void loadProgram();
+
 	void initialize();
 	void emulateCycle();
-	void loadProgram();
+
+	void initializeWindow();
+	void updateScreen();
+
+	// For closing the window
+	~Chip8();
 
 private:
 	unsigned short opcode;			// The current opcode
 
 	// NOTE: Old programs expect to be loaded into address 0x200
-	unsigned char memory[4096];		// I assume what the program sits in
-	
+	unsigned char memory[4096];		// This is where the program sits; RAM
+
 	unsigned char V[0xF];			// The registers: VF isn't recommended for use, as it is also a flag
 	
 	// TODO: Perhaps change this to a set of ints to pack, or even bools for easier use
@@ -34,6 +41,8 @@ private:
 	//  Q	W	E	R
 	//  A	S	D	F
 	//  Z	X	C	V
+
+	//  I kinda don't get this fully
 	unsigned char key[16];			// The hex based keyboard
 
 	// NOTE: These are technically 16 bits but are used as 12 bits ?
@@ -42,10 +51,10 @@ private:
 
 	// NOTE: The two timers: Both count down to 0 at 60Hz (60 times per second)
 	// They should run in a separate thread as to be accurate
-	unsigned char delay_timer;		// Intended for timing in games; can be set and read
+	unsigned char delay_timer = 0;	// Intended for timing in games; can be set and read
 	unsigned char sound_timer = 0;	// Will beep when its value is non-zero; can only be set
 
-	// TODO: This should be stored in the memory; traditionally from 0x50 - 0x9F
+	// This is stored in the memory in the initialise function
 	unsigned char chip8_fontset[80] =
 	{
 		0xF0, 0x90, 0x90, 0x90, 0xF0, // 0

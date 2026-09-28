@@ -1,4 +1,5 @@
 #include "chip8.hpp"
+#include "SDL.h"
 
 #include <concepts>
 #include <cstdio>
@@ -7,6 +8,11 @@
 #include <iosfwd>
 #include <iostream>
 using namespace std;
+
+Chip8::~Chip8()
+{
+
+}
 
 void Chip8::initialize()
 {
@@ -28,6 +34,11 @@ void Chip8::initialize()
 
 	// Load the program into memory
 	loadProgram();
+}
+
+void Chip8::initializeWindow()
+{
+	
 }
 
 void Chip8::emulateCycle()
@@ -177,6 +188,8 @@ void Chip8::emulateCycle()
 		default:
 			cout << "Unknown opcode: " << opcode << endl;
 	}
+
+	// Make sure to update the screen based on the graphics array
 }
 
 void Chip8::loadProgram()
