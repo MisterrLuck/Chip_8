@@ -1,3 +1,7 @@
+#define SCREEN_WIDTH 64
+#define SCREEN_HEIGHT 32
+
+
 class Chip8
 {
 public:
@@ -6,10 +10,15 @@ public:
 
 	void loadProgram();
 
-	void initialize();
+	void init();
 	void emulateCycle();
 
+	void clearScreen();
+
 private:
+	// const int SCREEN_HEIGHT = 32;
+	// const int SCREEN_WIDTH = 64;
+
 	unsigned short opcode;			// The current opcode
 
 	// NOTE: Old programs expect to be loaded into address 0x200
@@ -19,7 +28,7 @@ private:
 	
 	// TODO: Perhaps change this to a set of ints to pack, or even bools for easier use
 	// NOTE: Only have the display update when an instruction is said
-	bool gfx[64 * 32];		// Display in monochrome; ie black and white
+	unsigned short gfx[SCREEN_WIDTH * SCREEN_HEIGHT];		// Display in monochrome; ie black and white
 
 	unsigned short stack[16];		// Stack; only for returning from subroutines; limited to 16 2-byte entries
 	unsigned short sp;				// Stack pointer
@@ -46,8 +55,8 @@ private:
 
 	// NOTE: The two timers: Both count down to 0 at 60Hz (60 times per second)
 	// They should run in a separate thread as to be accurate
-	unsigned char delay_timer = 0;	// Intended for timing in games; can be set and read
-	unsigned char sound_timer = 0;	// Will beep when its value is non-zero; can only be set
+	unsigned char delay_timer;		// Intended for timing in games; can be set and read
+	unsigned char sound_timer;		// Will beep when its value is non-zero; can only be set
 
 	// This is stored in the memory in the initialise function
 	unsigned char chip8_fontset[80] =
@@ -92,7 +101,7 @@ private:
 // All are two bytes long, stored in big endian
 
 // [ ]	0NNN		Execute machine language subroutine at address NNN
-// [ ]	00E0		Clear the screen
+// [X]	00E0		Clear the screen
 // [ ]	00EE		Return from a subroutine
 // [X]	1NNN		Jump to address NNN
 // [X]	2NNN		Execute subroutine starting at address NNN

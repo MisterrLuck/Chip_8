@@ -10,16 +10,19 @@ int main()
 	Chip8 chip8;
 	Graphics graphics;
 
+	// Initialization
+	chip8.init();
+	
 	if (!graphics.init())
 	{
 		cout << "Error with the graphics\n";
 		return -1;
 	}
 
-	bool success = true;
-	while (success)
+	bool running = true;
+	while (running)
 	{
-		success = graphics.updateFrame();
+		running = graphics.updateFrame();
 	}
 
 	return 0;

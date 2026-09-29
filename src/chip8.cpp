@@ -8,7 +8,7 @@
 #include <iostream>
 using namespace std;
 
-void Chip8::initialize()
+void Chip8::init()
 {
 	pc = 0x200;
 	opcode = 0;
@@ -16,6 +16,7 @@ void Chip8::initialize()
 	sp = 0;
 
 	// Clear display
+	clearScreen();
 	// Clear stack
 	// Clear registers V0-VF
 	// Clear memory
@@ -25,6 +26,8 @@ void Chip8::initialize()
 		memory[i+0x50] = chip8_fontset[i];
 
 	// Reset timers
+	delay_timer = 0;
+	sound_timer = 0;
 
 	// Load the program into memory
 	loadProgram();
@@ -45,10 +48,10 @@ void Chip8::emulateCycle()
 
 	// Define them ahead of time in case the opcode uses them
 	// Look up value in register
-	int XInd = (opcode & 0x0F00) >> 8;
-	int YInd = (opcode & 0x00F0) >> 4;
-	int X    = V[XInd];
-	int Y    = V[YInd];
+	int X_ind = (opcode & 0x0F00) >> 8;
+	int Y_ind = (opcode & 0x00F0) >> 4;
+	int X    = V[X_ind];
+	int Y    = V[Y_ind];
 
 	// Hardcoded values
 	// NOTE: Should they be proper datatypes instead of ints ?
@@ -60,13 +63,13 @@ void Chip8::emulateCycle()
 	switch (opcode & 0xF000)
 	{
 		case 0x0000: // if the most significant isn't enough
-			switch (opcode & 0x000F)
+			switch (opcode & 0x0FFF)
 			{
-				case 0x0000: // 0x00E0: Clears screen
-
+				case 0x00E0: // 0x00E0: Clears screen
+					clearScreen();
 				break;
 
-				case 0x000E: // 0x00EE: Return from subroutine
+				case 0x00EE: // 0x00EE: Return from subroutine
 
 				break;
 
@@ -128,28 +131,40 @@ void Chip8::emulateCycle()
 
 		case 0xD000: // 0xDXYN : draw a sprite at (X,Y)
 		{
-			// Sprite data is located at address I, N is the number of bytes
-			// unsigned short x = V[(opcode & 0x0F00) >> 8];
-			// unsigned short y = V[(opcode & 0x00F0) >> 4];
-			// unsigned short height = opcode & 0x000F;
-			// unsigned short pixel;
-			//
-			// // for collision detection or smth
-			// V[0xF] = 0;
-			// for (int yline = 0; yline < height; yline++)
-			// {
-			// 	pixel = memory[I + yline];
-			// 	for (int xline = 0; xline < 8; xline++)
-			// 	{
-			// 		if ((pixel & (0x80 >> xline)) != 0)
-			// 		{
-			// 			// get the pixel position in the array
-			// 			if (gfx[(x + xline + ((y + yline ) * 64))] == 1)
-			// 				V[0xF] = 1;
-			// 			gfx[(x + xline + ((y + yline ) * 64))] ^= 1;
-			// 		}
-			// 	}
-			// }
+			// Sprite data is located at address I, N is the number of bytes / rows
+			X = X % SCREEN_WIDTH;
+			Y = Y % SCREEN_HEIGHT;
+			
+			V[0xF] = 0; // For collision detection
+			// The height of the sprite
+			for (size_t row = 0; row < N; row++)
+			{
+				// On the bottom of the screen
+				if (Y + row >= SCREEN_HEIGHT)
+					break;
+
+				// Current byte of data
+				int byte = memory[I + row];
+				// each bit in byte
+				for (size_t bit_ind = 0; bit_ind < 8; bit_ind++)
+				{
+					// On the edge of the screen
+					if (X + bit_ind >= SCREEN_WIDTH)
+						break;
+
+					// Get the bits from left to right
+					int pixel = (byte >> (7 - bit_ind)) & 0b1;
+
+					size_t ind = (SCREEN_HEIGHT * (X + bit_ind)) + (Y + row);
+
+					// WARNING: Idk if this can cause problems
+					// If the bit has flipped; ie both values are 1
+					if (gfx[ind] & pixel != 0)
+						V[0xF] = 1;
+
+					gfx[ind] ^= pixel;
+				}
+			}
 		}
 		break;
 
@@ -179,6 +194,14 @@ void Chip8::emulateCycle()
 	}
 
 	// Make sure to update the screen based on the graphics array
+}
+
+void Chip8::clearScreen()
+{
+	for (size_t ind = 0; ind < 64 * 32; ind++)
+	{
+		gfx[ind] = 0;
+	}
 }
 
 void Chip8::loadProgram()
