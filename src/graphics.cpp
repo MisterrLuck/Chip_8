@@ -1,56 +1,36 @@
 #include "graphics.hpp"
+#include "chip8.hpp"
+#include "raylib.h"
 
 Graphics::~Graphics()
 {
-	glfwDestroyWindow(window);
+    CloseWindow();
 }
 
-bool Graphics::init()
+bool Graphics::init(unsigned int pixel_scale)
 {
-	glfwInit();
+	if (pixel_scale <= 0)
+		pixel_scale = 20;
+	scale = pixel_scale;
 
-	// Makes it floating in i3wm
-	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-	window = glfwCreateWindow(640, 480, "Chip 8", NULL, NULL);
+    InitWindow(SCREEN_WIDTH * scale, SCREEN_HEIGHT * scale, "Chip 8");
 
-	glfwSetWindowUserPointer(window, this);
-	glfwSetKeyCallback(window, onKey);
-	
-	glfwMakeContextCurrent(window);
-	
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    SetTargetFPS(60);
 
-	open = (bool) window;
+	open = true;
 	return open;
 }
 
-bool Graphics::updateFrame()
+bool Graphics::updateFrame(unsigned short *gfx)
 {
-	int width, height;
+	BeginDrawing();
 
-	glfwGetFramebufferSize(window, &width, &height);
+		ClearBackground(RAYWHITE);
 
-	glViewport(0, 0, width, height);
-	glClear(GL_COLOR_BUFFER_BIT);
+		DrawText("Running Chip 8", 250, 20, 20, LIGHTGRAY);
 
-	glfwSwapBuffers(window);
+	EndDrawing();
 
-	// Keep running
-	glfwPollEvents();
-
-	return open;
+	return open && (!WindowShouldClose());
 }
 
-void Graphics::onKey(int key, int scancode, int action, int mods)
-{
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-		open = false;
-}
-
-// Static member function
-// NOTE: This is a weird workaround to be able to modify the class members
-void Graphics::onKey(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-	Graphics* gfx =  reinterpret_cast<Graphics *>(glfwGetWindowUserPointer(window));
-	gfx->onKey(key, scancode, action, mods);
-}

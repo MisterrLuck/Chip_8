@@ -1,20 +1,18 @@
-#include <GLFW/glfw3.h>
-
+#pragma once
+// #include <GLFW/glfw3.h>
+#include "raylib.h"
 
 class Graphics
 {
 public:
-	bool init();
+	bool init(unsigned int scale = 20);
 
-	bool updateFrame();
-	void setOpen();
+	bool updateFrame(unsigned short *gfx);
+	void drawPixel(int x, int y);
 
 	~Graphics();
 
 private:
-	GLFWwindow* window;
 	bool open = false;
-
-	void onKey(int key, int scancode, int action, int mods);
-	static void onKey(GLFWwindow* window, int key, int scancode, int action, int mods);
+	int scale;
 };

@@ -13,11 +13,11 @@ int main()
 	// Initialization
 	chip8.init();
 	
-	// if (!graphics.init())
-	// {
-	// 	cout << "Error with the graphics\n";
-	// 	return -1;
-	// }
+	if (!graphics.init(20))
+	{
+		cout << "Error with the graphics\n";
+		return -1;
+	}
 
 	chip8.loadProgram();
 
@@ -29,32 +29,34 @@ int main()
 	// 		cout << "\n";
 	// }
 
-	while (true)
-	{
-		bool ret = chip8.emulateCycle();
-		// cout << "Return: " << ret << "\n";
-
-		// ret = false;
-		if (ret)
-		{
-			// Show graphics
-			for (size_t y = 0; y < SCREEN_HEIGHT; y++)
-			{
-				for (size_t x = 0; x < SCREEN_WIDTH; x++)
-				{
-					size_t ind = (SCREEN_HEIGHT * y) + x;
-					cout << chip8.gfx[ind];
-				}
-				cout << "\n";
-			}
-		}
-	}
-
-	// bool running = true;
-	// while (running)
+	// while (true)
 	// {
-	// 	running = graphics.updateFrame();
+	// 	bool ret = chip8.emulateCycle();
+	// 	// cout << "Return: " << ret << "\n";
+	//
+	// 	// ret = false;
+	// 	if (ret)
+	// 	{
+	// 		// Show graphics
+	// 		for (size_t y = 0; y < SCREEN_HEIGHT; y++)
+	// 		{
+	// 			for (size_t x = 0; x < SCREEN_WIDTH; x++)
+	// 			{
+	// 				size_t ind = (SCREEN_HEIGHT * y) + x;
+	// 				cout << chip8.gfx[ind];
+	// 			}
+	// 			cout << "\n";
+	// 		}
+	// 	}
 	// }
 
+	bool running = true;
+	unsigned short temp;
+	while (running)
+	{
+		running = graphics.updateFrame(&temp);
+	}
+
+	
 	return 0;
 }
