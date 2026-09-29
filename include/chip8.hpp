@@ -11,11 +11,12 @@ public:
 	void loadProgram();
 
 	void init();
-	void emulateCycle();
+	bool emulateCycle();
 
 	void clearScreen();
 
-private:
+	// TODO: Add back the private label
+// private:
 	// const int SCREEN_HEIGHT = 32;
 	// const int SCREEN_WIDTH = 64;
 
@@ -24,7 +25,7 @@ private:
 	// NOTE: Old programs expect to be loaded into address 0x200
 	unsigned char memory[4096];		// This is where the program sits; RAM
 
-	unsigned char V[0xF];			// The registers: VF isn't recommended for use, as it is also a flag
+	unsigned char V[16];			// The registers: VF isn't recommended for use, as it is also a flag
 	
 	// TODO: Perhaps change this to a set of ints to pack, or even bools for easier use
 	// NOTE: Only have the display update when an instruction is said
@@ -123,7 +124,7 @@ private:
 // [X]	ANNN		Store memory address NNN in register I
 // [ ]	BNNN		Jump to address NNN + V0
 // [ ]	CXNN		Set VX to a random number with a mask of NN
-// [ ]	DXYN		Draw a sprite at position VX, VY with N bytes of sprite data starting at the address stored in I. Set VF to 01 if any set pixels are changed to unset, and 00 otherwise. Sprites are drawn as an XOR where it will flip the bit if the sprite has a one.
+// [X]	DXYN		Draw a sprite at position VX, VY with N bytes of sprite data starting at the address stored in I. Set VF to 01 if any set pixels are changed to unset, and 00 otherwise. Sprites are drawn as an XOR where it will flip the bit if the sprite has a one.
 // [ ]	EX9E		Skip the following instruction if the key corresponding to the hex value currently stored in register VX is pressed
 // [ ]	EXA1		Skip the following instruction if the key corresponding to the hex value currently stored in register VX is not pressed
 // [ ]	FX07		Store the current value of the delay timer in register VX

@@ -1,40 +1,53 @@
 #include "chip8.hpp"
 
-#include <concepts>
+// #include <concepts>
 #include <cstdio>
-#include <fstream>
-#include <ios>
-#include <iosfwd>
+#include <cstdint>
 #include <iostream>
+
+#include <fstream>
+#include <iterator>
+#include <vector>
+
 using namespace std;
 
 void Chip8::init()
 {
+	// Reset variables
 	pc = 0x200;
 	opcode = 0;
 	I = 0;
 	sp = 0;
 
-	// Clear display
-	clearScreen();
-	// Clear stack
-	// Clear registers V0-VF
-	// Clear memory
-
-	// Load fontset:
-	for (int i = 0; i < 80; i++)
-		memory[i+0x50] = chip8_fontset[i];
-
 	// Reset timers
 	delay_timer = 0;
 	sound_timer = 0;
 
-	// Load the program into memory
-	loadProgram();
+	// Clear display
+	clearScreen();
+	
+	// Clear stack
+	size_t ind;
+	for (ind = 0; ind < 16; ind++)
+		stack[ind] = 0;
+
+	// Clear registers V0-VF
+	for (ind = 0; ind < 16; ind++)
+		V[ind] = 0;
+
+	// Clear memory
+	for (ind = 0; ind < 4096; ind++)
+		memory[ind] = 0;
+
+	// Load fontset:
+	for (ind = 0; ind < 80; ind++)
+		memory[ind + 0x50] = chip8_fontset[ind];
 }
 
-void Chip8::emulateCycle()
+bool Chip8::emulateCycle()
 {
+	// TODO: Add reset button to reset the program as it never ends
+	// TODO: Also a stop button obv
 	// NOTE: Steps of the program
 	// Fetch the current command
 	// Decode to find out what to do
@@ -42,22 +55,23 @@ void Chip8::emulateCycle()
 	
 	// NOTE: Timing can vary; standard speed is 700 instructions per second
 
-	// NOTE: memory[sp, sp+1] = 0xA520 : (0xA5 << 8) | 0x20 = 0xA520
-	opcode = memory[sp] << 8 | memory[sp + 1];
-	sp++;
+	// NOTE: memory[pc, pc+1] = 0xA520 : (0xA5 << 8) | 0x20 = 0xA520
+	opcode = memory[pc] << 8 | memory[pc + 1];
 
 	// Define them ahead of time in case the opcode uses them
 	// Look up value in register
-	int X_ind = (opcode & 0x0F00) >> 8;
-	int Y_ind = (opcode & 0x00F0) >> 4;
-	int X    = V[X_ind];
-	int Y    = V[Y_ind];
+	int X = (opcode >> 8) & 0xF;
+	int Y = (opcode >> 4) & 0xF;
+	// int X_val = V[X_red];
+	// int Y_val = V[Y_reg];
 
 	// Hardcoded values
 	// NOTE: Should they be proper datatypes instead of ints ?
 	int N    = opcode & 0x000F;
 	int NN   = opcode & 0x00FF;
 	int NNN  = opcode & 0x0FFF;
+
+	bool ret = true;
 
 	// get most significant byte : 0x(A)520
 	switch (opcode & 0xF000)
@@ -74,7 +88,7 @@ void Chip8::emulateCycle()
 				break;
 
 				default: // probably 0x0NNN
-					cout << "Unknown opcode [0x0000]: " << opcode << endl;
+					ret = false;
 			}
 		break;
 
@@ -132,15 +146,15 @@ void Chip8::emulateCycle()
 		case 0xD000: // 0xDXYN : draw a sprite at (X,Y)
 		{
 			// Sprite data is located at address I, N is the number of bytes / rows
-			X = X % SCREEN_WIDTH;
-			Y = Y % SCREEN_HEIGHT;
+			int x = V[X] % SCREEN_WIDTH;
+			int y = V[Y] % SCREEN_HEIGHT;
 			
 			V[0xF] = 0; // For collision detection
 			// The height of the sprite
 			for (size_t row = 0; row < N; row++)
 			{
 				// On the bottom of the screen
-				if (Y + row >= SCREEN_HEIGHT)
+				if (y + row >= SCREEN_HEIGHT)
 					break;
 
 				// Current byte of data
@@ -149,13 +163,13 @@ void Chip8::emulateCycle()
 				for (size_t bit_ind = 0; bit_ind < 8; bit_ind++)
 				{
 					// On the edge of the screen
-					if (X + bit_ind >= SCREEN_WIDTH)
+					if (x + bit_ind >= SCREEN_WIDTH)
 						break;
 
 					// Get the bits from left to right
 					int pixel = (byte >> (7 - bit_ind)) & 0b1;
 
-					size_t ind = (SCREEN_HEIGHT * (X + bit_ind)) + (Y + row);
+					size_t ind = (SCREEN_HEIGHT * (y + row)) + (x + bit_ind);
 
 					// WARNING: Idk if this can cause problems
 					// If the bit has flipped; ie both values are 1
@@ -193,7 +207,17 @@ void Chip8::emulateCycle()
 			cout << "Unknown opcode: " << opcode << endl;
 	}
 
-	// Make sure to update the screen based on the graphics array
+	if (ret)
+		cout << "Opcode: " << opcode << endl;
+
+	if (opcode & 0xF000 == 0xD000)
+		cout << "\nFound it!!!!!!!!!!!!!!!!!!!\n\n";
+
+	pc += 2;
+
+	// TODO: Make sure to update the screen based on the graphics array
+	
+	return ret;
 }
 
 void Chip8::clearScreen()
@@ -206,12 +230,18 @@ void Chip8::clearScreen()
 
 void Chip8::loadProgram()
 {
-	// fstream file("game.c8", ios::in | ios::binary);
-	// if (file.is_open())
-	// 	file.read()
-	int bufferSize = 10; // Idk where to get this?
-	unsigned char buffer[10]; // Idk about this either
+	std::ifstream input("../roms/IBM_logo.ch8", std::ios::binary);
 
-	for(int i = 0; i < bufferSize; ++i)
-		memory[i + 0x200] = buffer[i];
+	std::vector<unsigned char> bytes(
+		(std::istreambuf_iterator<char>(input)),
+		(std::istreambuf_iterator<char>()));
+
+	input.close();
+
+	cout << "Size of vector: " << bytes.size() << "\n";
+
+	for(size_t ind = 0; ind < bytes.size(); ind++)
+	{
+		memory[ind + 0x200] = bytes[ind];
+	}
 }
