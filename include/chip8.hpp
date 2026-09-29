@@ -1,18 +1,13 @@
 class Chip8
 {
 public:
+	// I think this is flagged if the screen needs a redraw
 	bool drawFlag = false;
 
 	void loadProgram();
 
 	void initialize();
 	void emulateCycle();
-
-	void initializeWindow();
-	void updateScreen();
-
-	// For closing the window
-	~Chip8();
 
 private:
 	unsigned short opcode;			// The current opcode

@@ -1,5 +1,4 @@
 #include "chip8.hpp"
-#include "SDL.h"
 
 #include <concepts>
 #include <cstdio>
@@ -8,11 +7,6 @@
 #include <iosfwd>
 #include <iostream>
 using namespace std;
-
-Chip8::~Chip8()
-{
-
-}
 
 void Chip8::initialize()
 {
@@ -34,11 +28,6 @@ void Chip8::initialize()
 
 	// Load the program into memory
 	loadProgram();
-}
-
-void Chip8::initializeWindow()
-{
-	
 }
 
 void Chip8::emulateCycle()

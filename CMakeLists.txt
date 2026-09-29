@@ -11,12 +11,10 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(Chip_8 src/main.cpp
         src/chip8.cpp
-        include/chip8.hpp)
+		src/graphics.cpp
+        include/chip8.hpp
+		include/graphics.hpp)
 
 target_link_libraries(Chip_8 ${SDL2_LIBRARIES})
 target_link_libraries(Chip_8 glfw)
 target_link_libraries(Chip_8 OpenGL::GL)
-# target_link_libraries(main PRIVATE SFML::Graphics)
-# target_compile_features(main PRIVATE cxx_std_17)
-
-# set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT main)
