@@ -29,7 +29,7 @@ int main()
 		
 		if (chip8.draw_flag)
 		{
-			running = graphics.updateFrame(chip8.gfx);
+			graphics.updateFrame(chip8.gfx);
 
 			// Make sure the graphics line up with the array
 			// Show graphics
@@ -47,7 +47,7 @@ int main()
 		}
 
 
-		sleep(1);
+		// sleep(1);
 	}
 
 	

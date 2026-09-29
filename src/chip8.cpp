@@ -45,7 +45,7 @@ void Chip8::init()
 		memory[ind + 0x50] = chip8_fontset[ind];
 }
 
-bool Chip8::emulateCycle()
+void Chip8::emulateCycle()
 {
 	// TODO: Add reset button to reset the program as it never ends
 	// TODO: Also a stop button obv
@@ -70,8 +70,9 @@ bool Chip8::emulateCycle()
 	int NN   = opcode & 0x00FF;
 	int NNN  = opcode & 0x0FFF;
 
-	bool ret = true;
 	draw_flag = false;
+	// Some instructions (like jump) don't want to inc the pc after executing
+	bool inc_pc = true;
 
 	// get most significant byte : 0x(A)520
 	switch (opcode & 0xF000)
@@ -87,19 +88,18 @@ bool Chip8::emulateCycle()
 				case 0x00EE: // 0x00EE: Return from subroutine
 
 				break;
-
-				default: // probably 0x0NNN
-					ret = false;
 			}
 		break;
 
-		case 0x1000: // 0x1NNN : jump to address; without return address?
+		case 0x1000: // 0x1NNN : jump to address 
 			pc = NNN;
+			inc_pc = false;
 		break;
 
 		case 0x2000: // 0x2NNN : jump to subroutine at address
 			stack[sp++] = pc; // save the current position, and increment sp
 			pc = NNN;
+			inc_pc = false;
 		break;
 
 		case 0x3000: // 0x3XNN : skip next instruction if VX == NN
@@ -213,11 +213,8 @@ bool Chip8::emulateCycle()
 
 	cout << "[" << std::format("{:x}", pc) << "]: " << std::format("{:x}", opcode) << endl;
 
-	pc += 2;
-
-	// TODO: Make sure to update the screen based on the graphics array
-	
-	return ret;
+	if (inc_pc)
+		pc += 2;
 }
 
 void Chip8::clearScreen()

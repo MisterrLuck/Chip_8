@@ -12,7 +12,7 @@ public:
 	void loadProgram();
 
 	void init();
-	bool emulateCycle();
+	void emulateCycle();
 
 	void clearScreen();
 
@@ -100,7 +100,6 @@ public:
 
 // All are two bytes long, stored in big endian
 
-// [ ]	0NNN		Execute machine language subroutine at address NNN
 // [X]	00E0		Clear the screen
 // [ ]	00EE		Return from a subroutine
 // [X]	1NNN		Jump to address NNN

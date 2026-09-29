@@ -26,7 +26,7 @@ bool Graphics::updateFrame(unsigned short *gfx)
 {
 	BeginDrawing();
 
-		ClearBackground(RAYWHITE);
+		ClearBackground(BLACK);
 
 		for (size_t x = 0; x < SCREEN_WIDTH; x++)
 		{
@@ -39,7 +39,7 @@ bool Graphics::updateFrame(unsigned short *gfx)
 				{
 					Vector2 pos = {(float) (x * scale), (float) (y * scale)};
 
-					DrawRectangleV(pos, {(float) scale, (float) scale}, BLACK);
+					DrawRectangleV(pos, {(float) scale, (float) scale}, WHITE);
 				}
 			}
 		}
