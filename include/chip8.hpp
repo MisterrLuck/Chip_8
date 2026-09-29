@@ -7,7 +7,7 @@ class Chip8
 {
 public:
 	// I think this is flagged if the screen needs a redraw
-	bool drawFlag = false;
+	bool draw_flag = false;
 
 	void loadProgram();
 
@@ -18,8 +18,6 @@ public:
 
 	// TODO: Add back the private label
 // private:
-	// const int SCREEN_HEIGHT = 32;
-	// const int SCREEN_WIDTH = 64;
 
 	unsigned short opcode;			// The current opcode
 

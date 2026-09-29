@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <cstdint>
 #include <iostream>
+#include <format>
 
 #include <fstream>
 #include <iterator>
@@ -62,8 +63,6 @@ bool Chip8::emulateCycle()
 	// Look up value in register
 	int X = (opcode >> 8) & 0xF;
 	int Y = (opcode >> 4) & 0xF;
-	// int X_val = V[X_red];
-	// int Y_val = V[Y_reg];
 
 	// Hardcoded values
 	// NOTE: Should they be proper datatypes instead of ints ?
@@ -72,6 +71,7 @@ bool Chip8::emulateCycle()
 	int NNN  = opcode & 0x0FFF;
 
 	bool ret = true;
+	draw_flag = false;
 
 	// get most significant byte : 0x(A)520
 	switch (opcode & 0xF000)
@@ -80,6 +80,7 @@ bool Chip8::emulateCycle()
 			switch (opcode & 0x0FFF)
 			{
 				case 0x00E0: // 0x00E0: Clears screen
+					draw_flag = true;
 					clearScreen();
 				break;
 
@@ -145,6 +146,8 @@ bool Chip8::emulateCycle()
 
 		case 0xD000: // 0xDXYN : draw a sprite at (X,Y)
 		{
+			draw_flag = true;
+
 			// Sprite data is located at address I, N is the number of bytes / rows
 			int x = V[X] % SCREEN_WIDTH;
 			int y = V[Y] % SCREEN_HEIGHT;
@@ -169,7 +172,8 @@ bool Chip8::emulateCycle()
 					// Get the bits from left to right
 					int pixel = (byte >> (7 - bit_ind)) & 0b1;
 
-					size_t ind = (SCREEN_HEIGHT * (y + row)) + (x + bit_ind);
+					size_t ind = (SCREEN_WIDTH * (y + row)) + (x + bit_ind);
+					// cout << "i: " << ind << " | N: " << N << " | x: " << x+bit_ind << " | y: " << y+row << "\n";
 
 					// WARNING: Idk if this can cause problems
 					// If the bit has flipped; ie both values are 1
@@ -207,11 +211,7 @@ bool Chip8::emulateCycle()
 			cout << "Unknown opcode: " << opcode << endl;
 	}
 
-	if (ret)
-		cout << "Opcode: " << opcode << endl;
-
-	if (opcode & 0xF000 == 0xD000)
-		cout << "\nFound it!!!!!!!!!!!!!!!!!!!\n\n";
+	cout << "[" << std::format("{:x}", pc) << "]: " << std::format("{:x}", opcode) << endl;
 
 	pc += 2;
 

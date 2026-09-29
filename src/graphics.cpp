@@ -32,7 +32,7 @@ bool Graphics::updateFrame(unsigned short *gfx)
 		{
 			for (size_t y = 0; y < SCREEN_HEIGHT; y++)
 			{
-				size_t ind = (SCREEN_HEIGHT * y) + x;
+				size_t ind = (SCREEN_WIDTH * y) + x;
 
 				// WARNING: The only two numbers should be 1 and 0
 				if (gfx[ind] == 1)
@@ -46,6 +46,6 @@ bool Graphics::updateFrame(unsigned short *gfx)
 
 	EndDrawing();
 
-	return open && (!WindowShouldClose());
+	return open;
 }
 
