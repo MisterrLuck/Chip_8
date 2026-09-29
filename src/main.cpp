@@ -31,7 +31,7 @@ int main()
 
 	// while (true)
 	// {
-	// 	bool ret = chip8.emulateCycle();
+		bool ret = chip8.emulateCycle();
 	// 	// cout << "Return: " << ret << "\n";
 	//
 	// 	// ret = false;
@@ -51,10 +51,9 @@ int main()
 	// }
 
 	bool running = true;
-	unsigned short temp;
 	while (running)
 	{
-		running = graphics.updateFrame(&temp);
+		running = graphics.updateFrame(chip8.gfx);
 	}
 
 	

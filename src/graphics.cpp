@@ -1,6 +1,7 @@
 #include "graphics.hpp"
 #include "chip8.hpp"
 #include "raylib.h"
+#include <cstddef>
 
 Graphics::~Graphics()
 {
@@ -27,7 +28,21 @@ bool Graphics::updateFrame(unsigned short *gfx)
 
 		ClearBackground(RAYWHITE);
 
-		DrawText("Running Chip 8", 250, 20, 20, LIGHTGRAY);
+		for (size_t x = 0; x < SCREEN_WIDTH; x++)
+		{
+			for (size_t y = 0; y < SCREEN_HEIGHT; y++)
+			{
+				size_t ind = (SCREEN_HEIGHT * y) + x;
+
+				// WARNING: The only two numbers should be 1 and 0
+				if (gfx[ind] == 1)
+				{
+					Vector2 pos = {(float) (x * scale), (float) (y * scale)};
+
+					DrawRectangleV(pos, {(float) scale, (float) scale}, BLACK);
+				}
+			}
+		}
 
 	EndDrawing();
 
