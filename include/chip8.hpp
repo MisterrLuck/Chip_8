@@ -17,6 +17,8 @@ public:
 	void emulateCycle();
 
 	void clearScreen();
+	
+	bool OG_SHIFT = true;
 
 	
 	// TODO: Perhaps change this to a set of ints to pack, or even bools for easier use
@@ -114,11 +116,11 @@ private:
 // [X]	8XY1		Set VX to VX OR VY
 // [X]	8XY2		Set VX to VX AND VY
 // [X]	8XY3		Set VX to VX XOR VY
-// [ ]	8XY4		Add the value of register VY to register VX. Set VF to 01 if a carry occurs. Set VF to 00 if a carry does not occur
+// [X]	8XY4		Add the value of register VY to register VX. Set VF to 01 if a carry occurs. Set VF to 00 if a carry does not occur
 // [ ]	8XY5		Subtract the value of register VY from register VX. Set VF to 00 if a borrow occurs. Set VF to 01 if a borrow does not occur
-// [ ]	8XY6		Store the value of register VY shifted right one bit in register VX. Set register VF to the least significant bit prior to the shift. VY is unchanged
+// [X]	8XY6		Store the value of register VY shifted right one bit in register VX. Set register VF to the least significant bit prior to the shift. VY is unchanged
 // [ ]	8XY7		Set register VX to the value of VY minus VX. Set VF to 00 if a borrow occurs. Set VF to 01 if a borrow does not occur
-// [ ]	8XYE		Store the value of register VY shifted left one bit in register VX Set register VF to the most significant bit prior to the shift VY is unchanged
+// [X]	8XYE		Store the value of register VY shifted left one bit in register VX Set register VF to the most significant bit prior to the shift VY is unchanged
 // [X]	9XY0		Skip the following instruction if the value of register VX is not equal to the value of register VY
 // [X]	ANNN		Store memory address NNN in register I
 // [ ]	BNNN		Jump to address NNN + V0

@@ -157,13 +157,32 @@ void Chip8::emulateCycle()
 				case 0x0005: // 0x8XY5 : VX - VY with underflow
 				break;
 
-				case 0x0006: // 0x8XY6
+				// TODO: Add configuration for using the VY register
+				case 0x0006: // 0x8XY6 : shift VX right one, move bit to VF
+					if (OG_SHIFT)
+					{
+						V[F] = V[Y] & 0b1;
+						V[X] = V[Y] >> 1;
+					} else
+					{
+						V[F] = V[X] & 0b1;
+						V[X] >>= 1;
+					}
 				break;
 
 				case 0x0007: // 0x8XY7 : VY - VX with underflow
 				break;
 
-				case 0x000E: // 0x8XYE
+				case 0x000E: // 0x8XYE : shift VX left one, move bit to VF
+					if (OG_SHIFT)
+					{
+						V[F] = V[Y] & 0x80; // leading bit is 1
+						V[X] = V[Y] << 1;
+					} else
+					{
+						V[F] = V[X] & 0x80;
+						V[X] <<= 1;
+					}
 				break;
 			}
 		break;
