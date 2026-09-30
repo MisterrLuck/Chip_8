@@ -86,7 +86,9 @@ void Chip8::emulateCycle()
 				break;
 
 				case 0x00EE: // 0x00EE: Return from subroutine
-
+					// WARNING: Idk if that will work
+					pc = stack[--sp]; // Should decrement and then access the stack
+					inc_pc = false;
 				break;
 			}
 		break;
@@ -128,16 +130,47 @@ void Chip8::emulateCycle()
 		case 0x8000:
 			switch (opcode & 0x000F)
 			{
-				case 0x0004: // 0x8XY4 : adds register value Y to X
-					// if the adding number is more than the remaining amount in the other number, its a carry
-					// if (V[(opcode & 0x00F0) >> 4] > (0xFF - V[(opcode & 0x0F00)>> 8]))
-					// 	V[0xF] = 1; // carry bit
-					// else
-					// 	V[0xF] = 0;
-					// // Adds the two values and stores into X
-					// V[(opcode & 0x0F00) >> 8] += V[(opcode & 0x00F0) >> 4];
+				case 0x0000: // 0x8XY0 : store VY in VX
+					V[X] = V[Y];
+				break;
+
+				case 0x0001: // 0x8XY1 : VX = VX OR VY
+					V[X] = V[X] | V[Y];
+				break;
+
+				case 0x0002: // 0x8XY2 : VX = VX AND VY
+					V[X] = V[X] & V[Y];
+				break;
+
+				case 0x0003: // 0x8XY3 : VX = VX XOR VY
+					V[X] = V[X] ^ V[Y];
+				break;
+
+				case 0x0004: // 0x8XY4 : VX = VX + VY with carry
+					V[0xF] = 0;
+					if (V[X] + V[Y] > 0xFF)
+						V[0xF] = 1;
+
+					V[X] += V[Y];
+				break;
+
+				case 0x0005: // 0x8XY5 : VX - VY with underflow
+				break;
+
+				case 0x0006: // 0x8XY6
+				break;
+
+				case 0x0007: // 0x8XY7 : VY - VX with underflow
+				break;
+
+				case 0x000E: // 0x8XYE
 				break;
 			}
+		break;
+
+		case 0x9000: // 0x9XY0 : Skep next if VX != VY
+			if (V[X] != V[Y])
+				pc += 2;
 		break;
 
 		case 0xA000: // 0xANNN : sets I to address NNN
@@ -211,7 +244,9 @@ void Chip8::emulateCycle()
 			cout << "Unknown opcode: " << opcode << endl;
 	}
 
+#ifdef DEBUG
 	cout << "[" << std::format("{:x}", pc) << "]: " << std::format("{:x}", opcode) << endl;
+#endif
 
 	if (inc_pc)
 		pc += 2;
@@ -225,17 +260,15 @@ void Chip8::clearScreen()
 	}
 }
 
-void Chip8::loadProgram()
+void Chip8::loadProgram(string program)
 {
-	std::ifstream input("../roms/IBM_logo.ch8", std::ios::binary);
+	std::ifstream input(program, std::ios::binary);
 
 	std::vector<unsigned char> bytes(
 		(std::istreambuf_iterator<char>(input)),
 		(std::istreambuf_iterator<char>()));
 
 	input.close();
-
-	cout << "Size of vector: " << bytes.size() << "\n";
 
 	for(size_t ind = 0; ind < bytes.size(); ind++)
 	{

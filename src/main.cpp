@@ -1,12 +1,13 @@
 #include <iostream>
 #include <unistd.h>
+#include <string>
 
 #include "graphics.hpp"
 #include "chip8.hpp"
-using std::cout;
+using std::cout, std::string;
 
 
-int main()
+int main(int argc, char *argv[])
 {
 	Chip8 chip8;
 	Graphics graphics;
@@ -20,7 +21,12 @@ int main()
 		return -1;
 	}
 
-	chip8.loadProgram();
+	// chip8.loadProgram("../roms/IBM_logo.ch8");
+	chip8.loadProgram("../roms/test_opcode.ch8");
+	// if (argc > 1)
+	// 	chip8.loadProgram(string(argv[1]));
+	// else
+	// 	chip8.loadProgram("../roms/IBM_logo.ch8");
 
 	bool running = true;
 	while (running && (!WindowShouldClose()))

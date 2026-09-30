@@ -1,3 +1,5 @@
+# TODO: add arguments bc its better
+
 print("Welcome to the Code To ROM Helper!")
 
 print("\nEnter your filename")
