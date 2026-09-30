@@ -161,11 +161,11 @@ void Chip8::emulateCycle()
 				case 0x0006: // 0x8XY6 : shift VX right one, move bit to VF
 					if (OG_SHIFT)
 					{
-						V[F] = V[Y] & 0b1;
+						V[0xF] = V[Y] & 0b1;
 						V[X] = V[Y] >> 1;
 					} else
 					{
-						V[F] = V[X] & 0b1;
+						V[0xF] = V[X] & 0b1;
 						V[X] >>= 1;
 					}
 				break;
@@ -176,11 +176,11 @@ void Chip8::emulateCycle()
 				case 0x000E: // 0x8XYE : shift VX left one, move bit to VF
 					if (OG_SHIFT)
 					{
-						V[F] = V[Y] & 0x80; // leading bit is 1
+						V[0xF] = V[Y] & 0x80; // leading bit is 1
 						V[X] = V[Y] << 1;
 					} else
 					{
-						V[F] = V[X] & 0x80;
+						V[0xF] = V[X] & 0x80;
 						V[X] <<= 1;
 					}
 				break;
@@ -194,6 +194,14 @@ void Chip8::emulateCycle()
 
 		case 0xA000: // 0xANNN : sets I to address NNN
 			I = NNN; // get operands from opcode
+		break;
+
+		case 0xB000: // 0xBNNN or 0xBXNN : jumps to NNN/XNN with an offset of V0/VX
+			if (OG_JUMP_OFFSET)
+				pc = NNN + V[0];
+			else
+				pc = NNN + V[X];
+			inc_pc = false;
 		break;
 
 		case 0xD000: // 0xDXYN : draw a sprite at (X,Y)

@@ -12,6 +12,10 @@ int main(int argc, char *argv[])
 	Chip8 chip8;
 	Graphics graphics;
 
+#ifdef SHIFT
+	cout << "Shift is defined\n";
+#endif
+
 	// Initialization
 	chip8.init();
 	
