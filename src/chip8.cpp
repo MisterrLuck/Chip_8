@@ -74,6 +74,10 @@ void Chip8::emulateCycle()
 	// Some instructions (like jump) don't want to inc the pc after executing
 	bool inc_pc = true;
 
+	// HACK: This is temporary and shouldn't stay. IDK how to yet
+	if (delay_timer > 0)
+		delay_timer--;
+
 	// get most significant byte : 0x(A)520
 	switch (opcode & 0xF000)
 	{
@@ -88,7 +92,6 @@ void Chip8::emulateCycle()
 				case 0x00EE: // 0x00EE: Return from subroutine
 					// WARNING: Idk if that will work
 					pc = stack[--sp]; // Should decrement and then access the stack
-					// inc_pc = false;
 				break;
 			}
 		break;

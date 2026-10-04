@@ -38,6 +38,10 @@ int main(int argc, char *argv[])
 	else
 		chip8.loadProgram("../roms/IBM_logo.ch8");
 
+#ifdef DEBUGGER
+	bool debugging = true;
+#endif
+
 	while (!WindowShouldClose())
 	{
 		chip8.emulateCycle();
@@ -47,6 +51,9 @@ int main(int argc, char *argv[])
 
 // Slow down per instruction and allow for printing of memory and registers
 #ifdef DEBUGGER
+		if (!debugging)
+			continue;
+
 		bool loop = true;
 		while (loop)
 		{
@@ -89,6 +96,10 @@ int main(int argc, char *argv[])
 
 				case 's':
 					cout << format("Sound Timer: {:d}", chip8.sound_timer) << "\n";
+				break;
+
+				case 'c':
+					debugging = false;
 				break;
 
 				case 'e':
