@@ -5,8 +5,9 @@ find_package(raylib 6.0 REQUIRED)
 include_directories(include/)
 
 # Configure the version of chip8
-add_compile_definitions(SUPER_CHIP)
+# add_compile_definitions(SUPER_CHIP)
 # add_compile_definitions(COSMIC)
+add_compile_definitions(SHIFT)
 
 # add_compile_definitions(DEBUGGER)
 

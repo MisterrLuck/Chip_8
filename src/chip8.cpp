@@ -88,7 +88,7 @@ void Chip8::emulateCycle()
 				case 0x00EE: // 0x00EE: Return from subroutine
 					// WARNING: Idk if that will work
 					pc = stack[--sp]; // Should decrement and then access the stack
-					inc_pc = false;
+					// inc_pc = false;
 				break;
 			}
 		break;
