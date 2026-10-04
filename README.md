@@ -13,7 +13,7 @@ add_compile_definitions(SHIFT)
 add_compile_definitions(JUMP_OFFSET)
 ```
 
-[Here](CONFIG.md) is the full list of what each change does.
+[Here](docs/CONFIG.md) is the full list of what each change does.
 
 
 ## Usage
@@ -49,4 +49,4 @@ This python program will also allow for comments with `#`
 ### Debugging Programs
 
 You can also debug your own programs.
-More information can be found [here](DEBUGGER.md)
+More information can be found [here](docs/DEBUGGER.md)
