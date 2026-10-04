@@ -186,11 +186,11 @@ void Chip8::emulateCycle()
 				case 0x000E: // 0x8XYE : shift VX left one, move bit to VF
 					if (OG_SHIFT)
 					{
-						V[0xF] = V[Y] & 0x80; // leading bit is 1
+						V[0xF] = (V[Y] & 0x80) >> 7; // leading bit is 1
 						V[X] = V[Y] << 1;
 					} else
 					{
-						V[0xF] = V[X] & 0x80;
+						V[0xF] = (V[X] & 0x80) >> 7;
 						V[X] <<= 1;
 					}
 				break;

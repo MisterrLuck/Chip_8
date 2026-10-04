@@ -2,15 +2,29 @@
 
 A Chip 8 emulator written in C++ with the Raylib graphics library.
 
+## Table of Contents
+
+- [Specs](#specs)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [Programs](#programs)
+    - [Creating Programs](#creating-programs)
+    - [Debugging Programs](#debugging-programs)
+- [Thanks](#thanks)
+- [What's Next](#whats-next)
+
+
+## Specs
+
+
+
 
 ## Configuration
 
 There are many different versions of the chip 8 emulator. Some have differing instruction behaviour. To be able to run as many roms as possible, you can change the configuration in the CMakeLists.txt
 
-```CMakeLists.txt
-# Configure the version of chip8
-add_compile_definitions(SHIFT)
-add_compile_definitions(JUMP_OFFSET)
+```cmake
+add_compile_definitions(SUPER_CHIP) # Changes to the SUPER-CHIP version of Chip 8
 ```
 
 [Here](docs/CONFIG.md) is the full list of what each change does.
@@ -28,6 +42,8 @@ make
 ./Chip_8
 ```
 
+
+## Programs
 
 ### Creating Programs
 
@@ -48,5 +64,20 @@ This python program will also allow for comments with `#`
 
 ### Debugging Programs
 
-You can also debug your own programs.
+You can also debug your own programs using the custom debugger.
 More information can be found [here](docs/DEBUGGER.md)
+
+It is in very early stages.
+
+
+## Thanks
+
+Thanks to Tobias V. I. Langhoff and his [blog post](https://tobiasvl.github.io/blog/write-a-chip-8-emulator/) on making a Chip 8 emulator
+Thanks to cj1128 on github for his [BC_test rom](https://github.com/cj1128/chip8-emulator/blob/master/rom/BC_test.ch8) which helped debugging.
+
+
+## Whats Next
+
+ - I want to improve the debugger to maybe add breakpoints and have a separate window running at once, inspired by [massung](https://github.com/massung/CHIP-8) or [Austin Morlan](https://code.austinmorlan.com/austin/2019-chip8-emulator). This would mean moving away from raylib which would suck, because raylib doesn't support multiple windows.
+ - I also want to create an assembler which was also inspired by [massung](https://github.com/massung/CHIP-8).
+ - I want to improve the overall experience, with easier changing between instruction sets, without rebuilding the whole program

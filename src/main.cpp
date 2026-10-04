@@ -30,9 +30,10 @@ int main(int argc, char *argv[])
 	}
 
 	// chip8.loadProgram("../roms/IBM_logo.ch8");
-	chip8.loadProgram("../roms/test_opcode.ch8");
+	chip8.loadProgram("../roms/test_opcode2.ch8");
+	// chip8.loadProgram("../roms/test.ch8");
 	// chip8.loadProgram("../roms/BC_test.ch8");
-	// chip8.loadProgram("../roms/test_sub.ch8");
+	// chip8.loadProgram("../roms/debug.ch8");
 	// if (argc > 1)
 	// 	chip8.loadProgram(string(argv[1]));
 	// else
@@ -99,7 +100,6 @@ int main(int argc, char *argv[])
 		}
 #endif
 	}
-
 	
 	return 0;
 }
