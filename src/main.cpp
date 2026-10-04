@@ -2,13 +2,21 @@
 #include <unistd.h>
 #include <string>
 
+#ifdef DEBUGGER
+#include <format>
+using std::format;
+#endif
+
 #include "graphics.hpp"
 #include "chip8.hpp"
-using std::cout, std::string;
+using std::cout, std::string, std::cin;
 
 
 int main(int argc, char *argv[])
 {
+	// Get rid of raylib output
+	SetTraceLogLevel(LOG_ERROR); 
+
 	Chip8 chip8;
 	Graphics graphics;
 
@@ -23,37 +31,73 @@ int main(int argc, char *argv[])
 
 	// chip8.loadProgram("../roms/IBM_logo.ch8");
 	chip8.loadProgram("../roms/test_opcode.ch8");
+	// chip8.loadProgram("../roms/BC_test.ch8");
+	// chip8.loadProgram("../roms/test_sub.ch8");
 	// if (argc > 1)
 	// 	chip8.loadProgram(string(argv[1]));
 	// else
 	// 	chip8.loadProgram("../roms/IBM_logo.ch8");
 
-	bool running = true;
-	while (running && (!WindowShouldClose()))
+	while (!WindowShouldClose())
 	{
 		chip8.emulateCycle();
 		
 		if (chip8.draw_flag)
-		{
 			graphics.updateFrame(chip8.gfx);
 
-			// Make sure the graphics line up with the array
-			// Show graphics
-			// size_t ind = 0;
-			// for (size_t y = 0; y < SCREEN_HEIGHT; y++)
-			// {
-			//    	 for (size_t x = 0; x < SCREEN_WIDTH; x++)
-			//    	 {
-			//    			 ind = (SCREEN_WIDTH * y) + x;
-			//    			 cout << chip8.gfx[ind];
-			//    	 }
-			//    	 cout << "\n";
-			// }
-			// cout << "ind: " << ind << "\n";
+// Slow down per instruction and allow for printing of memory and registers
+#ifdef DEBUGGER
+		bool loop = true;
+		while (loop)
+		{
+			char command;
+			cout << ">>";
+			cin >> command;
+
+			switch (command)
+			{
+				case 'n':
+					loop = false;
+				break;
+
+				case 'l':
+					cout << format("Last Opcode: 0x{:x}", chip8.opcode) << "\n";
+				break;
+
+				case 'o':
+					cout << format("Next Opcode: 0x{:x}", chip8.memory[chip8.pc] << 8 | chip8.memory[chip8.pc + 1]) << "\n";
+				break;
+
+				case 'v': // Registers
+					for (size_t ind = 0; ind <= 0xF; ind++)
+					{
+						cout << format("V{:x}: {:d}", ind, chip8.V[ind]) << "\n";
+					}
+				break;
+
+				// case 'm': // Memory
+				// 	cout << chip8.opcode << "\n";
+				// break;
+
+				case 'i':
+					cout << format("Index Register: 0x{:x}", chip8.I) << "\n";
+				break;
+
+				case 'd':
+					cout << format("Delay Timer: {:d}", chip8.delay_timer) << "\n";
+				break;
+
+				case 's':
+					cout << format("Sound Timer: {:d}", chip8.sound_timer) << "\n";
+				break;
+
+				case 'e':
+					return 0;
+				break;
+			}
+			cout << "\n";
 		}
-
-
-		// sleep(1);
+#endif
 	}
 
 	

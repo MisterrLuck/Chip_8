@@ -2,7 +2,6 @@
 
 A Chip 8 emulator written in C++ with the Raylib graphics library.
 
-Tested using the [Test ROM](https://github.com/corax89/chip8-test-rom)
 
 ## Configuration
 
@@ -29,6 +28,9 @@ make
 ./Chip_8
 ```
 
+
+### Creating Programs
+
 You can use the `code_to_rom.py` file to convert your code from a text file to a binary format to be run
 
 ```bash
@@ -42,3 +44,9 @@ python code_to_rom.py input_file.txt output_file.ch8
 ```
 
 This python program will also allow for comments with `#`
+
+
+### Debugging Programs
+
+You can also debug your own programs.
+More information can be found [here](DEBUGGER.md)
