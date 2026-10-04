@@ -1,11 +1,11 @@
 #include "chip8.hpp"
 
-// #include <concepts>
 #include <cstdio>
 #include <cstdint>
+#include <cstdlib>
 #include <iostream>
 #include <format>
-
+#include <ctime>
 #include <fstream>
 #include <iterator>
 #include <vector>
@@ -154,10 +154,10 @@ void Chip8::emulateCycle()
 					V[X] += V[Y];
 				break;
 
+				// TODO: Figure out what underflow is and how to do it
 				case 0x0005: // 0x8XY5 : VX - VY with underflow
 				break;
 
-				// TODO: Add configuration for using the VY register
 				case 0x0006: // 0x8XY6 : shift VX right one, move bit to VF
 					if (OG_SHIFT)
 					{
@@ -204,6 +204,11 @@ void Chip8::emulateCycle()
 			inc_pc = false;
 		break;
 
+		case 0xC000: // 0xCXNN : sets VX to a random number between 0 and 255 ANDED with NN
+			srand(time(0));
+			V[X] = (rand() % 255) & NN;
+		break;
+
 		case 0xD000: // 0xDXYN : draw a sprite at (X,Y)
 		{
 			draw_flag = true;
@@ -246,6 +251,7 @@ void Chip8::emulateCycle()
 		}
 		break;
 
+		// Key instructions
 		case 0xE000:
 			switch (opcode & 0x00FF)
 			{
@@ -259,10 +265,55 @@ void Chip8::emulateCycle()
 		case 0xF000: //0xFX..
 			switch (opcode & 0x00FF)
 			{
-				case 0x0033: // 0xFX33 : stores value in X as BCD
-					// memory[I] = V[X] / 100;
-					// memory[I+1] = (V[X] / 10) % 10;
-					// memory[I+2] = (V[X] % 100) % 10;
+				case 0x0007: // 0xFX07 : Store value of delay timer in VX
+					V[X] = delay_timer;
+				break;
+
+				case 0x0015: // 0xFX15 : Set value of delay timer to VX
+					delay_timer = V[X];
+				break;
+
+				case 0x0018: // 0xFX18 : Set value of sound timer to VX
+					sound_timer = V[X];
+				break;
+
+				case 0x001E: // 0xFX1E : Add VX to index register I
+					if (!OG_FX1E_OVERFLOW)
+					{
+						V[0xF] = 0;
+						if (V[X] + I > 0x0FFF)
+							V[0xF] = 1;
+					}
+					I = (I + V[X]) & 0x0FFF;
+				break;
+
+				case 0x0029: // 0xFX29 : Set I to the font address of the hexadecimal character in VX
+					// 0x50 is the font start
+					// VX & 0xF is the character
+					// 5 bytes per character
+					I = 0x50 + ((VX & 0xF) * 5);
+				break;
+
+				case 0x0033: // 0xFX33 : stores value in VX as BCD
+					memory[I] = V[X] / 100;
+					memory[I+1] = (V[X] / 10) % 10;
+					memory[I+2] = (V[X] % 100) % 10;
+				break;
+
+				case 0x0055: // 0xFX55 : Loads registers 0-X inclusive in memory at I
+					for (size_t ind = 0; ind <= X; ind++)
+						memory[I + ind] = V[ind];
+
+					if (OG_REG_MEMORY_INDEX)
+						I = I + X + 1;
+				break;
+
+				case 0x0065: // 0xFX65 : Store the memory from I into registers 0-X
+					for (size_t ind = 0; ind <= X; ind++)
+						V[ind] = memory[I + ind];
+
+					if (OG_REG_MEMORY_INDEX)
+						I = I + X + 1;
 				break;
 			}
 		break;

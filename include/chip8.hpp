@@ -28,7 +28,18 @@ public:
 #ifdef JUMP_OFFSET
 	bool OG_JUMP_OFFSET = true;
 #else
-	bool OF_JUMP_OFFSET = false;
+	bool OG_JUMP_OFFSET = false;
+#endif
+// TODO: Make better names for the configuration
+#ifdef FX1E_OVERFLOW
+	bool OG_FX1E_OVERFLOW = false;
+#else
+	bool OG_FX1E_OVERFLOW = true;
+#endif
+#ifdef REG_MEMORY_INDEX
+	bool OG_REG_MEMORY_INDEX = true;
+#else
+	bool OG_REG_MEMORY_INDEX = false;
 #endif
 
 	
@@ -73,6 +84,7 @@ private:
 	unsigned char sound_timer;		// Will beep when its value is non-zero; can only be set
 
 	// This is stored in the memory in the initialise function
+	// NOTE: Stored at 0x50 with 5 byte increments
 	unsigned char chip8_fontset[80] =
 	{
 		0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
@@ -135,17 +147,17 @@ private:
 // [X]	9XY0		Skip the following instruction if the value of register VX is not equal to the value of register VY
 // [X]	ANNN		Store memory address NNN in register I
 // [X]	BNNN		Jump to address NNN + V0
-// [ ]	CXNN		Set VX to a random number with a mask of NN
+// [X]	CXNN		Set VX to a random number with a mask of NN
 // [X]	DXYN		Draw a sprite at position VX, VY with N bytes of sprite data starting at the address stored in I. Set VF to 01 if any set pixels are changed to unset, and 00 otherwise. Sprites are drawn as an XOR where it will flip the bit if the sprite has a one.
 // [ ]	EX9E		Skip the following instruction if the key corresponding to the hex value currently stored in register VX is pressed
 // [ ]	EXA1		Skip the following instruction if the key corresponding to the hex value currently stored in register VX is not pressed
-// [ ]	FX07		Store the current value of the delay timer in register VX
+// [X]	FX07		Store the current value of the delay timer in register VX
 // [ ]	FX0A		Wait for a keypress and store the result in register VX
-// [ ]	FX15		Set the delay timer to the value of register VX
-// [ ]	FX18		Set the sound timer to the value of register VX
-// [ ]	FX1E		Add the value stored in register VX to register I
-// [ ]	FX29		Set I to the memory address of the sprite data corresponding to the hexadecimal digit stored in register VX
-// [ ]	FX33		Store the binary-coded decimal equivalent of the value stored in register VX at addresses I, I + 1, and I + 2
-// [ ]	FX55		Store the values of registers V0 to VX inclusive in memory starting at address I is set to I + X + 1 after operation²
-// [ ]	FX65		Fill registers V0 to VX inclusive with the values stored in memory starting at address I is set to I + X + 1 after operation
+// [X]	FX15		Set the delay timer to the value of register VX
+// [X]	FX18		Set the sound timer to the value of register VX
+// [X]	FX1E		Add the value stored in register VX to register I
+// [X]	FX29		Set I to the memory address of the sprite data corresponding to the hexadecimal digit stored in register VX
+// [X]	FX33		Store the binary-coded decimal equivalent of the value stored in register VX at addresses I, I + 1, and I + 2
+// [X]	FX55		Store the values of registers V0 to VX inclusive in memory starting at address I is set to I + X + 1 after operation
+// [X]	FX65		Fill registers V0 to VX inclusive with the values stored in memory starting at address I is set to I + X + 1 after operation
 
