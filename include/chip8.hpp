@@ -6,10 +6,17 @@
 using std::string;
 
 #ifdef COSMIC
-
+#define SHIFT
+#define JUMP_OFFSET
+#define FX1E_OVERFLOW
+#define REG_MEMORY_INDEX
 #endif
-#ifdef SUPER_CHIP
 
+#ifdef SUPER_CHIP
+#undef SHIFT
+#undef JUMP_OFFSET
+#undef FX1E_OVERFLOW
+#undef REG_MEMORY_INDEX
 #endif
 
 class Chip8

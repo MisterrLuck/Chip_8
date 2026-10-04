@@ -30,10 +30,10 @@ When defined, the setting will be the original implementation. When not defined,
 
 ## Recomended Settings
 
-```CMakeLists.txt
-add_compile_definitions(JUMP_OFFSET)
-```
+You can define each change individually or you can set the COSMIC or SUPER_CHIP macro to change the settings to a specific version.
+Any other macros that you add will be ignored, and SUPER_CHIP takes priority.
 
+More information on the different version of Chip 8 can be found [here](https://en.wikipedia.org/wiki/CHIP-8#CHIP-8_extensions_and_variations)
 
 ## Notes
 
