@@ -156,6 +156,11 @@ void Chip8::emulateCycle()
 
 				// TODO: Figure out what underflow is and how to do it
 				case 0x0005: // 0x8XY5 : VX - VY with underflow
+					V[0xF] = 0;
+					if (V[X] >= V[Y])
+						V[0xF] = 1;
+
+					V[X] -= V[Y];
 				break;
 
 				case 0x0006: // 0x8XY6 : shift VX right one, move bit to VF
@@ -171,6 +176,11 @@ void Chip8::emulateCycle()
 				break;
 
 				case 0x0007: // 0x8XY7 : VY - VX with underflow
+					V[0xF] = 0;
+					if (V[X] <= V[Y])
+						V[0xF] = 1;
+
+					V[Y] -= V[X];
 				break;
 
 				case 0x000E: // 0x8XYE : shift VX left one, move bit to VF
@@ -193,7 +203,7 @@ void Chip8::emulateCycle()
 		break;
 
 		case 0xA000: // 0xANNN : sets I to address NNN
-			I = NNN; // get operands from opcode
+			I = NNN;
 		break;
 
 		case 0xB000: // 0xBNNN or 0xBXNN : jumps to NNN/XNN with an offset of V0/VX
@@ -291,7 +301,7 @@ void Chip8::emulateCycle()
 					// 0x50 is the font start
 					// VX & 0xF is the character
 					// 5 bytes per character
-					I = 0x50 + ((VX & 0xF) * 5);
+					I = 0x50 + ((V[X] & 0xF) * 5);
 				break;
 
 				case 0x0033: // 0xFX33 : stores value in VX as BCD

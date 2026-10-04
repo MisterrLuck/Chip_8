@@ -5,6 +5,13 @@
 #include <string>
 using std::string;
 
+#ifdef COSMIC
+
+#endif
+#ifdef SUPER_CHIP
+
+#endif
+
 class Chip8
 {
 public:
@@ -45,7 +52,7 @@ public:
 	
 	// TODO: Perhaps change this to a set of ints to pack, or even bools for easier use
 	unsigned short gfx[SCREEN_WIDTH * SCREEN_HEIGHT];		// Display in monochrome; ie black and white
-private:
+// private:
 
 	unsigned short opcode;			// The current opcode
 
@@ -54,7 +61,6 @@ private:
 
 	unsigned char V[16];			// The registers: VF isn't recommended for use, as it is also a flag
 	
-
 	unsigned short stack[16];		// Stack; only for returning from subroutines; limited to 16 2-byte entries
 	unsigned short sp;				// Stack pointer
 
@@ -140,9 +146,9 @@ private:
 // [X]	8XY2		Set VX to VX AND VY
 // [X]	8XY3		Set VX to VX XOR VY
 // [X]	8XY4		Add the value of register VY to register VX. Set VF to 01 if a carry occurs. Set VF to 00 if a carry does not occur
-// [ ]	8XY5		Subtract the value of register VY from register VX. Set VF to 00 if a borrow occurs. Set VF to 01 if a borrow does not occur
+// [X]	8XY5		Subtract the value of register VY from register VX. Set VF to 00 if a borrow occurs. Set VF to 01 if a borrow does not occur
 // [X]	8XY6		Store the value of register VY shifted right one bit in register VX. Set register VF to the least significant bit prior to the shift. VY is unchanged
-// [ ]	8XY7		Set register VX to the value of VY minus VX. Set VF to 00 if a borrow occurs. Set VF to 01 if a borrow does not occur
+// [X]	8XY7		Set register VX to the value of VY minus VX. Set VF to 00 if a borrow occurs. Set VF to 01 if a borrow does not occur
 // [X]	8XYE		Store the value of register VY shifted left one bit in register VX Set register VF to the most significant bit prior to the shift VY is unchanged
 // [X]	9XY0		Skip the following instruction if the value of register VX is not equal to the value of register VY
 // [X]	ANNN		Store memory address NNN in register I
