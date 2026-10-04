@@ -14,7 +14,7 @@ add_compile_definitions(MACRO_NAME)
 
 ## All Configuration Options
 
-Here is a list of all the possible macro names, the instruction it affects, and how they act when defined vs not defined.
+Here is a list of all the possible settings changes.
 
 
 | Macro | Instruction | Defined | Not Defined |
@@ -23,6 +23,9 @@ Here is a list of all the possible macro names, the instruction it affects, and 
 | JUMP_OFFSET | BNNN | The address offset will be in V0 | The address offset will be in `VX` (BXNN) |
 | FX1E_OVERFLOW | FX1E | `VF` will not change with overflow | `VF` will change with overflow |
 | REG_MEMORY_INDEX | FX55, FX65 | Index will update to `I + X + 1` by the end | Index will not change |
+
+
+When defined, the setting will be the original implementation. When not defined, the setting will be the newer implementation, usually from the CHIP-48 or SUPER-CHIP.
 
 
 ## Recomended Settings
