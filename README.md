@@ -87,7 +87,8 @@ It is in very early stages.
 
 ## Thanks
 
-Thanks to Tobias V. I. Langhoff and his [blog post](https://tobiasvl.github.io/blog/write-a-chip-8-emulator/) on making a Chip 8 emulator
+Thanks to Tobias V. I. Langhoff and his [blog post](https://tobiasvl.github.io/blog/write-a-chip-8-emulator/) on making a Chip 8 emulator.
+
 Thanks to cj1128 on github for his [BC_test rom](https://github.com/cj1128/chip8-emulator/blob/master/rom/BC_test.ch8) which helped debugging.
 
 

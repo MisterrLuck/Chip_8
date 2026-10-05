@@ -17,7 +17,7 @@ add_compile_definitions(MACRO_NAME)
 Here is a list of all the possible settings changes.
 
 
-| Macro | Instruction | Defined | Not Defined |
+| Macro | Instruction | Defined (Old) | Not Defined (New) |
 |-------|-------------|---------|-------------|
 | SHIFT | 8XY6, 8XYE | `VX = VY >> 1`, `VX = VY << 1` | `VX = VX >> 1`, `VX = VX << 1` |
 | JUMP_OFFSET | BNNN | The address offset will be in V0 | The address offset will be in `VX` (BXNN) |
@@ -38,8 +38,6 @@ More information on the different version of Chip 8 can be found [here](https://
 ## Notes
 
 Most of these changes were changed with the CHIP-48 and the SUPER-CHIP.
-
-Defining the macros will default the setting to its original implementation.
 
 
 ## Contributing
