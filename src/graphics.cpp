@@ -8,10 +8,10 @@ Graphics::~Graphics()
     CloseWindow();
 }
 
-void Graphics::init(unsigned int pixel_scale, Color off_color, Color on_color)
+void Graphics::init(unsigned int pixel_scale, Color off, Color on)
 {
-	off = off_color;
-	on = on_color;
+	off_color = off;
+	on_color = on;
 
 	if (pixel_scale <= 0)
 		pixel_scale = 20;
@@ -26,7 +26,7 @@ void Graphics::updateFrame(unsigned short *gfx)
 {
 	BeginDrawing();
 
-		ClearBackground(BLACK);
+		ClearBackground(off_color);
 
 		for (size_t x = 0; x < SCREEN_WIDTH; x++)
 		{
@@ -39,7 +39,7 @@ void Graphics::updateFrame(unsigned short *gfx)
 				{
 					Vector2 pos = {(float) (x * scale), (float) (y * scale)};
 
-					DrawRectangleV(pos, {(float) scale, (float) scale}, WHITE);
+					DrawRectangleV(pos, {(float) scale, (float) scale}, on_color);
 				}
 			}
 		}

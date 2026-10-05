@@ -10,6 +10,7 @@
 #include <fstream>
 #include <iterator>
 #include <vector>
+#include <cmath>
 
 // using namespace std;
 using std::cout, std::endl;
@@ -51,46 +52,25 @@ void Chip8::emulateCycle()
 {
 	// TODO: Add reset button to reset the program as it never ends
 	// TODO: Also a stop button obv
-	// NOTE: Steps of the program
-	// Fetch the current command
-	// Decode to find out what to do
-	// Execute the instruction
 	
 	// NOTE: Timing can vary; standard speed is 700 instructions per second
+	// TODO: Slow down timing to 700 ins/sec
 
 	// NOTE: memory[pc, pc+1] = 0xA520 : (0xA5 << 8) | 0x20 = 0xA520
 	opcode = memory[pc] << 8 | memory[pc + 1];
 
-	// Define them ahead of time in case the opcode uses them
-	// Look up value in register
 	int X = (opcode >> 8) & 0xF;
 	int Y = (opcode >> 4) & 0xF;
-
-	// Hardcoded values
-	// NOTE: Should they be proper datatypes instead of ints ?
 	int N    = opcode & 0x000F;
 	int NN   = opcode & 0x00FF;
 	int NNN  = opcode & 0x0FFF;
 
 	draw_flag = false;
-	// Some instructions (like jump) don't want to inc the pc after executing
 	bool inc_pc = true;
 
-	// HACK: This is temporary and shouldn't stay. IDK how to yet
-	if (delay_timer > 0)
-		delay_timer--;
-
-	if (sound_timer > 0)
-	{
-		cout << "\a"; // Beeping while its above 0
-		sound_timer--;
-	}
-
-
-	// get most significant byte : 0x(A)520
 	switch (opcode & 0xF000)
 	{
-		case 0x0000: // if the most significant isn't enough
+		case 0x0000:
 			switch (opcode & 0x0FFF)
 			{
 				case 0x00E0: // 0x00E0: Clears screen
@@ -166,7 +146,6 @@ void Chip8::emulateCycle()
 					V[X] += V[Y];
 				break;
 
-				// TODO: Figure out what underflow is and how to do it
 				case 0x0005: // 0x8XY5 : VX - VY with underflow
 					V[0xF] = 0;
 					if (V[X] >= V[Y])
@@ -258,9 +237,7 @@ void Chip8::emulateCycle()
 
 					// Get the bits from left to right
 					int pixel = (byte >> (7 - bit_ind)) & 0b1;
-
 					size_t ind = (SCREEN_WIDTH * (y + row)) + (x + bit_ind);
-					// cout << "i: " << ind << " | N: " << N << " | x: " << x+bit_ind << " | y: " << y+row << "\n";
 
 					// WARNING: Idk if this can cause problems
 					// If the bit has flipped; ie both values are 1
@@ -356,9 +333,6 @@ void Chip8::emulateCycle()
 				break;
 			}
 		break;
-
-		default:
-			cout << "Unknown opcode: " << opcode << endl;
 	}
 
 #ifdef DEBUG
@@ -375,6 +349,21 @@ void Chip8::clearScreen()
 	{
 		gfx[ind] = 0;
 	}
+}
+
+void Chip8::updateTimers(int time_per_tick, int time_passed)
+{
+	int time = time_passed + leftover_time;
+	// If enough for one clock tick has passed
+	int subtraction_amount = (int) (time / time_per_tick);
+	leftover_time = time % time_per_tick;
+
+	cout << "sub: " << subtraction_amount << "\n";
+	cout << "left: " << leftover_time << "\n";
+	cout << "time: " << static_cast<int>(delay_timer) << "\n";
+
+	delay_timer = std::max(0, delay_timer - subtraction_amount);
+	sound_timer = std::max(0, sound_timer - subtraction_amount);
 }
 
 // HACK: This will keep a queue of pressed keys I think

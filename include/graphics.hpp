@@ -4,7 +4,7 @@
 class Graphics
 {
 public:
-	void init(unsigned int scale = 20, Color off_color=BLACK, Color on_color=WHITE);
+	void init(unsigned int scale = 20, Color off=BLACK, Color on=WHITE);
 
 	void updateFrame(unsigned short *gfx);
 	void drawPixel(int x, int y);
@@ -13,5 +13,5 @@ public:
 
 private:
 	int scale;
-	Color on, off;
+	Color on_color, off_color;
 };

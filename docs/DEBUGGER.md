@@ -29,7 +29,3 @@ You can only enter one character for commands.
 | c | continue the program to the end |
 | e | exit the program | 
 
-
-## Issues
-
-This isn't complete and might not work well with the timers, as they will still run while the program is stopped. 

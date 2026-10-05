@@ -34,6 +34,8 @@ public:
 	int keyPressed();
 	int keyFromInt(char val);
 
+	void updateTimers(int time_per_tick, int time_passed);
+
 
 	unsigned short opcode;
 
@@ -53,6 +55,9 @@ public:
 	// TODO: They should run in a separate thread as to be accurate
 	unsigned char delay_timer;
 	unsigned char sound_timer;
+
+	// For the leftover timer microseconds for the next frame
+	int leftover_time;
 
 	unsigned char chip8_fontset[80] =
 	{
