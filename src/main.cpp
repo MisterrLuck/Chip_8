@@ -47,6 +47,7 @@ int main(int argc, char *argv[])
 	{
 		chip8.emulateCycle();
 		
+		PollInputEvents();
 		if (chip8.draw_flag)
 			graphics.updateFrame(chip8.gfx);
 

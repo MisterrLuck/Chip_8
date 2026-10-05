@@ -32,6 +32,7 @@ public:
 
 	void clearScreen();
 
+	int keyPressed();
 	int keyFromInt(char val);
 
 
@@ -149,10 +150,10 @@ public:
 // [X]	BNNN		Jump to address NNN + V0
 // [X]	CXNN		Set VX to a random number with a mask of NN
 // [X]	DXYN		Draw a sprite at position VX, VY with N bytes of sprite data starting at the address stored in I. Set VF to 01 if any set pixels are changed to unset, and 00 otherwise. Sprites are drawn as an XOR where it will flip the bit if the sprite has a one.
-// [ ]	EX9E		Skip the following instruction if the key corresponding to the hex value currently stored in register VX is pressed
-// [ ]	EXA1		Skip the following instruction if the key corresponding to the hex value currently stored in register VX is not pressed
+// [X]	EX9E		Skip the following instruction if the key corresponding to the hex value currently stored in register VX is pressed
+// [X]	EXA1		Skip the following instruction if the key corresponding to the hex value currently stored in register VX is not pressed
 // [X]	FX07		Store the current value of the delay timer in register VX
-// [ ]	FX0A		Wait for a keypress and store the result in register VX
+// [X]	FX0A		Wait for a keypress and store the result in register VX
 // [X]	FX15		Set the delay timer to the value of register VX
 // [X]	FX18		Set the sound timer to the value of register VX
 // [X]	FX1E		Add the value stored in register VX to register I

@@ -279,12 +279,12 @@ void Chip8::emulateCycle()
 			{
 				case 0x009E: // EX9E : skips next instruction if key in VX is pressed
 					// TODO: Improve this somehow I don't like this method
-					if (IsKeyPressed(keyFromInt(V[X])))
+					if (IsKeyDown(keyFromInt(V[X])))
 						pc += 2;
 				break;
 
 				case 0x00A1: // EXA1 : skips next instruction if key in VX is not pressed
-					if (!IsKeyPressed(keyFromInt(V[X])))
+					if (!IsKeyDown(keyFromInt(V[X])))
 						pc += 2;
 				break;
 			}
@@ -298,8 +298,14 @@ void Chip8::emulateCycle()
 				break;
 
 				case 0x000A: // 0xFX0A : Wait until key is pressed
-					if (!IsKeyDown(keyFromInt(V[X])))
+				{
+					int key = keyPressed();
+					// cout << "Key: " << key << "\n";
+					if (key != -1)
+						V[X] = key;
+					else
 						inc_pc = false; // wont increment instruction until its pressed
+				}
 				break;
 
 				case 0x0015: // 0xFX15 : Set value of delay timer to VX
@@ -369,6 +375,25 @@ void Chip8::clearScreen()
 	{
 		gfx[ind] = 0;
 	}
+}
+
+// HACK: This will keep a queue of pressed keys I think
+int Chip8::keyPressed()
+{
+	int key = GetKeyPressed();
+
+	while (key != 0)
+	{
+		// If the key pressed is one from our list
+		for (size_t val = 0; val <= 0xF; val++)
+		{
+			if (key == keyFromInt(val))
+				return val;
+		}
+		key = GetKeyPressed();
+	}
+
+	return -1;
 }
 
 int Chip8::keyFromInt(char val)
