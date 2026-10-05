@@ -1,18 +1,17 @@
 #pragma once
-// #include <GLFW/glfw3.h>
 #include "raylib.h"
 
 class Graphics
 {
 public:
-	bool init(unsigned int scale = 20);
+	void init(unsigned int scale = 20, Color off_color=BLACK, Color on_color=WHITE);
 
-	bool updateFrame(unsigned short *gfx);
+	void updateFrame(unsigned short *gfx);
 	void drawPixel(int x, int y);
 
 	~Graphics();
 
 private:
-	bool open = false;
 	int scale;
+	Color on, off;
 };

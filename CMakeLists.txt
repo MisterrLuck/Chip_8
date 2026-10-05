@@ -7,9 +7,10 @@ include_directories(include/)
 
 # Configurations
 add_compile_definitions(SUPER_CHIP)
+# add_compile_definitions(COSMIC)
+
 
 set(CMAKE_CXX_STANDARD 20)
-
 
 add_executable(Chip_8 src/main.cpp
         src/chip8.cpp

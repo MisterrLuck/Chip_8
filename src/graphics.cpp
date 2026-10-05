@@ -8,8 +8,11 @@ Graphics::~Graphics()
     CloseWindow();
 }
 
-bool Graphics::init(unsigned int pixel_scale)
+void Graphics::init(unsigned int pixel_scale, Color off_color, Color on_color)
 {
+	off = off_color;
+	on = on_color;
+
 	if (pixel_scale <= 0)
 		pixel_scale = 20;
 	scale = pixel_scale;
@@ -17,12 +20,9 @@ bool Graphics::init(unsigned int pixel_scale)
     InitWindow(SCREEN_WIDTH * scale, SCREEN_HEIGHT * scale, "Chip 8");
 
     SetTargetFPS(60);
-
-	open = true;
-	return open;
 }
 
-bool Graphics::updateFrame(unsigned short *gfx)
+void Graphics::updateFrame(unsigned short *gfx)
 {
 	BeginDrawing();
 
@@ -45,7 +45,5 @@ bool Graphics::updateFrame(unsigned short *gfx)
 		}
 
 	EndDrawing();
-
-	return open;
 }
 

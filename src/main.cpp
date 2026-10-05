@@ -24,12 +24,7 @@ int main(int argc, char *argv[])
 
 	// Initialization
 	chip8.init();
-	
-	if (!graphics.init(20))
-	{
-		cout << "Error with the graphics\n";
-		return -1;
-	}
+	graphics.init(20, ORANGE, MAROON);
 
 	if (argc > 1)
 		chip8.loadProgram(string(argv[1]));
