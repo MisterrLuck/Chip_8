@@ -32,6 +32,8 @@ public:
 
 	void clearScreen();
 
+	int keyFromInt(char val);
+
 
 	// Configurations
 #ifdef SHIFT
@@ -71,21 +73,6 @@ public:
 	unsigned short stack[16];		// Stack; only for returning from subroutines; limited to 16 2-byte entries
 	unsigned short sp;				// Stack pointer
 
-
-	// NOTE: The layout of the keyboard
-	//  1	2	3	C
-	//  4	5	6	D
-	//  7	8	9	E
-	//  A	0	B	F
-
-	//  NOTE: Modern approach to the keyboard
-	//  1	2	3	4
-	//  Q	W	E	R
-	//  A	S	D	F
-	//  Z	X	C	V
-
-	//  I kinda don't get this fully
-	unsigned char key[16];			// The hex based keyboard
 
 	// NOTE: These are technically 16 bits but are used as 12 bits ?
 	unsigned short I;				// Index register used to point at locations in memory

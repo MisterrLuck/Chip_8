@@ -6,6 +6,7 @@ A Chip 8 emulator written in C++ with the Raylib graphics library.
 
 - [Specs](#specs)
 - [Configuration](#configuration)
+- [Requirements](#requirements)
 - [Usage](#usage)
 - [Programs](#programs)
     - [Creating Programs](#creating-programs)
@@ -16,7 +17,9 @@ A Chip 8 emulator written in C++ with the Raylib graphics library.
 
 ## Specs
 
+Memory -> 4096 Bytes
 
+opcode -> 2 Bytes
 
 
 ## Configuration
@@ -28,6 +31,13 @@ add_compile_definitions(SUPER_CHIP) # Changes to the SUPER-CHIP version of Chip 
 ```
 
 [Here](docs/CONFIG.md) is the full list of what each change does.
+
+
+## Requirements
+
+- cmake
+- g++
+- [raylib](https://github.com/raysan5/raylib#build-and-installation)
 
 
 ## Usage
@@ -78,6 +88,10 @@ Thanks to cj1128 on github for his [BC_test rom](https://github.com/cj1128/chip8
 
 ## Whats Next
 
- - I want to improve the debugger to maybe add breakpoints and have a separate window running at once, inspired by [massung](https://github.com/massung/CHIP-8) or [Austin Morlan](https://code.austinmorlan.com/austin/2019-chip8-emulator). This would mean moving away from raylib which would suck, because raylib doesn't support multiple windows.
- - I also want to create an assembler which was also inspired by [massung](https://github.com/massung/CHIP-8).
- - I want to improve the overall experience, with easier changing between instruction sets, without rebuilding the whole program
+Some things I want to add in the future
+
+ - Improve the debugger to maybe add breakpoints and have a separate window running at once, inspired by [massung](https://github.com/massung/CHIP-8) or [Austin Morlan](https://code.austinmorlan.com/austin/2019-chip8-emulator). This would mean moving away from raylib which would suck, because raylib doesn't support multiple windows.
+ - Create an assembler which was also inspired by [massung](https://github.com/massung/CHIP-8).
+ - Improve the overall experience, with easier changing between instruction sets, without rebuilding the whole program
+ - Add proper [SUPER-CHIP](https://johnearnest.github.io/Octo/docs/SuperChip.html) support with the larger screen and extra instructions, instead of just the inconsistencies in existing instructions
+ - Maybe even adding [XO-CHIP](https://johnearnest.github.io/Octo/docs/XO-ChipSpecification.html) functionality

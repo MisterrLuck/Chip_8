@@ -1,4 +1,5 @@
 #include "chip8.hpp"
+#include "raylib.h"
 
 #include <cstdio>
 #include <cstdint>
@@ -81,9 +82,8 @@ void Chip8::emulateCycle()
 
 	if (sound_timer > 0)
 	{
+		cout << "\a"; // Beeping while its above 0
 		sound_timer--;
-		if (sound_timer == 0)
-			cout << "\a";
 	}
 
 
@@ -278,8 +278,14 @@ void Chip8::emulateCycle()
 			switch (opcode & 0x00FF)
 			{
 				case 0x009E: // EX9E : skips next instruction if key in VX is pressed
-					// if (key[V[X]] != 0)
-					// 	pc += 2;
+					// TODO: Improve this somehow I don't like this method
+					if (IsKeyPressed(keyFromInt(V[X])))
+						pc += 2;
+				break;
+
+				case 0x00A1: // EXA1 : skips next instruction if key in VX is not pressed
+					if (!IsKeyPressed(keyFromInt(V[X])))
+						pc += 2;
 				break;
 			}
 		break;
@@ -289,6 +295,11 @@ void Chip8::emulateCycle()
 			{
 				case 0x0007: // 0xFX07 : Store value of delay timer in VX
 					V[X] = delay_timer;
+				break;
+
+				case 0x000A: // 0xFX0A : Wait until key is pressed
+					if (!IsKeyDown(keyFromInt(V[X])))
+						inc_pc = false; // wont increment instruction until its pressed
 				break;
 
 				case 0x0015: // 0xFX15 : Set value of delay timer to VX
@@ -358,6 +369,82 @@ void Chip8::clearScreen()
 	{
 		gfx[ind] = 0;
 	}
+}
+
+int Chip8::keyFromInt(char val)
+{
+	val = val & 0xF;
+	switch(val)
+	{
+		// Row 1
+		case 1:
+			return KEY_ONE;
+		break;
+
+		case 2:
+			return KEY_TWO;
+		break;
+
+		case 3:
+			return KEY_THREE;
+		break;
+
+		case 0xc:
+			return KEY_FOUR;
+		break;
+
+		// Row 2
+		case 4:
+			return KEY_Q;
+		break;
+
+		case 5:
+			return KEY_W;
+		break;
+
+		case 6:
+			return KEY_E;
+		break;
+
+		case 0xd:
+			return KEY_R;
+		break;
+
+		// Row 3
+		case 7:
+			return KEY_A;
+		break;
+
+		case 8:
+			return KEY_S;
+		break;
+
+		case 9:
+			return KEY_D;
+		break;
+
+		case 0xe:
+			return KEY_F;
+		break;
+
+		// Row 4
+		case 0xa:
+			return KEY_Z;
+		break;
+
+		case 0:
+			return KEY_X;
+		break;
+
+		case 0xb:
+			return KEY_C;
+		break;
+
+		case 0xf:
+			return KEY_V;
+		break;
+	}
+	return KEY_NULL;
 }
 
 void Chip8::loadProgram(string program)
