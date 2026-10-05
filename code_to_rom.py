@@ -6,6 +6,13 @@ print("Welcome to the Code To ROM Helper!")
 if len(sys.argv) > 2:
     inp_file = sys.argv[1]
     out_file = sys.argv[2]
+elif len(sys.argv) == 2:
+    inp_file = sys.argv[1]
+    print(inp_file)
+    if inp_file[-4:] == ".txt":
+        out_file = inp_file[:-4] + ".ch8"
+    else:
+        out_file = inp_file + ".ch8"
 
 else:
     print("\nEnter your filename")

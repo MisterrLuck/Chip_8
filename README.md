@@ -69,6 +69,11 @@ If you want to make it easier to recompile you programs quickly, use the command
 python code_to_rom.py input_file.txt output_file.ch8
 ```
 
+Or even better, if you want them to have the same name just do the input file
+```bash
+python code_to_rom.py myRom.txt
+```
+
 This python program will also allow for comments with `#`
 
 
