@@ -15,7 +15,9 @@ using std::cout, std::string, std::cin;
 int main(int argc, char *argv[])
 {
 	// Get rid of raylib output
+#ifndef DEBUGGER
 	SetTraceLogLevel(LOG_ERROR); 
+#endif
 
 	Chip8 chip8;
 	Graphics graphics;
@@ -29,19 +31,18 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	// chip8.loadProgram("../roms/IBM_logo.ch8");
-	// chip8.loadProgram("../roms/debug.ch8");
-	// chip8.loadProgram("../roms/octo.ch8");
-	// chip8.loadProgram("../roms/octojam3title.ch8");
 	if (argc > 1)
 		chip8.loadProgram(string(argv[1]));
 	else
-		chip8.loadProgram("../roms/IBM_logo.ch8");
+	{
+		cout << "No program provided\n";
+		return -1;
+	}
 
 #ifdef DEBUGGER
 	bool debugging = true;
 #endif
-
+	
 	while (!WindowShouldClose())
 	{
 		chip8.emulateCycle();
@@ -49,7 +50,7 @@ int main(int argc, char *argv[])
 		if (chip8.draw_flag)
 			graphics.updateFrame(chip8.gfx);
 
-// Slow down per instruction and allow for printing of memory and registers
+// Custom one by one debugger
 #ifdef DEBUGGER
 		if (!debugging)
 			continue;
@@ -100,6 +101,7 @@ int main(int argc, char *argv[])
 
 				case 'c':
 					debugging = false;
+					loop = false;
 				break;
 
 				case 'e':

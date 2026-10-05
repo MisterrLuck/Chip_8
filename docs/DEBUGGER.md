@@ -26,6 +26,7 @@ You can only enter one character for commands.
 | i | print index |
 | d | print delay timer |
 | s | print sound timer |
+| c | continue the program to the end |
 | e | exit the program | 
 
 

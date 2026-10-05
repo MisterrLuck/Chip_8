@@ -10,7 +10,8 @@
 #include <iterator>
 #include <vector>
 
-using namespace std;
+// using namespace std;
+using std::cout, std::endl;
 
 void Chip8::init()
 {
@@ -77,6 +78,14 @@ void Chip8::emulateCycle()
 	// HACK: This is temporary and shouldn't stay. IDK how to yet
 	if (delay_timer > 0)
 		delay_timer--;
+
+	if (sound_timer > 0)
+	{
+		sound_timer--;
+		if (sound_timer == 0)
+			cout << "\a";
+	}
+
 
 	// get most significant byte : 0x(A)520
 	switch (opcode & 0xF000)
