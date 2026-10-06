@@ -16,15 +16,19 @@ add_executable(Chip_8 src/main.cpp
         src/chip8.cpp
 		src/graphics.cpp
         include/chip8.hpp
-		include/graphics.hpp)
+		include/graphics.hpp
+	)
 
 target_link_libraries(Chip_8 raylib)
 
 add_executable(Debug_Chip_8 src/main.cpp
         src/chip8.cpp
 		src/graphics.cpp
+		src/debugger.cpp
         include/chip8.hpp
-		include/graphics.hpp)
+		include/graphics.hpp
+		include/debugger.hpp
+	)
 
 target_link_libraries(Debug_Chip_8 raylib)
 

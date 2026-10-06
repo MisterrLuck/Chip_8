@@ -9,19 +9,28 @@ using std::format;
 #endif
 
 #include "graphics.hpp"
+<<<<<<< Updated upstream
 #include "chip8.hpp"
 using std::cout, std::string, std::cin;
+=======
+#include "debugger.hpp"
+using std::cout, std::string, std::cerr;
+>>>>>>> Stashed changes
 
 
 int main(int argc, char *argv[])
 {
-	// Get rid of raylib output
-#ifndef DEBUGGER
-	SetTraceLogLevel(LOG_ERROR); 
-#endif
 
 	Chip8 chip8;
 	Graphics graphics;
+	
+#ifndef DEBUGGER
+	// Get rid of raylib output
+	SetTraceLogLevel(LOG_ERROR); 
+
+	Debugger debugger;
+	debugger.init(&chip8);
+#endif
 	
 	const int INST_PER_SECOND = 700;
 	const int MICROSECONDS_PER_INST = 1000000 / INST_PER_SECOND;
@@ -41,10 +50,6 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-#ifdef DEBUGGER
-	bool debugging = true;
-#endif
-	
 	while (!WindowShouldClose())
 	{
 		// pythons time.time()
@@ -72,66 +77,9 @@ int main(int argc, char *argv[])
 
 		// cout << remaining_inst_time << "\n";
 
-// Custom one by one debugger
+// Custom debugger
 #ifdef DEBUGGER
-		if (!debugging)
-			continue;
-
-		bool loop = true;
-		while (loop)
-		{
-			char command;
-			cout << ">>";
-			cin >> command;
-
-			switch (command)
-			{
-				case 'n':
-					loop = false;
-				break;
-
-				case 'l':
-					cout << format("Last Opcode: 0x{:x}", chip8.opcode) << "\n";
-				break;
-
-				case 'o':
-					cout << format("Next Opcode: 0x{:x}", chip8.memory[chip8.pc] << 8 | chip8.memory[chip8.pc + 1]) << "\n";
-				break;
-
-				case 'v': // Registers
-					for (size_t ind = 0; ind <= 0xF; ind++)
-					{
-						cout << format("V{:x}: {:d}", ind, chip8.V[ind]) << "\n";
-					}
-				break;
-
-				// case 'm': // Memory
-				// 	cout << chip8.opcode << "\n";
-				// break;
-
-				case 'i':
-					cout << format("Index Register: 0x{:x}", chip8.I) << "\n";
-				break;
-
-				case 'd':
-					cout << format("Delay Timer: {:d}", chip8.delay_timer) << "\n";
-				break;
-
-				case 's':
-					cout << format("Sound Timer: {:d}", chip8.sound_timer) << "\n";
-				break;
-
-				case 'c':
-					debugging = false;
-					loop = false;
-				break;
-
-				case 'e':
-					return 0;
-				break;
-			}
-			cout << "\n";
-		}
+		Debugger.prompt();
 #endif
 	}
 	
