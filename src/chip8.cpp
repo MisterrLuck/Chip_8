@@ -461,9 +461,14 @@ int Chip8::keyFromInt(char val)
 	return KEY_NULL;
 }
 
-void Chip8::loadProgram(string program)
+bool Chip8::loadProgram(string program)
 {
 	std::ifstream input(program, std::ios::binary);
+	if (!input.is_open())
+	{
+		std::cerr << "Unable to find program\n";
+		return false;
+	}
 
 	std::vector<unsigned char> bytes(
 		(std::istreambuf_iterator<char>(input)),
@@ -475,4 +480,6 @@ void Chip8::loadProgram(string program)
 	{
 		memory[ind + 0x200] = bytes[ind];
 	}
+
+	return true;
 }

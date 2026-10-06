@@ -24,7 +24,7 @@ class Chip8
 public:
 	bool draw_flag = false;
 
-	void loadProgram(string program);
+	bool loadProgram(string program);
 
 	void init();
 	void emulateCycle();

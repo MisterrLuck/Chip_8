@@ -8,9 +8,9 @@
 using std::format;
 #endif
 
-#include "graphics.hpp"
 #include "chip8.hpp"
-using std::cout, std::string, std::cin;
+#include "graphics.hpp"
+using std::cout, std::string, std::cerr;
 
 
 int main(int argc, char *argv[])
@@ -34,10 +34,17 @@ int main(int argc, char *argv[])
 	graphics.init(20, ORANGE, MAROON);
 
 	if (argc > 1)
-		chip8.loadProgram(string(argv[1]));
+	{
+		// If it fails
+		if (!chip8.loadProgram(string(argv[1])));
+		{
+			cerr << "Could not load program\n";
+			return -1;
+		}
+	}
 	else
 	{
-		cout << "No program provided\n";
+		cerr << "No program provided\n";
 		return -1;
 	}
 
