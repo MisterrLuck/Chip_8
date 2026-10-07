@@ -30,10 +30,12 @@ private:
 	// TODO: Store the program directly instead of grabbing from memory?
 	// so that it can run seperately from the debugger
 	void disassemble();
+	
 	// My searching algorithm idea
 	// NOTE: Maybe needs a better name
 	void locationBranch();
-	void remainingLocations();
+	void getDataLocations();
+
 	void printProgram();
 	void getProgramEnd();
 };

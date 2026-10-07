@@ -357,16 +357,14 @@ void Chip8::clearScreen()
 	}
 }
 
+// WARNING: I think there might be issues with leftover time if the counter is at 0, 
+// and there is still leftover that doesn't make sense
 void Chip8::updateTimers(int time_per_tick, int time_passed)
 {
 	int time = time_passed + leftover_time;
 	// If enough for one clock tick has passed
 	int subtraction_amount = (int) (time / time_per_tick);
 	leftover_time = time % time_per_tick;
-
-	cout << "sub: " << subtraction_amount << "\n";
-	cout << "left: " << leftover_time << "\n";
-	cout << "time: " << static_cast<int>(delay_timer) << "\n";
 
 	delay_timer = std::max(0, delay_timer - subtraction_amount);
 	sound_timer = std::max(0, sound_timer - subtraction_amount);

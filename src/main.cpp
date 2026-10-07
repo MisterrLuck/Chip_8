@@ -18,10 +18,10 @@ int main(int argc, char *argv[])
 	Chip8 chip8;
 	Graphics graphics;
 	
-#ifndef DEBUGGER
+// #ifndef DEBUGGER
 	// Get rid of raylib output
 	SetTraceLogLevel(LOG_ERROR); 
-#endif
+// #endif
 	
 	const int INST_PER_SECOND = 700; // 700 instructions per second
 	const int MICROSECONDS_PER_INST = 1000000 / INST_PER_SECOND;

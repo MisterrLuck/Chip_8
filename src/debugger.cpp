@@ -84,16 +84,6 @@ void Debugger::disassemble()
 
 void Debugger::locationBranch()
 {
-	// Do a loose branching of the program
-	//  to be able to tell whats sprite data and whats not
-
-	// Each opcode only has 1-2 options of a location
-	//  most locations will be the address right after
-	//  but jumps will have a different location
-	//  and skips will have the extra possible address; hence branching
-
-	// Any opcode not run has to be sprite data
-
 	vector<unsigned short> unvisited_locations = { 0x200 };
 	
 	// Local lambda function
@@ -102,7 +92,7 @@ void Debugger::locationBranch()
 		{
 			if (std::find(locations.begin(), locations.end(), address) == locations.end())
 			{
-				cout << format("Adding 0x{:x}\n", address);
+				// cout << format("Adding 0x{:x}\n", address);
 				unvisited_locations.push_back(address);
 			}
 		}
@@ -111,12 +101,10 @@ void Debugger::locationBranch()
 	// As long as there are locations to visit
 	while (unvisited_locations.size() > 0)
 	{
-		unsigned short curr_loc = unvisited_locations[0];
+		unsigned short curr_address = unvisited_locations[0];
 
-		// Add new locations based on the opcode at this location
-		// Make sure to check if its already in the locations vector
-		int opcode = chip8->getOpcode(curr_loc);
-		cout << format("Opcode: 0x{:x}\n", opcode);
+		int opcode = chip8->getOpcode(curr_address);
+		// cout << format("Opcode: 0x{:x}\n", opcode);
 
 		// HACK: This might not be good
 		if (opcode != 0)
@@ -130,8 +118,8 @@ void Debugger::locationBranch()
 				case 0x9000:
 				case 0xE000: // Two instructions are both skips
 					// Next and one after
-					addUnvisited(curr_loc + 2);
-					addUnvisited(curr_loc + 4);
+					addUnvisited(curr_address + 2);
+					addUnvisited(curr_address + 4);
 				break;
 
 				case 0x1000: // Jump
@@ -140,7 +128,7 @@ void Debugger::locationBranch()
 
 				case 0x2000: // Call subroutine: could be returned from
 					addUnvisited(opcode & 0x0FFF); // Jump location
-					addUnvisited(curr_loc + 2);
+					addUnvisited(curr_address + 2);
 				break;
 
 				case 0xB000: // This doesn't work with this opcode bc it will change
@@ -148,69 +136,62 @@ void Debugger::locationBranch()
 				break;
 
 				default:
-					addUnvisited(curr_loc + 2);
+					addUnvisited(curr_address + 2);
 				break;
 			}
 		}
 
 		// Add current locations to the list, and remove it from unvisited
-		locations.push_back(curr_loc);
+		locations.push_back(curr_address);
 		unvisited_locations.erase(unvisited_locations.begin());
 	}
 
-	cin.ignore();
-
-	for (auto loc : locations)
-	{
-		cout << format("Address: 0x{:x}\n", loc);
-	}
-	cout << "\n";
+	getDataLocations();
 	printProgram();
+
 }
 
 void Debugger::printProgram()
 {
-	int address = 0x200;
-	int opcode = chip8->getOpcode(address);
-	
-	while (address <= program_end)
-	{
-		// Found
-		if (std::find(locations.begin(), locations.end(), address) != locations.end())
-		{
-			cout << format("O{{0x{:04x}}}: 0x{:04x}\n", address, opcode);
-			address += 2;
-		} else
-		{
-			cout << format("D{{0x{:04x}}}: 0x{:02x}\n", address, chip8->memory[address]);
-			address++;
-		}
-		opcode = chip8->getOpcode(address);
-	}
+	cout << "Program:\n";
+	for (auto opcode_address : locations)
+		cout << format("{{0x{:04x}}}: 0x{:04x}\n", opcode_address, chip8->getOpcode(opcode_address));
+
+	cout << "\nData:\n";
+	for (auto data_address : data_locations)
+		cout << format("{{0x{:04x}}}: 0x{:02x}\n", data_address, chip8->memory[data_address]);
 }
 
 void Debugger::getProgramEnd()
 {
 	const int MEMORY_END = 4096;
-	int curr_loc = 0x200;
-	program_end = curr_loc;
+	int curr_address = 0x200;
+	program_end = curr_address;
 
-	while (curr_loc != MEMORY_END)
+	while (curr_address != MEMORY_END)
 	{
-		if (chip8->memory[curr_loc] != 0)
-			program_end = curr_loc;
+		if (chip8->memory[curr_address] != 0)
+			program_end = curr_address;
 
-		curr_loc++;
+		curr_address++;
 	}
 }
 
-void Debugger::remainingLocations()
+void Debugger::getDataLocations()
 {
-	// int end_address = 0x200;
-	// int opcode = chip8->getOpcode(end_address);
-	//
-	// while (opcode != 0)
-	// {
-	//
-	// }
+	int curr_address = 0x200;
+	
+	while (curr_address <= program_end)
+	{
+		// Found
+		if (std::find(locations.begin(), locations.end(), curr_address) != locations.end())
+		{
+			curr_address += 2;
+		} else
+		{
+			data_locations.push_back(curr_address);
+			// cout << format("D{{0x{:04x}}}: 0x{:02x}\n", address, chip8->memory[address]);
+			curr_address++;
+		}
+	}
 }
