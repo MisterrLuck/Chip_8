@@ -153,13 +153,38 @@ void Debugger::locationBranch()
 
 void Debugger::printProgram()
 {
-	cout << "Program:\n";
+	cout << "Program:\n\n";
 	for (auto opcode_address : locations)
-		cout << format("{{0x{:04x}}}: 0x{:04x}\n", opcode_address, chip8->getOpcode(opcode_address));
+		cout << format("{{0x{:04x}}}: {:04X}\n", opcode_address, chip8->getOpcode(opcode_address));
 
 	cout << "\nData:\n";
+	const int COUNT_LIMIT = 32;
+	int current_count = 0;
+	int last_data_address = -1;
+
 	for (auto data_address : data_locations)
-		cout << format("{{0x{:04x}}}: 0x{:02x}\n", data_address, chip8->memory[data_address]);
+	{
+		// Keep the successive sprite data together
+		if (data_address == last_data_address+1)
+		{
+			if (current_count >= COUNT_LIMIT)
+			{
+				current_count = 0;
+				cout << "\n            ";
+			}
+
+			cout << format("{:02x}", chip8->memory[data_address]);
+		}
+		else
+		{
+			current_count = 0;
+			cout << format("\n{{0x{:04x}}}: 0x{:02x}", data_address, chip8->memory[data_address]);
+		}
+
+		current_count++;
+		last_data_address = data_address;
+	}
+	cout << "\n";
 }
 
 void Debugger::getProgramEnd()
