@@ -4,20 +4,19 @@
 #include <algorithm>
 using std::cin, std::cout;
 
+// TODO: Add prompt before the first opcode has run, especially to see if the person wants to run it yet; like in gdb
 void Debugger::init(Chip8* chip)
 {
 	chip8 = chip;
 
 	getProgramEnd();
 	// Add the location branching functions here
+	locationBranch();
 }
 
 
 bool Debugger::prompt()
 {
-	locationBranch();
-	return false;
-
 	while (true)
 	{
 		char command;
@@ -29,6 +28,10 @@ bool Debugger::prompt()
 		// Or even add a test to see if there has been a change which is cheaper
 		switch (command)
 		{
+			case 'p':
+				printProgram();
+			break;
+
 			case 'n':
 				return true;
 			break;
@@ -131,6 +134,7 @@ void Debugger::locationBranch()
 					addUnvisited(curr_address + 2);
 				break;
 
+				// TODO: Find a way for 0xBNNN to work with this algorithm
 				case 0xB000: // This doesn't work with this opcode bc it will change
 
 				break;
@@ -147,8 +151,6 @@ void Debugger::locationBranch()
 	}
 
 	getDataLocations();
-	printProgram();
-
 }
 
 void Debugger::printProgram()

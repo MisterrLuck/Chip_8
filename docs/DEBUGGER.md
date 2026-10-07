@@ -1,15 +1,17 @@
 # Debugger
 
-The custom debugger will allow instructions run one by one.
+This custom debugger allows for viewing code easier, with a distinct separation between opcodes and sprite data.
 
 
 ## Usage
 
-Add this line to the CMakeLists.txt to run the program with the debugger
+By default the CMakeLists file will compile both a debugger and non debugger version of the emulator. Run the debugger version just like you would the normal version.
 
-```CMakeLists.txt
-add_compile_definitions(DEBUGGER)
+```bash
+./Debug_Chip_8 ../roms/myRom.ch8
 ```
+
+It will then prompt you for commands at every instruction.
 
 
 ## List of commands
@@ -19,6 +21,7 @@ You can only enter one character for commands.
 
 | Command | Description | 
 |---------|-------------|
+| p | print out the entire program |
 | n | run the next opcode |
 | l | print opcode that just ran |
 | o | print next opcode |
@@ -29,3 +32,12 @@ You can only enter one character for commands.
 | c | continue the program to the end |
 | e | exit the program | 
 
+
+
+## Specs
+
+The debugger will disassemble the given code to make it easier to debug. It first branches through the program to see which bytes are opcodes, and which is sprite data.
+
+> This may be wrong because of the BNNN instruction, which allows for different jump locations depending on the current state.
+
+It then has a list of locations of the program, and for the data. When printing out the program, it uses these locations for different formatting.
