@@ -4,18 +4,12 @@
 #include <string>
 
 #ifdef DEBUGGER
-#include <format>
-using std::format;
+#include "debugger.hpp"
 #endif
 
-#include "graphics.hpp"
-<<<<<<< Updated upstream
 #include "chip8.hpp"
-using std::cout, std::string, std::cin;
-=======
-#include "debugger.hpp"
+#include "graphics.hpp"
 using std::cout, std::string, std::cerr;
->>>>>>> Stashed changes
 
 
 int main(int argc, char *argv[])
@@ -27,12 +21,9 @@ int main(int argc, char *argv[])
 #ifndef DEBUGGER
 	// Get rid of raylib output
 	SetTraceLogLevel(LOG_ERROR); 
-
-	Debugger debugger;
-	debugger.init(&chip8);
 #endif
 	
-	const int INST_PER_SECOND = 700;
+	const int INST_PER_SECOND = 700; // 700 instructions per second
 	const int MICROSECONDS_PER_INST = 1000000 / INST_PER_SECOND;
 
 	const int CLOCK_TICK_PER_SECOND = 60; // 60 Hz (60 times per second)
@@ -49,6 +40,11 @@ int main(int argc, char *argv[])
 		cout << "No program provided\n";
 		return -1;
 	}
+	
+#ifdef DEBUGGER
+	Debugger debugger;
+	debugger.init(&chip8);
+#endif
 
 	while (!WindowShouldClose())
 	{
@@ -77,9 +73,9 @@ int main(int argc, char *argv[])
 
 		// cout << remaining_inst_time << "\n";
 
-// Custom debugger
 #ifdef DEBUGGER
-		Debugger.prompt();
+		if (!debugger.prompt())
+			return 0;
 #endif
 	}
 	

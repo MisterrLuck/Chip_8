@@ -48,6 +48,12 @@ void Chip8::init()
 		memory[ind + 0x50] = chip8_fontset[ind];
 }
 
+int Chip8::getOpcode(int address) {
+	if (address < 0)
+		return memory[pc] << 8 | memory[pc + 1];
+	return memory[address] << 8 | memory[address + 1];
+}
+
 void Chip8::emulateCycle()
 {
 	// TODO: Add reset button to reset the program as it never ends
@@ -57,7 +63,7 @@ void Chip8::emulateCycle()
 	// TODO: Slow down timing to 700 ins/sec
 
 	// NOTE: memory[pc, pc+1] = 0xA520 : (0xA5 << 8) | 0x20 = 0xA520
-	opcode = memory[pc] << 8 | memory[pc + 1];
+	opcode = getOpcode();
 
 	int X = (opcode >> 8) & 0xF;
 	int Y = (opcode >> 4) & 0xF;

@@ -36,6 +36,8 @@ public:
 
 	void updateTimers(int time_per_tick, int time_passed);
 
+	int getOpcode(int address=-1);
+
 
 	unsigned short opcode;
 
