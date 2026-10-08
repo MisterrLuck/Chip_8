@@ -8,9 +8,8 @@ A Chip 8 emulator written in C++ with the Raylib graphics library.
 - [Configuration](#configuration)
 - [Requirements](#requirements)
 - [Usage](#usage)
-- [Programs](#programs)
-    - [Creating Programs](#creating-programs)
-    - [Debugging Programs](#debugging-programs)
+- [Creating Programs](#creating-programs)
+- [Custom Debugger](#custom-debugger)
 - [Thanks](#thanks)
 - [What's Next](#whats-next)
 
@@ -30,7 +29,7 @@ There are many different versions of the chip 8 emulator. Some have differing in
 add_compile_definitions(SUPER_CHIP) # Changes to the SUPER-CHIP version of Chip 8
 ```
 
-[Here](docs/CONFIG.md) is the full list of what each change does.
+[Here](docs/configuration.md) is the full list of what each change does.
 
 
 ## Requirements
@@ -53,9 +52,7 @@ make
 ```
 
 
-## Programs
-
-### Creating Programs
+## Creating Programs
 
 You can use the `code_to_rom.py` file to convert your code from a text file to a binary format to be run
 
@@ -77,12 +74,10 @@ python code_to_rom.py myRom.txt
 This python program will also allow for comments with `#`
 
 
-### Debugging Programs
+## Custom Debugger
 
-You can also debug your own programs using the custom debugger.
-More information can be found [here](docs/DEBUGGER.md)
-
-It is in very early stages.
+You can also debug programs using the custom debugger.
+More information can be found [here](docs/debugger.md)
 
 
 ## Thanks

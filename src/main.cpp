@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
 		chip8.loadProgram(string(argv[1]));
 	else
 	{
+		// TODO: Include default program to run
 		cout << "No program provided\n";
 		return -1;
 	}
