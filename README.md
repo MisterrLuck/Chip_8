@@ -2,6 +2,8 @@
 
 A Chip 8 emulator written in C++ with the Raylib graphics library.
 
+Aside from the emulator, it currently includes a text to rom converter, to write programs in hexadecimal easily, and also a custom debugger.
+
 ## Table of Contents
 
 - [Specs](#specs)
@@ -16,6 +18,8 @@ A Chip 8 emulator written in C++ with the Raylib graphics library.
 
 ## Specs
 
+WIP
+
 Memory -> 4096 Bytes
 
 opcode -> 2 Bytes
@@ -23,7 +27,7 @@ opcode -> 2 Bytes
 
 ## Configuration
 
-There are many different versions of the chip 8 emulator. Some have differing instruction behaviour. To be able to run as many roms as possible, you can change the configuration in the CMakeLists.txt
+There are many different versions of the chip 8 emulator. Some have differing instruction behaviour. To be able to run as many roms as possible, you can change the configuration in the CMakeLists.txt.
 
 ```cmake
 add_compile_definitions(SUPER_CHIP) # Changes to the SUPER-CHIP version of Chip 8
@@ -41,7 +45,7 @@ add_compile_definitions(SUPER_CHIP) # Changes to the SUPER-CHIP version of Chip 
 
 ## Usage
 
-Building the Chip 8 emulator
+Building the Chip 8 emulator.
 
 ```bash
 mkdir build
@@ -51,33 +55,43 @@ make
 ./Chip_8
 ```
 
+Run the emulator with your desired ROM as an input. If no program is provided, the default program will run.
+
 
 ## Creating Programs
 
-You can use the `code_to_rom.py` file to convert your code from a text file to a binary format to be run
+You can use the `scripts/code_to_rom.py` file to convert your code from text to a binary file, that you can run.
 
 ```bash
 python code_to_rom.py
 ```
 
-If you want to make it easier to recompile you programs quickly, use the command line arguments instead
+If you want to make it easier to recompile you programs quickly, use the command line arguments instead.
 
 ```bash
 python code_to_rom.py input_file.txt output_file.ch8
 ```
 
-Or even better, if you want them to have the same name just do the input file
+Or even better, if you want them to have the same name, just provide the input file.
+
 ```bash
 python code_to_rom.py myRom.txt
 ```
 
-This python program will also allow for comments with `#`
+> This will write to myRom.ch8
+
+The converter also allows you to document your code with comments, using `#`.
 
 
 ## Custom Debugger
 
-You can also debug programs using the custom debugger.
-More information can be found [here](docs/debugger.md)
+You can also debug programs using the custom debugger. In the default Cmake setup, the debugger will be built alongside the normal emulator.
+
+``` bash
+./Debug_Chip_8 myRom.ch8
+```
+
+More information on the debugger can be found [here](docs/debugger.md).
 
 
 ## Thanks
