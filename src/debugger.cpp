@@ -21,6 +21,8 @@ bool Debugger::prompt()
 {
 	if (cont)
 	{
+		// TODO: Add message for which breakpoint hit
+
 		// if pc not in breakpoints
 		auto bp_ind = std::find(breakpoints.begin(), breakpoints.end(), chip8->pc);
 		if (bp_ind == breakpoints.end())
@@ -52,7 +54,7 @@ bool Debugger::prompt()
 
 			case 'l':
 				// cout << format("Last Opcode: 0x{:x}\n", chip8->opcode);
-				printProgram(20, chip8->pc);
+				listProgram(20, chip8->pc);
 			break;
 
 			case 'o':
@@ -73,12 +75,14 @@ bool Debugger::prompt()
 			case 'b':
 			{
 				// NOTE: This wont accept hex
-				int bp_address;
+				string str_address;
 
-				cout << "Break >>";
-				cin >> bp_address;
+				cout << "Break at 0x";
+				cin >> str_address;
 				
-				breakpoints.push_back(bp_address);
+				unsigned int address = std::stoul(str_address, nullptr, 16);
+				
+				breakpoints.push_back(address);
 			}
 			break;
 
@@ -186,7 +190,7 @@ void Debugger::locationBranch()
 	getDataLocations();
 }
 
-void Debugger::printProgram(int lines, int start_address)
+void Debugger::listProgram(int lines, int start_address)
 {
 	start_address = std::max(0x200, start_address);
 	bool started = false;
@@ -205,6 +209,15 @@ void Debugger::printProgram(int lines, int start_address)
 		cout << format("{{0x{:04x}}}: {:04X} : {}\n", opcode_address, chip8->getOpcode(opcode_address), disassembleOpcode(chip8->getOpcode(opcode_address)));
 		line_count++;
 	}
+}
+
+void Debugger::printProgram()
+{
+	cout << "Program:\n\n";
+	for (auto opcode_address : opcode_locations)
+	{
+		cout << format("{{0x{:04x}}}: {:04X} : {}\n", opcode_address, chip8->getOpcode(opcode_address), disassembleOpcode(chip8->getOpcode(opcode_address)));
+	}
 
 	cout << "\nData:\n";
 	const int COUNT_LIMIT = 32;
@@ -213,13 +226,6 @@ void Debugger::printProgram(int lines, int start_address)
 
 	for (auto data_address : data_locations)
 	{
-		if (!started && start_address != data_address)
-			continue;
-		started = true;
-
-		if (line_count >= lines && lines != -1)
-			return;
-
 		// Keep the successive sprite data together
 		if (data_address == last_data_address+1)
 		{
@@ -227,7 +233,6 @@ void Debugger::printProgram(int lines, int start_address)
 			{
 				current_count = 0;
 				cout << "\n            ";
-				line_count++;
 			}
 			cout << format("{:02x}", chip8->memory[data_address]);
 		}

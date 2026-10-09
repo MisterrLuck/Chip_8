@@ -1,4 +1,3 @@
-# TODO: add arguments bc its better
 import sys
 
 print("Welcome to the Code To ROM Helper!")

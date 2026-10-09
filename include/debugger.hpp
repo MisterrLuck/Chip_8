@@ -42,6 +42,9 @@ private:
 	void locationBranch();
 	void getDataLocations();
 
-	void printProgram(int lines=-1, int start_address=0x200);
+	// Only list the program; and more custom
+	void listProgram(int lines=-1, int start_address=0x200);
+	// Prints the whole program and data
+	void printProgram();
 	void getProgramEnd();
 };
