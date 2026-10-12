@@ -19,18 +19,21 @@ It will then prompt you for commands at every instruction.
 You can only enter one character for commands.
 
 
-| Command | Description | 
-|---------|-------------|
-| p | print out the entire program |
-| n | run the next opcode |
-| l | print opcode that just ran |
-| o | print next opcode |
-| v | print registers |
-| i | print index |
-| d | print delay timer |
-| s | print sound timer |
-| c | continue the program to the end |
-| e | exit the program | 
+| Command | Description | Parameter |
+|:-------:|-----------|-------------|
+| d       | Delete a breakpoint                                   | Address to delete in hexadecimal |
+| l       | Print number of instructions from the current address | How many lines to print |
+| b       | Add a breakpoint                                      | Breakpoint address to add |
+| m       | Address in memory to print                            | Print the value in memory at a given address |
+| i       | Print out all current breakpoints                     | None |
+| p       | print out the entire program                          | None |
+| n       |  run the next opcode                                  | None |
+| o       | Print opcode that just ran                            | None |
+| v       | Print all registers (V + I)                           | None |
+| a       | Print current address and current opcode about to run | None |
+| t       | Print both timers                                     | None |
+| c       | Continue the program to the end or until a breakpoint | None |
+| e       | exit the program                                      | None |
 
 
 

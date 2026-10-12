@@ -479,4 +479,6 @@ void Chip8::loadProgram(string program)
 	{
 		memory[ind + 0x200] = bytes[ind];
 	}
+
+	opcode = getOpcode();
 }

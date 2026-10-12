@@ -21,19 +21,21 @@ bool Debugger::prompt()
 {
 	if (cont)
 	{
-		// TODO: Add message for which breakpoint hit
-
 		// if pc not in breakpoints
 		auto bp_ind = std::find(breakpoints.begin(), breakpoints.end(), chip8->pc);
+		// No breakpoint
 		if (bp_ind == breakpoints.end())
 			return true;
+
+		cout << format("Hit breakpoint at address 0x{:04x}\n", *(bp_ind));
+
 		cont = false;
-		// TODO: Get rid of this after testing
-		breakpoints.erase(bp_ind);
 	}
 
 	while (true)
 	{
+		// NOTE: Add breakpoint at 0x4de
+		// Or address 0x508 for key press
 		char command;
 		cout << ">>";
 		cin >> command;
@@ -41,9 +43,32 @@ bool Debugger::prompt()
 		// TODO: Maybe add update location branch command; In case the program updates memory
 		// If it isn't expensive can maybe update it anyway
 		// Or even add a test to see if there has been a change which is cheaper
-		// TODO: Make this better; it sucks rn
 		switch (command)
 		{
+			case 'i': // Show all the breakpoints
+				cout << "Breakpoints:\n\n";
+				for (auto b : breakpoints)
+					cout << format("0x{:04x}\n", b);
+			break;
+
+			case 'd':
+			{
+				string str_address;
+				cin >> str_address;
+				
+				unsigned int address = std::stoul(str_address, nullptr, 16);
+				
+				auto bp_ind = std::find(breakpoints.begin(), breakpoints.end(), address);
+				// Found
+				if (bp_ind != breakpoints.end())
+				{
+					cout << format("Removed breakpoint at address 0x{:04x}\n", address);
+					breakpoints.erase(bp_ind);
+				} else
+					cout << format("Couldn't find breakpoint at address 0x{:04x}\n", address);
+			}
+			break;
+
 			case 'p':
 				printProgram();
 			break;
@@ -53,56 +78,66 @@ bool Debugger::prompt()
 			break;
 
 			case 'l':
-				// cout << format("Last Opcode: 0x{:x}\n", chip8->opcode);
-				listProgram(20, chip8->pc);
+				int num_lines;
+				cin >> num_lines;
+
+				listProgram(num_lines, chip8->pc);
 			break;
 
-			case 'o':
-				cout << format("Next Opcode: 0x{:x}\n", chip8->memory[chip8->pc] << 8 | chip8->memory[chip8->pc + 1]);
+			case 'o': // opcode that just ran
+			{
+				int opcode = chip8->opcode;
+				cout << format("Previous Opcode: 0x{:04X} : {}\n", opcode, disassembleOpcode(opcode));
+			}
 			break;
 
 			case 'v': // Registers
 				for (size_t ind = 0; ind <= 0xF; ind++)
 				{
-					cout << format("V{:x}: {:d}\n", ind, chip8->V[ind]);
+					cout << format("V{:X}: 0x{:x} / {:d}\n", ind, chip8->V[ind], chip8->V[ind]);
 				}
+				cout << format("I : 0x{:x} / {:d}\n", chip8->I, chip8->I);
 			break;
 
-			case 'a':
-				cout << format("Address: 0x{:x}\n", chip8->pc);
+			case 'a': // next opode to run
+			{
+				int opcode = chip8->getOpcode(chip8->pc);
+
+				cout << format("{{0x{:04x}}}: {:04X} : {}\n", chip8->pc, opcode, disassembleOpcode(opcode));
+			}
 			break;
 
 			case 'b':
 			{
-				// NOTE: This wont accept hex
 				string str_address;
-
-				cout << "Break at 0x";
 				cin >> str_address;
 				
 				unsigned int address = std::stoul(str_address, nullptr, 16);
 				
+				cout << format("Break at 0x{:04x}\n", address);
 				breakpoints.push_back(address);
 			}
 			break;
 
-			// case 'm': // Memory
-			// 	cout << chip8.opcode << "\n";
-			// break;
-
-			case 'i':
-				cout << format("Index Register: 0x{:x}\n", chip8->I);
+			case 'm': // Memory
+			{
+				string str_index;
+				cin >> str_index;
+				
+				unsigned int mem_index = std::stoul(str_index, nullptr, 16);
+				
+				if (mem_index >= 4096)
+					cout << "Out of bounds\n";
+				else
+					cout << format("Mem{{0x{:x}}}: {}\n", mem_index, static_cast<unsigned int>(chip8->memory[mem_index]));
+			}
 			break;
 
-			case 'd':
+			case 't':
 				cout << format("Delay Timer: {:d}\n", chip8->delay_timer);
-			break;
-
-			case 's':
 				cout << format("Sound Timer: {:d}\n", chip8->sound_timer);
 			break;
 
-			// TODO: Fix `c` command
 			case 'c':
 				cont = true;
 				return true;
@@ -196,7 +231,6 @@ void Debugger::listProgram(int lines, int start_address)
 	bool started = false;
 	int line_count = 0;
 
-	cout << "Program:\n\n";
 	for (auto opcode_address : opcode_locations)
 	{
 		if (!started && start_address != opcode_address)
@@ -330,7 +364,7 @@ string Debugger::disassembleOpcode(int opcode)
 		break;
 
 		case 0x7000: // 0x7XNN : adds value NN to register VX
-			return format("ADD V{:X}, NN", X, NN);
+			return format("ADD V{:X}, {:x}", X, NN);
 		break;
 
 		case 0x8000:

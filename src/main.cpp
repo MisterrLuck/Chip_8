@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
 #ifdef DEBUGGER
 	Debugger debugger;
 	debugger.init(&chip8);
+	debugger.prompt();
 #endif
 
 	while (!WindowShouldClose())
