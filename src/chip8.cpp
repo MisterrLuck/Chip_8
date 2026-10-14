@@ -48,6 +48,12 @@ void Chip8::init()
 		memory[ind + 0x50] = chip8_fontset[ind];
 }
 
+int Chip8::getOpcode(int address) {
+	if (address < 0)
+		return memory[pc] << 8 | memory[pc + 1];
+	return memory[address] << 8 | memory[address + 1];
+}
+
 void Chip8::emulateCycle()
 {
 	// TODO: Add reset button to reset the program as it never ends
@@ -57,7 +63,7 @@ void Chip8::emulateCycle()
 	// TODO: Slow down timing to 700 ins/sec
 
 	// NOTE: memory[pc, pc+1] = 0xA520 : (0xA5 << 8) | 0x20 = 0xA520
-	opcode = memory[pc] << 8 | memory[pc + 1];
+	opcode = getOpcode();
 
 	int X = (opcode >> 8) & 0xF;
 	int Y = (opcode >> 4) & 0xF;
@@ -351,6 +357,8 @@ void Chip8::clearScreen()
 	}
 }
 
+// WARNING: I think there might be issues with leftover time if the counter is at 0, 
+// and there is still leftover that doesn't make sense
 void Chip8::updateTimers(int time_per_tick, int time_passed)
 {
 	int time = time_passed + leftover_time;
@@ -358,12 +366,15 @@ void Chip8::updateTimers(int time_per_tick, int time_passed)
 	int subtraction_amount = (int) (time / time_per_tick);
 	leftover_time = time % time_per_tick;
 
-	cout << "sub: " << subtraction_amount << "\n";
-	cout << "left: " << leftover_time << "\n";
-	cout << "time: " << static_cast<int>(delay_timer) << "\n";
+	if (subtraction_amount >= sound_timer)
+		sound_timer = 0;
+	else
+	{
+		sound_timer -= subtraction_amount;
+		cout << "\a";
+	}
 
 	delay_timer = std::max(0, delay_timer - subtraction_amount);
-	sound_timer = std::max(0, sound_timer - subtraction_amount);
 }
 
 // HACK: This will keep a queue of pressed keys I think
@@ -480,6 +491,8 @@ bool Chip8::loadProgram(string program)
 	{
 		memory[ind + 0x200] = bytes[ind];
 	}
+
+	opcode = getOpcode();
 
 	return true;
 }
