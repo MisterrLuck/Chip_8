@@ -48,6 +48,8 @@ void Chip8::init()
 		memory[ind + 0x50] = chip8_fontset[ind];
 }
 
+// TODO: split into two functions; one for the debugger to read, and one for the emulator to fetch
+// TODO: Also in the fetch; increment pc, and then decrement if needed in the instruction. Jumps wont need to decrement bc its already overwritten
 int Chip8::getOpcode(int address) {
 	if (address < 0)
 		return memory[pc] << 8 | memory[pc + 1];
@@ -145,19 +147,27 @@ void Chip8::emulateCycle()
 				break;
 
 				case 0x0004: // 0x8XY4 : VX = VX + VY with carry
-					V[0xF] = 0;
+				{
+					int flag = 0;
+
 					if (V[X] + V[Y] > 0xFF)
-						V[0xF] = 1;
+						flag = 1;
 
 					V[X] += V[Y];
+					V[0xF] = flag;
+				}
 				break;
 
 				case 0x0005: // 0x8XY5 : VX - VY with underflow
-					V[0xF] = 0;
+				{
+					int flag = 0;
+
 					if (V[X] >= V[Y])
-						V[0xF] = 1;
+						flag = 1;
 
 					V[X] -= V[Y];
+					V[0xF] = flag;
+				}
 				break;
 
 				case 0x0006: // 0x8XY6 : shift VX right one, move bit to VF
@@ -173,11 +183,15 @@ void Chip8::emulateCycle()
 				break;
 
 				case 0x0007: // 0x8XY7 : VY - VX with underflow
-					V[0xF] = 0;
+				{
+					int flag = 0;
+
 					if (V[X] <= V[Y])
-						V[0xF] = 1;
+						flag = 1;
 
 					V[X] = V[Y] - V[X];
+					V[0xF] = flag;
+				}
 				break;
 
 				case 0x000E: // 0x8XYE : shift VX left one, move bit to VF
@@ -213,7 +227,7 @@ void Chip8::emulateCycle()
 
 		case 0xC000: // 0xCXNN : sets VX to a random number between 0 and 255 ANDED with NN
 			srand(time(0));
-			V[X] = (rand() % 255) & NN;
+			V[X] = rand() & NN;
 		break;
 
 		case 0xD000: // 0xDXYN : draw a sprite at (X,Y)
@@ -300,12 +314,6 @@ void Chip8::emulateCycle()
 				break;
 
 				case 0x001E: // 0xFX1E : Add VX to index register I
-					if (!OG_FX1E_OVERFLOW)
-					{
-						V[0xF] = 0;
-						if (V[X] + I > 0x0FFF)
-							V[0xF] = 1;
-					}
 					I = (I + V[X]) & 0x0FFF;
 				break;
 

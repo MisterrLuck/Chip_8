@@ -21,7 +21,6 @@ Here is a list of all the possible settings changes.
 |-------|-------------|---------|-------------|
 | SHIFT | 8XY6, 8XYE | `VX = VY >> 1`, `VX = VY << 1` | `VX = VX >> 1`, `VX = VX << 1` |
 | JUMP_OFFSET | BNNN | The address offset will be in V0 | The address offset will be in `VX` (BXNN) |
-| FX1E_OVERFLOW | FX1E | `VF` will not change with overflow | `VF` will change with overflow |
 | REG_MEMORY_INDEX | FX55, FX65 | Index will update to `I + X + 1` by the end | Index will not change |
 
 

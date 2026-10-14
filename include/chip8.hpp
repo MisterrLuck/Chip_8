@@ -8,14 +8,12 @@ using std::string;
 #ifdef COSMIC
 #define SHIFT
 #define JUMP_OFFSET
-#define FX1E_OVERFLOW
 #define REG_MEMORY_INDEX
 #endif
 
 #ifdef SUPER_CHIP
 #undef SHIFT
 #undef JUMP_OFFSET
-#undef FX1E_OVERFLOW
 #undef REG_MEMORY_INDEX
 #endif
 
@@ -91,12 +89,6 @@ public:
 	bool OG_JUMP_OFFSET = true;
 #else
 	bool OG_JUMP_OFFSET = false;
-#endif
-// TODO: Make better names for the configuration
-#ifdef FX1E_OVERFLOW
-	bool OG_FX1E_OVERFLOW = false;
-#else
-	bool OG_FX1E_OVERFLOW = true;
 #endif
 #ifdef REG_MEMORY_INDEX
 	bool OG_REG_MEMORY_INDEX = true;
