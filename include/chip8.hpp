@@ -9,12 +9,14 @@ using std::string;
 #define SHIFT
 #define JUMP_OFFSET
 #define REG_MEMORY_INDEX
+#define BOOLEAN_RESET
 #endif
 
 #ifdef SUPER_CHIP
 #undef SHIFT
 #undef JUMP_OFFSET
 #undef REG_MEMORY_INDEX
+#undef BOOLEAN_RESET
 #endif
 
 class Chip8
@@ -22,6 +24,7 @@ class Chip8
 public:
 	bool draw_flag = false;
 
+	// TODO: Include sha hash thingy with metadata about the program
 	bool loadProgram(string program);
 
 	void init();
@@ -93,5 +96,10 @@ public:
 	bool OG_REG_MEMORY_INDEX = true;
 #else
 	bool OG_REG_MEMORY_INDEX = false;
+#endif
+#ifdef BOOLEAN_RESET
+	bool OG_BOOLEAN_RESET = true;
+#else
+	bool OG_BOOLEAN_RESET = false;
 #endif
 };

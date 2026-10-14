@@ -70,11 +70,13 @@ int main(int argc, char *argv[])
 		if (chip8.draw_flag)
 			graphics.updateFrame(chip8.gfx);
 
+		// TODO: Without draw flag, there is a speed issue; which also affects the timers
 		// Timing for ~accurate speed of processing
 		std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 		int inst_duration = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
 
 		int remaining_inst_time = MICROSECONDS_PER_INST - inst_duration;
+		cout << remaining_inst_time << "\n";
 
 		// MICROSECONDS_PER_INST is just the amount of time that has passed
 		chip8.updateTimers(MICROSECONDS_PER_CLOCK_TICK, MICROSECONDS_PER_INST);

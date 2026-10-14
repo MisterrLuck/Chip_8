@@ -65,6 +65,8 @@ void Chip8::emulateCycle()
 	// TODO: Slow down timing to 700 ins/sec
 
 	// NOTE: memory[pc, pc+1] = 0xA520 : (0xA5 << 8) | 0x20 = 0xA520
+	// TODO: Add error manager
+	// with errors for accessing memory out of bounds
 	opcode = getOpcode();
 
 	int X = (opcode >> 8) & 0xF;
@@ -135,14 +137,20 @@ void Chip8::emulateCycle()
 				break;
 
 				case 0x0001: // 0x8XY1 : VX = VX OR VY
+					if (OG_BOOLEAN_RESET)
+						V[0xF] = 0;
 					V[X] = V[X] | V[Y];
 				break;
 
 				case 0x0002: // 0x8XY2 : VX = VX AND VY
+					if (OG_BOOLEAN_RESET)
+						V[0xF] = 0;
 					V[X] = V[X] & V[Y];
 				break;
 
 				case 0x0003: // 0x8XY3 : VX = VX XOR VY
+					if (OG_BOOLEAN_RESET)
+						V[0xF] = 0;
 					V[X] = V[X] ^ V[Y];
 				break;
 

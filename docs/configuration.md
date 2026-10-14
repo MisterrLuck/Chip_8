@@ -22,6 +22,7 @@ Here is a list of all the possible settings changes.
 | SHIFT | 8XY6, 8XYE | `VX = VY >> 1`, `VX = VY << 1` | `VX = VX >> 1`, `VX = VX << 1` |
 | JUMP_OFFSET | BNNN | The address offset will be in V0 | The address offset will be in `VX` (BXNN) |
 | REG_MEMORY_INDEX | FX55, FX65 | Index will update to `I + X + 1` by the end | Index will not change |
+| BOOLEAN_RESET| 8XY1, 8XY2, 8XY3 | Will reset the VF register on boolean instructions | Will not reset the VF register on boolean instuctions |
 
 
 When defined, the setting will be the original implementation. When not defined, the setting will be the newer implementation, usually from the CHIP-48 or SUPER-CHIP.
