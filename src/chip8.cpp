@@ -177,7 +177,7 @@ void Chip8::emulateCycle()
 					if (V[X] <= V[Y])
 						V[0xF] = 1;
 
-					V[Y] -= V[X];
+					V[X] = V[Y] - V[X];
 				break;
 
 				case 0x000E: // 0x8XYE : shift VX left one, move bit to VF
