@@ -36,7 +36,6 @@ public:
 
 	int getOpcode(int address=-1);
 
-
 	unsigned short opcode;
 
 	// NOTE: Programs are loaded into address 0x200
@@ -52,12 +51,12 @@ public:
 	unsigned short pc;
 
 	// NOTE: The two timers: Both count down to 0 at 60Hz (60 times per second)
-	// TODO: They should run in a separate thread as to be accurate
 	unsigned char delay_timer;
 	unsigned char sound_timer;
 
 	// For the leftover timer microseconds for the next frame
-	int leftover_time;
+	int leftover_sound_time;
+	int leftover_delay_time;
 
 	unsigned char chip8_fontset[80] =
 	{

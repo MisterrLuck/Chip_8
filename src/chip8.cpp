@@ -373,23 +373,34 @@ void Chip8::clearScreen()
 // and there is still leftover that doesn't make sense
 void Chip8::updateTimers(int time_per_tick, int time_passed)
 {
-	int time = time_passed + leftover_time;
-	// If enough for one clock tick has passed
-	int subtraction_amount = (int) (time / time_per_tick);
-	leftover_time = time % time_per_tick;
+	int delay_time = time_passed + leftover_delay_time;
+	int sound_time = time_passed + leftover_sound_time;
 
-	if (subtraction_amount >= sound_timer)
+	// If enough for one clock tick has passed
+	int delay_subtraction_amount = (int) (delay_time / time_per_tick);
+	int sound_subtraction_amount = (int) (sound_time / time_per_tick);
+
+	leftover_delay_time = delay_time % time_per_tick;
+	leftover_sound_time = sound_time % time_per_tick;
+
+	if (sound_subtraction_amount >= sound_timer)
+	{
 		sound_timer = 0;
+		leftover_sound_time = 0;
+	}
 	else
 	{
-		sound_timer -= subtraction_amount;
+		sound_timer -= sound_subtraction_amount;
+		// TODO: Add actual beeps to the sound timer
 		cout << "\a";
 	}
 
-	delay_timer = std::max(0, delay_timer - subtraction_amount);
+	delay_timer = std::max(0, delay_timer - delay_subtraction_amount);
+	if (delay_timer == 0)
+		leftover_delay_time = 0;
 }
 
-// HACK: This will keep a queue of pressed keys I think
+// WARNING: This will keep a queue of pressed keys I think
 int Chip8::keyPressed()
 {
 	int key = GetKeyPressed();

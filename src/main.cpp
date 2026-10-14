@@ -95,13 +95,3 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-
-
-// Carry
-// 4rrxx : 8XY4
-// 5rrxx : 8XY5
-// 6rrx  : 8XY6
-// 7rrxx : 8XY7
-// Errx  : 8XYE
-//
-// Other FErr
