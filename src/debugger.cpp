@@ -4,6 +4,7 @@
 #include <string>
 #include <algorithm>
 #include <cmath>
+#include <climits>
 using std::cin, std::cout, std::string;
 
 // TODO: Add prompt before the first opcode has run, especially to see if the person wants to run it yet; like in gdb
@@ -34,6 +35,9 @@ bool Debugger::prompt()
 
 	while (true)
 	{
+		// cin.clear();
+		// cin.ignore(INT_MAX);
+
 		// NOTE: Add breakpoint at 0x4de
 		// Or address 0x508 for key press
 		char command;
@@ -430,7 +434,7 @@ string Debugger::disassembleOpcode(int opcode)
 		break;
 
 		case 0xC000: // 0xCXNN : sets VX to a random number between 0 and 255 ANDED with NN
-			return format("RND V{:X}, NN", X, NN);
+			return format("RND V{:X}, {:x}", X, NN);
 		break;
 
 		case 0xD000: // 0xDXYN : draw a sprite at (X,Y)

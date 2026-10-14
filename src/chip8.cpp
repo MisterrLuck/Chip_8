@@ -366,8 +366,15 @@ void Chip8::updateTimers(int time_per_tick, int time_passed)
 	int subtraction_amount = (int) (time / time_per_tick);
 	leftover_time = time % time_per_tick;
 
+	if (subtraction_amount >= sound_timer)
+		sound_timer = 0;
+	else
+	{
+		sound_timer -= subtraction_amount;
+		cout << "\a";
+	}
+
 	delay_timer = std::max(0, delay_timer - subtraction_amount);
-	sound_timer = std::max(0, sound_timer - subtraction_amount);
 }
 
 // HACK: This will keep a queue of pressed keys I think
