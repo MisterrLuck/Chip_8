@@ -36,8 +36,11 @@ int main(int argc, char *argv[])
 	if (argc > 1)
 	{
 		// If it fails
-		if (!chip8.loadProgram(string(argv[1])));
+		bool loaded = chip8.loadProgram(string(argv[1]));
+
+		if (!loaded)
 		{
+			cout << "loading issues\n";
 			cerr << "Could not load program\n";
 			return -1;
 		}
