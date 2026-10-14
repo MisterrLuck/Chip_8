@@ -97,16 +97,6 @@ int main(int argc, char *argv[])
 
 
 
-// Happy
-// 1rrr
-// 2rrr
-// 3rrr
-// 4rrxx : 8XY4
-// 5rrxx : 8XY5
-// 6rrr
-// 7rxxx : 8XY7
-// Errr
-//
 // Carry
 // 4rrxx : 8XY4
 // 5rrxx : 8XY5

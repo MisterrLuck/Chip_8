@@ -173,12 +173,14 @@ void Chip8::emulateCycle()
 				case 0x0006: // 0x8XY6 : shift VX right one, move bit to VF
 					if (OG_SHIFT)
 					{
-						V[0xF] = V[Y] & 0b1;
+						int flag = V[Y] & 0b1;
 						V[X] = V[Y] >> 1;
+						V[0xF] = flag;
 					} else
 					{
-						V[0xF] = V[X] & 0b1;
+						int flag = V[X] & 0b1;
 						V[X] >>= 1;
+						V[0xF] = flag;
 					}
 				break;
 
@@ -197,12 +199,14 @@ void Chip8::emulateCycle()
 				case 0x000E: // 0x8XYE : shift VX left one, move bit to VF
 					if (OG_SHIFT)
 					{
-						V[0xF] = (V[Y] & 0x80) >> 7; // leading bit is 1
+						int flag = (V[Y] & 0x80) >> 7; // leading bit is 1
 						V[X] = V[Y] << 1;
+						V[0xF] = flag;
 					} else
 					{
-						V[0xF] = (V[X] & 0x80) >> 7;
+						int flag = (V[X] & 0x80) >> 7;
 						V[X] <<= 1;
+						V[0xF] = flag;
 					}
 				break;
 			}
