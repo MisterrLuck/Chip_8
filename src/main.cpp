@@ -12,6 +12,9 @@
 using std::cout, std::string, std::cerr;
 
 
+// TODO: Use raygui when combining the debugger such into one window (https://github.com/raysan5/raygui)
+// TODO: Interesting chip 8 binary thing (https://github.com/Timendus/chip8-binary-format)
+// TODO: Aseprite to binary data addon
 int main(int argc, char *argv[])
 {
 
@@ -35,19 +38,13 @@ int main(int argc, char *argv[])
 
 	if (argc > 1)
 	{
-		// If it fails
 		bool loaded = chip8.loadProgram(string(argv[1]));
 
 		if (!loaded)
-		{
-			cout << "loading issues\n";
-			cerr << "Could not load program\n";
 			return -1;
-		}
 	}
 	else
 	{
-		// TODO: Include default program to run
 		cerr << "No program provided\n";
 		return -1;
 	}
@@ -61,6 +58,9 @@ int main(int argc, char *argv[])
 
 	while (!WindowShouldClose())
 	{
+		// TODO: Cap everything to 60Hz, makes it easier to update timers.
+		// 15 IPF for the draw wait quirk
+		//
 		// pythons time.time()
 		std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 

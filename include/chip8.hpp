@@ -24,7 +24,7 @@ class Chip8
 public:
 	bool draw_flag = false;
 
-	// TODO: Include sha hash thingy with metadata about the program
+	// TODO: Include sha hash thingy with metadata about the program (https://github.com/chip-8/chip-8-database)
 	bool loadProgram(string program);
 
 	void init();
@@ -41,7 +41,6 @@ public:
 
 	unsigned short opcode;
 
-	// NOTE: Programs are loaded into address 0x200
 	unsigned char memory[4096];
 	unsigned short gfx[SCREEN_WIDTH * SCREEN_HEIGHT];
 
@@ -53,7 +52,6 @@ public:
 	unsigned short I;
 	unsigned short pc;
 
-	// NOTE: The two timers: Both count down to 0 at 60Hz (60 times per second)
 	unsigned char delay_timer;
 	unsigned char sound_timer;
 
@@ -80,6 +78,9 @@ public:
 		0xF0, 0x80, 0xF0, 0x80, 0xF0, // E
 		0xF0, 0x80, 0xF0, 0x80, 0x80  // F
 	};
+
+	// NOTE: Configuration reference (https://chip-8.github.io/extensions/)
+	// TODO: Add better changing configurations
 
 	// Configurations
 #ifdef SHIFT

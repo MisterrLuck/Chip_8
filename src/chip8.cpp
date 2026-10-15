@@ -377,8 +377,6 @@ void Chip8::clearScreen()
 	}
 }
 
-// WARNING: I think there might be issues with leftover time if the counter is at 0, 
-// and there is still leftover that doesn't make sense
 void Chip8::updateTimers(int time_per_tick, int time_passed)
 {
 	int delay_time = time_passed + leftover_delay_time;
@@ -517,6 +515,13 @@ bool Chip8::loadProgram(string program)
 		(std::istreambuf_iterator<char>()));
 
 	input.close();
+
+	// Too big of a program
+	if (bytes.size() + 0x200 > 4096)
+	{
+		std::cerr << "Program is too large\n";
+		return false;
+	}
 
 	for(size_t ind = 0; ind < bytes.size(); ind++)
 	{

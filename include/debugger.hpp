@@ -38,7 +38,6 @@ private:
 	string disassembleOpcode(int opcode);
 	
 	// My searching algorithm idea
-	// NOTE: Maybe needs a better name
 	void locationBranch();
 	void getDataLocations();
 

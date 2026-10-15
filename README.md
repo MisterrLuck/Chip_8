@@ -98,7 +98,11 @@ More information on the debugger can be found [here](docs/debugger.md).
 
 Thanks to Tobias V. I. Langhoff and his [blog post](https://tobiasvl.github.io/blog/write-a-chip-8-emulator/) on making a Chip 8 emulator.
 
-Thanks to cj1128 on github for his [BC_test rom](https://github.com/cj1128/chip8-emulator/blob/master/rom/BC_test.ch8) which helped debugging.
+Thanks to Timendus for his [Chip-8 Test Suite](https://github.com/Timendus/chip8-test-suite) which fixed most issues.
+
+Thanks to Gulrak for help debugging and also for inspiration on his emulator [Cadmium](https://github.com/gulrak/cadmium).
+
+Thanks to Various people in the EmuDev discord server for guidance.
 
 
 ## Whats Next
