@@ -1,0 +1,104 @@
+# The default program for my CHIP-8 emulator
+# This should be loaded into memory if no program was selected
+
+1272 # Jumps to start of program
+1202 # Jumps to itself, the final loop
+
+# Data
+# CHIP 8
+# 15 bytes
+# C
+FF FF FF E0 E0 E0 E0 E0
+E0 E0 E0 E0 FF FF FF
+
+# H
+E7 E7 E7 E7 E7 E7 E7 FF
+FF FF E7 E7 E7 E7 E7 
+
+# I
+FF FF FF 3C 3C 3C 3C 3C
+3C 3C 3C 3C FF FF FF
+
+# P
+FF FF FF E7 E7 E7 E7 FF
+FF FF E0 E0 E0 E0 E0
+
+# 8 
+FF FF FF E7 E7 E7 E7 FF
+FF FF E7 E7 FF FF FF
+
+# by misterrluck
+# 5 bytes
+# by | 0x24F
+EA AE C4 A4 E4
+
+# mi
+AE E4 E4 A4 AE
+
+# st
+EE 84 E4 24 E4
+
+# er
+EE 8A CC 8A EA
+
+# rl
+E8 A8 C8 A8 AE
+
+# uc
+AE A8 A8 A8 EE
+
+# k
+A0 A0 C0 A0 A0
+
+# Program Start | 0x272
+
+00E0
+6003 # the x coord
+6102 # the y coord
+620b # the x displacement for the first couple letters
+A204 # The first letter
+
+6304 # how many letters with this displacement
+640F # how many to add to the index
+6501 # the number one
+
+# Draw CHIP
+# Loop start | 0x282
+# {
+D01F # draw a letter in CHIP
+8024 # move the x to the next position
+F41E # offset the index by 16
+8355 # decrement V3, the counter
+3300 # Skip if counter is at 0
+1282 # Loop
+# }
+
+# Draw 8
+7006 # Add 6 to x position for the `8`
+D01F # Draw 8
+
+# Draw by
+6005 # X value
+6119 # Y value
+A24F # set index to the first letter
+D015 # 5 bytes
+
+# Draw misterrluck
+700A # Starting X value
+6208 # Offset between letters
+6305 # How many bytes in each letter
+6406 # How many letters
+F31E # Move index to start
+
+# Loop Start | 0x2a4
+# {
+D015
+8024 # offset X value
+F31E # offset letter in memory
+8455 # decrement V4, the counter
+3400 # Skip if counter is at 0
+12a4 # Loop
+
+# }
+
+1202 # Jump to the final loop 
