@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 4.2)
 project(Chip_8)
 project(Debug_Chip_8)
+project(Assembler)
 
 find_package(raylib 6.0 REQUIRED)
 include_directories(include/)
@@ -33,3 +34,8 @@ add_executable(Debug_Chip_8 src/main.cpp
 target_link_libraries(Debug_Chip_8 raylib)
 
 target_compile_definitions(Debug_Chip_8 PRIVATE DEBUGGER)
+
+add_executable(Assembler src/main_asm.cpp
+		src/assembler.cpp
+		include/assembler.hpp
+	)
