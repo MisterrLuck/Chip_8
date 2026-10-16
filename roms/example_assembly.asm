@@ -3,7 +3,7 @@ global start
 start:
 	CLS
 
-	# Adding comments
+	; Can add comments with `#` or `;`
 	STOR V0, 0x10
 	# Register names have to be capitalized
 	JUMP label
@@ -15,7 +15,7 @@ func:
 label:
 	CALL func
 	add I, V0
-	# ST is the sound timer
+	; ST is the sound timer
 	# DT is the delay timer
 	STOR ST, 0x60
 	stor V5, DT
