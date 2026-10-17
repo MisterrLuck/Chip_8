@@ -1,7 +1,8 @@
 #include "assembler.hpp"
 
 #include <iostream>
-using std::cout, std::string, std::cerr;
+#include <format>
+using std::cout, std::string, std::cerr, std::format;
 
 int main(int argc, char *argv[])
 {
@@ -20,9 +21,15 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
+
+	// cout << "\n\n";
+	assembler.locateLabels();
+
+	for (tuple<string, int> label : assembler.label_locations)
+		cout << format("{}: 0x{:x}\n", get<0>(label), get<1>(label));
+
 	for (string line : assembler.file_contents)
 		cout << line << "\n";
-
 
 	return 0;
 }
