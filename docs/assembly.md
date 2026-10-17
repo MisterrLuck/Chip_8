@@ -25,7 +25,7 @@ Here is the assembly language.
 | 9XY0 | SKNE  VX, VY  | |
 | ANNN | STOR   I, NNN | I = NNN |
 | CXNN | RAND   VX, NN | VX = rand(NN)| 
-| DXYN | DRAW  VX, VY  | |
+| DXYN | DRAW  VX, VY, N  | |
 | EX9E | SKK   VX      | |
 | EXA1 | SKNK  VX      | |
 | FX07 | STOR   VX, DT | VX = DT |

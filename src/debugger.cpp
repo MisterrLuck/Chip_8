@@ -438,7 +438,7 @@ string Debugger::disassembleOpcode(int opcode)
 		break;
 
 		case 0xD000: // 0xDXYN : draw a sprite at (X,Y)
-			return format("DRAW V{:X}, V{:X}", X, Y);
+			return format("DRAW V{:X}, V{:X}, {:x}", X, Y, N);
 		break;
 
 		// Key instructions

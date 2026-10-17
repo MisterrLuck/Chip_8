@@ -73,11 +73,9 @@ int Assembler::assembleInstruction(string instruction)
 	{
 		if (parameters[0] == "I")
 			return 0xA000 | getLabelAddress(parameters[1]);
-
-		else if (parameters[0] == "DT")
+		if (parameters[0] == "DT")
 			return 0xF015 | (getRegisterNum(parameters[1]) << 8);
-
-		else if (parameters[0] == "ST")
+		if (parameters[0] == "ST")
 			return 0xF018 | (getRegisterNum(parameters[1]) << 8);
 		else
 		{
@@ -85,10 +83,44 @@ int Assembler::assembleInstruction(string instruction)
 				return 0xF007 | (getRegisterNum(parameters[0]) << 8);
 			if (getRegisterNum(parameters[1]) == -1)
 				return 0x6000 | (getRegisterNum(parameters[0]) << 8) | decodeNN(parameters[1]);
-			else
-				return 0x8000 | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4);
+			return 0x8000 | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4);
 		}
-	}
+	} if (instruction == "ADD")
+	{
+		if (parameters[0] == "I")
+			return 0xF01E | (getRegisterNum(parameters[1]) << 8);
+		if (getRegisterNum(parameters[1]) == -1)
+			// TODO: Fix this?? getting a -0FA for 7006
+			return 0x7000 | (getRegisterNum(parameters[0]) << 8) | decodeNN(parameters[1]);
+		return 0x8004 | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4);
+	}  if (instruction == "OR")
+		return 0x8001 | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4);
+	if (instruction == "AND")
+		return 0x8002 | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4);
+	if (instruction == "XOR")
+		return 0x8003 | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4);
+	if (instruction == "SUBR")
+		return 0x8005 | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4);
+	if (instruction == "SUBL")
+		return 0x8007 | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4);
+	if (instruction == "RAND")
+		return 0xC000 | (getRegisterNum(parameters[0]) << 8) | decodeNN(parameters[1]);
+	if (instruction == "DRAW")
+		return 0xD000 | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4) | decodeN(parameters[2]);
+	if (instruction == "SKK")
+		return 0xE09E | (getRegisterNum(parameters[0]) << 8);
+	if (instruction == "SKNK")
+		return 0xE0A1 | (getRegisterNum(parameters[0]) << 8);
+	if (instruction == "KEY")
+		return 0xF00A | (getRegisterNum(parameters[0]) << 8);
+	if (instruction == "CHAR")
+		return 0xF029 | (getRegisterNum(parameters[0]) << 8);
+	if (instruction == "BCD")
+		return 0xF033 | (getRegisterNum(parameters[0]) << 8);
+	if (instruction == "SMEM")
+		return 0xF055 | (getRegisterNum(parameters[0]) << 8);
+	if (instruction == "LMEM")
+		return 0xF065 | (getRegisterNum(parameters[0]) << 8);
 
 	return 0;
 }
@@ -238,7 +270,7 @@ int Assembler::decodeN(string num)
 	else
 		n = std::stoul(num, nullptr, 10);
 
-	if (n & 0xF != n)
+	if (n > 0xF)
 		throw std::invalid_argument(format("Number is over 1 byte: '{}'", n));
 
 	return n;
