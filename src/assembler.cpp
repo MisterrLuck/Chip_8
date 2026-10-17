@@ -5,6 +5,7 @@
 #include <iostream>
 #include <algorithm>
 #include <format>
+#include <sstream>
 using std::string, std::format, std::cout;
 
 bool Assembler::loadProgram(string file_name)
@@ -30,6 +31,89 @@ bool Assembler::loadProgram(string file_name)
 
 }
 
+void Assembler::assemble()
+{
+	locateLabels();
+
+	for (string instruction : file_contents)
+		binary_program.push_back(assembleInstruction(instruction));
+}
+
+int Assembler::assembleInstruction(string instruction)
+{
+	auto i = splitInstruction(instruction);
+	instruction = get<0>(i);
+	vector<string> parameters = get<1>(i);
+
+	// TODO: Add to lower for the instruction and parameters
+	// TODO: Add strict tests on parameter length for all instructions, and parameters
+	if (instruction == "CLS")
+		return 0x00E0;
+	if (instruction == "RET")
+		return 0x00EE;
+	if (instruction == "JUMP")
+		return 0x1000 | getLabelAddress(parameters[0]);
+	if (instruction == "CALL")
+		return 0x2000 | getLabelAddress(parameters[0]);
+	if (instruction == "SKE")
+	{
+		// Move the VX register into place
+		int opcode = getRegisterNum(parameters[0]) << 8;
+		if (getRegisterNum(parameters[1]) == -1)
+			return 0x3000 | opcode | decodeNN(parameters[1]);
+		return 0x5000 | opcode | (getRegisterNum(parameters[1]) << 4);
+	} if (instruction == "SKNE")
+	{
+		// Move the VX register into place
+		int opcode = getRegisterNum(parameters[0]) << 8;
+		if (getRegisterNum(parameters[1]) == -1)
+			return 0x4000 | opcode | decodeNN(parameters[1]);
+		return 0x9000 | opcode | (getRegisterNum(parameters[1]) << 4);
+	} if (instruction == "STOR")
+	{
+		if (parameters[0] == "I")
+			return 0xA000 | getLabelAddress(parameters[1]);
+
+		else if (parameters[0] == "DT")
+			return 0xF015 | (getRegisterNum(parameters[1]) << 8);
+
+		else if (parameters[0] == "ST")
+			return 0xF018 | (getRegisterNum(parameters[1]) << 8);
+		else
+		{
+			if (parameters[1] == "DT")
+				return 0xF007 | (getRegisterNum(parameters[0]) << 8);
+			if (getRegisterNum(parameters[1]) == -1)
+				return 0x6000 | (getRegisterNum(parameters[0]) << 8) | decodeNN(parameters[1]);
+			else
+				return 0x8000 | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4);
+		}
+	}
+
+	return 0;
+}
+
+tuple<string, vector<string>> Assembler::splitInstruction(string instruction)
+{
+	vector<string> parameters;
+
+	int ind = instruction.find(' ');
+
+	if (ind != string::npos)
+	{
+		string parameter_str = instruction.substr(ind+1, instruction.size() - (ind+1));
+		instruction = instruction.substr(0, ind);
+		
+		string tmp;
+		std::stringstream s(parameter_str);
+
+		while (getline(s, tmp, ','))
+			parameters.push_back(strip(tmp));
+
+	}
+
+	return tuple<string, vector<string>>(instruction, parameters);
+}
 
 string Assembler::cleanLine(string line)
 {
@@ -45,7 +129,7 @@ string Assembler::cleanLine(string line)
 		line = line.substr(0, hash_ind);
 
 	// Remove excess whitespace
-	line = trim(line);
+	line = strip(line);
 
 	return line;
 }
@@ -72,13 +156,9 @@ void Assembler::locateLabels()
 		} else
 		{
 			int offset = getOffset(line);
-			// cout << format("{}\n", offset);
 			pc += offset;
 		}
-
-		// cout << format("{{0x{:x}}}\n", pc);
 	}
-
 }
 
 int Assembler::getOffset(string line)
@@ -101,6 +181,69 @@ int Assembler::getOffset(string line)
 	return count(line.begin(), line.end(), ',')	+ 1;
 }
 
+int Assembler::getLabelAddress(string label)
+{
+	for (tuple<string, int> tup : label_locations)
+	{
+		if (get<0>(tup) == label)
+			return get<1>(tup);
+	}
+
+	throw std::invalid_argument(format("Label doesn't exist: '{}'", label));
+}
+
+int Assembler::getRegisterNum(string reg)
+{
+	if (reg[0] != 'V' || reg.size() != 2)
+		return -1;
+
+	char num = reg[1];
+
+	// 0-9
+	if (num >= 48 && num <= 57)
+		return num - 48;
+	// A-F
+	else if (num >= 65 && num <= 70)
+		return num - 55;
+	// a-f
+	else if (num >= 97 && num <= 102)
+		return num - 87;
+	else
+		return -1;
+}
+
+int Assembler::decodeNN(string num)
+{
+	unsigned int n;
+	if (num.substr(0, 2) == "0x")
+		n = std::stoul(num, nullptr, 16);
+	else if (num.substr(0, 2) == "0b")
+		n = std::stoul(num, nullptr, 2);
+	else
+		n = std::stoul(num, nullptr, 10);
+
+	if (n > 0xFF)
+		throw std::invalid_argument(format("Number is over 2 bytes: '{}'", n));
+
+	return n;
+}
+
+int Assembler::decodeN(string num)
+{
+	unsigned int n;
+	if (num.substr(0, 2) == "0x")
+		n = std::stoul(num, nullptr, 16);
+	else if (num.substr(0, 2) == "0b")
+		n = std::stoul(num, nullptr, 2);
+	else
+		n = std::stoul(num, nullptr, 10);
+
+	if (n & 0xF != n)
+		throw std::invalid_argument(format("Number is over 1 byte: '{}'", n));
+
+	return n;
+}
+
 string strToLower(string str)
 {
 	std::transform(str.begin(), str.end(), str.begin(),
@@ -109,7 +252,7 @@ string strToLower(string str)
 }
 
 // https://stackoverflow.com/questions/1798112/removing-leading-and-trailing-spaces-from-a-string
-string trim(const string& str, const string& whitespace)
+string strip(const string& str, const string& whitespace)
 {
     const auto strBegin = str.find_first_not_of(whitespace);
     if (strBegin == string::npos)

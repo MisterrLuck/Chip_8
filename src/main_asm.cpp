@@ -21,15 +21,20 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-
-	// cout << "\n\n";
-	assembler.locateLabels();
+	assembler.assemble();
 
 	for (tuple<string, int> label : assembler.label_locations)
 		cout << format("{}: 0x{:x}\n", get<0>(label), get<1>(label));
 
+	cout << "\n";
+
 	for (string line : assembler.file_contents)
 		cout << line << "\n";
+
+	cout << "\n";
+
+	for (int opcode : assembler.binary_program)
+		cout << format("{:04X}\n", opcode);
 
 	return 0;
 }
