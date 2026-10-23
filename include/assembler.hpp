@@ -35,6 +35,9 @@ public:
 	vector<string> file_contents;
 	vector<int> binary_program;
 	vector<tuple<string, int>> label_locations;
+
+	// single byte flag for the BYTES instruction
+	bool single_byte;
 };
 
 string strToLower(string str);

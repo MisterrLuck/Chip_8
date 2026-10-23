@@ -36,11 +36,19 @@ void Assembler::assemble()
 	locateLabels();
 
 	for (string instruction : file_contents)
-		binary_program.push_back(assembleInstruction(instruction));
+	{
+		int opcode = assembleInstruction(instruction);
+
+		if (!single_byte)
+			binary_program.push_back((opcode & 0xFF00) >> 8);
+		binary_program.push_back(opcode & 0xFF);
+	}
 }
 
 int Assembler::assembleInstruction(string instruction)
 {
+	single_byte = false;
+
 	auto i = splitInstruction(instruction);
 	instruction = get<0>(i);
 	vector<string> parameters = get<1>(i);
@@ -121,6 +129,15 @@ int Assembler::assembleInstruction(string instruction)
 		return 0xF055 | (getRegisterNum(parameters[0]) << 8);
 	if (instruction == "LMEM")
 		return 0xF065 | (getRegisterNum(parameters[0]) << 8);
+	if (instruction == "BYTES")
+	{
+		// HACK: This is a mess but oh well
+		for (int ind = 0; ind < parameters.size()-1; ind++)
+			binary_program.push_back(decodeNN(parameters[ind]));
+
+		single_byte = true;
+		return decodeNN(parameters[parameters.size()-1]);
+	}
 
 	return 0;
 }

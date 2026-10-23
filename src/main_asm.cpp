@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 	cout << "\n";
 
 	for (int opcode : assembler.binary_program)
-		cout << format("{:04X}\n", opcode);
+		cout << format("{:02X}\n", opcode);
 
 	return 0;
 }
