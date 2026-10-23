@@ -45,6 +45,18 @@ void Assembler::assemble()
 	}
 }
 
+void Assembler::writeProgram(string file_name)
+{
+	#include <fstream>
+
+	std::ofstream fout;
+	fout.open(file_name, std::ios::binary | std::ios::out);
+
+	fout.write((char*) &binary_program[0], binary_program.size());
+
+	fout.close();
+}
+
 int Assembler::assembleInstruction(string instruction)
 {
 	single_byte = false;

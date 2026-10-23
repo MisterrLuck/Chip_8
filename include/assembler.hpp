@@ -9,7 +9,9 @@ class Assembler
 public:
 	bool loadProgram(string file_name);
 	void assemble();
+	void writeProgram(string file_name);
 
+// private:
 	// removes spaces and comments and such in lines
 	string cleanLine(string line);
 	
@@ -23,7 +25,6 @@ public:
 	tuple<string, vector<string>> splitInstruction(string instruction);
 	int assembleInstruction(string instruction);
 	
-	void writeProgram(string file_name);
 
 	// Helper functions
 	int getLabelAddress(string label);
@@ -33,7 +34,7 @@ public:
 
 	// Without the comments and spaces, and eventually without the labels
 	vector<string> file_contents;
-	vector<int> binary_program;
+	vector<unsigned char> binary_program;
 	vector<tuple<string, int>> label_locations;
 
 	// single byte flag for the BYTES instruction
