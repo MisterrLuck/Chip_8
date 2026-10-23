@@ -81,8 +81,9 @@ public:
 
 	// NOTE: Configuration reference (https://chip-8.github.io/extensions/)
 	// TODO: Add better changing configurations
+	// TODO: Change names based on the 'standard' (https://github.com/chip-8/chip-8-database)
 
-	// Configurations
+	// Configurations / Quirks
 #ifdef SHIFT
 	bool OG_SHIFT = true;
 #else
