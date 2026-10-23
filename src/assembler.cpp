@@ -52,7 +52,7 @@ void Assembler::writeProgram(string file_name)
 	std::ofstream fout;
 	fout.open(file_name, std::ios::binary | std::ios::out);
 
-	fout.write((char*) &binary_program[0], binary_program.size());
+	fout.write(binary_program.data(), binary_program.size());
 
 	fout.close();
 }

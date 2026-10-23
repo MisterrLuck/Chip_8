@@ -34,7 +34,7 @@ public:
 
 	// Without the comments and spaces, and eventually without the labels
 	vector<string> file_contents;
-	vector<unsigned char> binary_program;
+	vector<char> binary_program;
 	vector<tuple<string, int>> label_locations;
 
 	// single byte flag for the BYTES instruction
