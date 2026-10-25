@@ -4,6 +4,25 @@
 #include <tuple>
 using std::string, std::vector, std::tuple;
 
+
+#ifdef COSMIC
+#define SHIFT
+#define JUMP_OFFSET
+#define REG_MEMORY_INDEX
+#define BOOLEAN_RESET
+#endif
+
+#ifdef SUPER_CHIP
+#undef SHIFT
+#undef JUMP_OFFSET
+#undef REG_MEMORY_INDEX
+#undef BOOLEAN_RESET
+#endif
+
+
+string strToLower(string str);
+string strip(const string& str, const string& whitespace = " \t");
+
 class Assembler
 {
 public:
@@ -39,7 +58,23 @@ public:
 
 	// single byte flag for the BYTES instruction
 	bool single_byte;
+
+
+	// Configurations
+#ifdef SHIFT
+	bool OG_SHIFT = true;
+#else
+	bool OG_SHIFT = false;
+#endif
+#ifdef JUMP_OFFSET
+	bool OG_JUMP_OFFSET = true;
+#else
+	bool OG_JUMP_OFFSET = false;
+#endif
+#ifdef BOOLEAN_RESET
+	bool OG_BOOLEAN_RESET = true;
+#else
+	bool OG_BOOLEAN_RESET = false;
+#endif
 };
 
-string strToLower(string str);
-string strip(const string& str, const string& whitespace = " \t");

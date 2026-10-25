@@ -13,6 +13,7 @@ add_compile_definitions(SUPER_CHIP)
 
 set(CMAKE_CXX_STANDARD 20)
 
+# Emulator
 add_executable(Chip_8 src/main.cpp
         src/chip8.cpp
 		src/graphics.cpp
@@ -22,6 +23,7 @@ add_executable(Chip_8 src/main.cpp
 
 target_link_libraries(Chip_8 raylib)
 
+# Debugger
 add_executable(Debug_Chip_8 src/main.cpp
         src/chip8.cpp
 		src/graphics.cpp
@@ -32,9 +34,9 @@ add_executable(Debug_Chip_8 src/main.cpp
 	)
 
 target_link_libraries(Debug_Chip_8 raylib)
-
 target_compile_definitions(Debug_Chip_8 PRIVATE DEBUGGER)
 
+# Assembler
 add_executable(Assembler src/main_asm.cpp
 		src/assembler.cpp
 		include/assembler.hpp

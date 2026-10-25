@@ -225,15 +225,13 @@ int Assembler::assembleInstruction(string instruction)
 			throw std::invalid_argument(format("Register `{}` doesn't exist in `SUBL` instruction", parameters[1]));
 
 		return 0x8007 | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4);
-	}
-	if (instruction == "RAND")
+	} if (instruction == "RAND")
 	{
 		if (getRegisterNum(parameters[0]) == -1)
 			throw std::invalid_argument(format("Register `{}` doesn't exist in `RAND` instruction", parameters[0]));
 
 		return 0xC000 | (getRegisterNum(parameters[0]) << 8) | decodeNN(parameters[1]);
-	}
-	if (instruction == "DRAW")
+	} if (instruction == "DRAW")
 	{
 		if (getRegisterNum(parameters[0]) == -1)
 			throw std::invalid_argument(format("Register `{}` doesn't exist in `DRAW` instruction", parameters[0]));
@@ -241,57 +239,91 @@ int Assembler::assembleInstruction(string instruction)
 			throw std::invalid_argument(format("Register `{}` doesn't exist in `DRAW` instruction", parameters[1]));
 
 		return 0xD000 | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4) | decodeN(parameters[2]);
-	}
-	if (instruction == "SKK")
+	} if (instruction == "SKK")
 	{
 		if (getRegisterNum(parameters[0]) == -1)
 			throw std::invalid_argument(format("Register `{}` doesn't exist in `SKK` instruction", parameters[0]));
 
 		return 0xE09E | (getRegisterNum(parameters[0]) << 8);
-	}
-	if (instruction == "SKNK")
+	} if (instruction == "SKNK")
 	{
 		if (getRegisterNum(parameters[0]) == -1)
 			throw std::invalid_argument(format("Register `{}` doesn't exist in `SKNK` instruction", parameters[0]));
 
 		return 0xE0A1 | (getRegisterNum(parameters[0]) << 8);
-	}
-	if (instruction == "KEY")
+	} if (instruction == "KEY")
 	{
 		if (getRegisterNum(parameters[0]) == -1)
 			throw std::invalid_argument(format("Register `{}` doesn't exist in `KEY` instruction", parameters[0]));
 
 		return 0xF00A | (getRegisterNum(parameters[0]) << 8);
-	}
-	if (instruction == "CHAR")
+	} if (instruction == "CHAR")
 	{
 		if (getRegisterNum(parameters[0]) == -1)
 			throw std::invalid_argument(format("Register `{}` doesn't exist in `CHAR` instruction", parameters[0]));
 
 		return 0xF029 | (getRegisterNum(parameters[0]) << 8);
-	}
-	if (instruction == "BCD")
+	} if (instruction == "BCD")
 	{
 		if (getRegisterNum(parameters[0]) == -1)
 			throw std::invalid_argument(format("Register `{}` doesn't exist in `BCD` instruction", parameters[0]));
 
 		return 0xF033 | (getRegisterNum(parameters[0]) << 8);
-	}
-	if (instruction == "SMEM")
+	} if (instruction == "SMEM")
 	{
 		if (getRegisterNum(parameters[0]) == -1)
 			throw std::invalid_argument(format("Register `{}` doesn't exist in `SMEM` instruction", parameters[0]));
 
 		return 0xF055 | (getRegisterNum(parameters[0]) << 8);
-	}
-	if (instruction == "LMEM")
+	} if (instruction == "LMEM")
 	{
 		if (getRegisterNum(parameters[0]) == -1)
 			throw std::invalid_argument(format("Register `{}` doesn't exist in `LMEM` instruction", parameters[0]));
 
 		return 0xF065 | (getRegisterNum(parameters[0]) << 8);
-	}
-	if (instruction == "BYTES")
+	} if (instruction == "SHR")
+	{
+		if (OG_SHIFT)
+		{
+			if (getRegisterNum(parameters[0]) == -1)
+				throw std::invalid_argument(format("Register `{}` doesn't exist in `SHR` instruction", parameters[0]));
+			if (getRegisterNum(parameters[1]) == -1)
+				throw std::invalid_argument(format("Register `{}` doesn't exist in `SHR` instruction", parameters[1]));
+
+			return 0x8006 | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4);
+		} else
+		{
+			if (getRegisterNum(parameters[0]) == -1)
+				throw std::invalid_argument(format("Register `{}` doesn't exist in `SHR` instruction", parameters[0]));
+
+			return 0x8006 | (getRegisterNum(parameters[0]) << 8);
+		}
+	} if (instruction == "SHL")
+	{
+		if (OG_SHIFT)
+		{
+			if (getRegisterNum(parameters[0]) == -1)
+				throw std::invalid_argument(format("Register `{}` doesn't exist in `SHL` instruction", parameters[0]));
+			if (getRegisterNum(parameters[1]) == -1)
+				throw std::invalid_argument(format("Register `{}` doesn't exist in `SHL` instruction", parameters[1]));
+
+			return 0x800E | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4);
+		} else
+		{
+			if (getRegisterNum(parameters[0]) == -1)
+				throw std::invalid_argument(format("Register `{}` doesn't exist in `SHL` instruction", parameters[0]));
+
+			return 0x800E | (getRegisterNum(parameters[0]) << 8);
+		}
+	} if (instruction == "JUMPO")
+	{
+		if (parameters.size() != 1)
+			throw std::invalid_argument("`JUMPO` instruction should only have one parameter");
+		if (getLabelAddress(parameters[0]) == -1)
+			throw std::invalid_argument(format("Label `{}` doesn't exist in `JUMP` instruction", parameters[0]));
+
+		return 0xB000 | getLabelAddress(parameters[0]);
+	} if (instruction == "BYTES")
 	{
 		// HACK:
 		for (int ind = 0; ind < parameters.size()-1; ind++)
