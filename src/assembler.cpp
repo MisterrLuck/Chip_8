@@ -66,84 +66,234 @@ int Assembler::assembleInstruction(string instruction)
 	vector<string> parameters = get<1>(i);
 
 	// TODO: Add to lower for the instruction and parameters
-	// TODO: Add strict tests on parameter length for all instructions, and parameters
+	// TODO: Add line number or address number probably 
+	// TODO: Add SHL, SHR, and JUMPO
+	// TODO: Move this around to check for each case exactly (param[0] is register && param[1] is NN), and then have general error if no cases
 	if (instruction == "CLS")
+	{
+		if (parameters.size() != 0)
+			throw std::invalid_argument("`CLS` instruction shouldn't have any parameters");
 		return 0x00E0;
+	}
 	if (instruction == "RET")
+	{
+		if (parameters.size() != 0)
+			throw std::invalid_argument("`RET` instruction shouldn't have any parameters");
 		return 0x00EE;
+	}
 	if (instruction == "JUMP")
+	{
+		if (parameters.size() != 1)
+			throw std::invalid_argument("`JUMP` instruction should only have one parameter");
+		if (getLabelAddress(parameters[0]) == -1)
+			throw std::invalid_argument(format("Label `{}` doesn't exist in `JUMP` instruction", parameters[0]));
+
 		return 0x1000 | getLabelAddress(parameters[0]);
+	}
 	if (instruction == "CALL")
+	{
+		if (parameters.size() != 1)
+			throw std::invalid_argument("`CALL` instruction should only have one parameter");
+		if (getLabelAddress(parameters[0]) == -1)
+			throw std::invalid_argument(format("Label `{}` doesn't exist in `CALL` instruction", parameters[0]));
+
 		return 0x2000 | getLabelAddress(parameters[0]);
+	}
 	if (instruction == "SKE")
 	{
+		if (parameters.size() != 2)
+			throw std::invalid_argument("`SKE` instruction should only have two parameters");
+		if (getRegisterNum(parameters[0]) == -1)
+			throw std::invalid_argument(format("First parameter `{}` in `SKE` has to be a register", parameters[0]));
+
 		// Move the VX register into place
 		int opcode = getRegisterNum(parameters[0]) << 8;
-		if (getRegisterNum(parameters[1]) == -1)
+		if (getRegisterNum(parameters[1]) == -1) // NN as the second parameter
+		{
 			return 0x3000 | opcode | decodeNN(parameters[1]);
+		}
 		return 0x5000 | opcode | (getRegisterNum(parameters[1]) << 4);
 	} if (instruction == "SKNE")
 	{
+		if (parameters.size() != 2)
+			throw std::invalid_argument("`SKNE` instruction should only have two parameters");
+		if (getRegisterNum(parameters[0]) == -1)
+			throw std::invalid_argument(format("First parameter `{}` in `SKNE` has to be a register", parameters[0]));
+
 		// Move the VX register into place
 		int opcode = getRegisterNum(parameters[0]) << 8;
 		if (getRegisterNum(parameters[1]) == -1)
+		{
 			return 0x4000 | opcode | decodeNN(parameters[1]);
+		}
 		return 0x9000 | opcode | (getRegisterNum(parameters[1]) << 4);
 	} if (instruction == "STOR")
 	{
 		if (parameters[0] == "I")
+		{
+			if (getLabelAddress(parameters[1]) == -1)
+				throw std::invalid_argument(format("Label `{}` doesn't exist in `STOR` instruction, after `I`", parameters[1]));
+
 			return 0xA000 | getLabelAddress(parameters[1]);
-		if (parameters[0] == "DT")
+		} if (parameters[0] == "DT")
+		{
+			if (getRegisterNum(parameters[1]) == -1)
+				throw std::invalid_argument(format("Register `{}` doesn't exist in `STOR` instruction, after `DT`", parameters[1]));
+
 			return 0xF015 | (getRegisterNum(parameters[1]) << 8);
-		if (parameters[0] == "ST")
+		} if (parameters[0] == "ST")
+		{
+			if (getRegisterNum(parameters[1]) == -1)
+				throw std::invalid_argument(format("Register `{}` doesn't exist in `STOR` instruction, after `ST`", parameters[1]));
+
 			return 0xF018 | (getRegisterNum(parameters[1]) << 8);
+		}
 		else
 		{
 			if (parameters[1] == "DT")
+			{
+				if (getRegisterNum(parameters[0]) == -1)
+					throw std::invalid_argument(format("Register `{}` doesn't exist in `STOR` instruction, before `DT`", parameters[0]));
+
 				return 0xF007 | (getRegisterNum(parameters[0]) << 8);
-			if (getRegisterNum(parameters[1]) == -1)
+			} if (getRegisterNum(parameters[1]) == -1)
+			{
+				if (getRegisterNum(parameters[0]) == -1)
+					throw std::invalid_argument(format("Register `{}` doesn't exist in `STOR` instruction", parameters[0]));
+
 				return 0x6000 | (getRegisterNum(parameters[0]) << 8) | decodeNN(parameters[1]);
+			} if (getRegisterNum(parameters[0]) == -1)
+				throw std::invalid_argument(format("Register `{}` doesn't exist in `STOR` instruction", parameters[0]));
+
 			return 0x8000 | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4);
 		}
 	} if (instruction == "ADD")
 	{
 		if (parameters[0] == "I")
+		{
+			if (getRegisterNum(parameters[1]) == -1)
+				throw std::invalid_argument(format("Register `{}` doesn't exist in `ADD` instruction", parameters[1]));
+
 			return 0xF01E | (getRegisterNum(parameters[1]) << 8);
-		if (getRegisterNum(parameters[1]) == -1)
-			// TODO: Fix this?? getting a -0FA for 7006
+		} if (getRegisterNum(parameters[1]) == -1)
+		{
+			if (getRegisterNum(parameters[0]) == -1)
+				throw std::invalid_argument(format("Register `{}` doesn't exist in `ADD` instruction", parameters[0]));
+
 			return 0x7000 | (getRegisterNum(parameters[0]) << 8) | decodeNN(parameters[1]);
+		} if (getRegisterNum(parameters[0]) == -1)
+			throw std::invalid_argument(format("Register `{}` doesn't exist in `ADD` instruction", parameters[0]));
+
 		return 0x8004 | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4);
 	}  if (instruction == "OR")
+	{
+		if (getRegisterNum(parameters[0]) == -1)
+			throw std::invalid_argument(format("Register `{}` doesn't exist in `OR` instruction", parameters[0]));
+		if (getRegisterNum(parameters[1]) == -1)
+			throw std::invalid_argument(format("Register `{}` doesn't exist in `OR` instruction", parameters[1]));
+
 		return 0x8001 | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4);
-	if (instruction == "AND")
+	} if (instruction == "AND")
+	{
+		if (getRegisterNum(parameters[0]) == -1)
+			throw std::invalid_argument(format("Register `{}` doesn't exist in `AND` instruction", parameters[0]));
+		if (getRegisterNum(parameters[1]) == -1)
+			throw std::invalid_argument(format("Register `{}` doesn't exist in `AND` instruction", parameters[1]));
+
 		return 0x8002 | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4);
-	if (instruction == "XOR")
+	} if (instruction == "XOR")
+	{
+		if (getRegisterNum(parameters[0]) == -1)
+			throw std::invalid_argument(format("Register `{}` doesn't exist in `XOR` instruction", parameters[0]));
+		if (getRegisterNum(parameters[1]) == -1)
+			throw std::invalid_argument(format("Register `{}` doesn't exist in `XOR` instruction", parameters[1]));
+
 		return 0x8003 | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4);
-	if (instruction == "SUBR")
+	} if (instruction == "SUBR")
+	{
+		if (getRegisterNum(parameters[0]) == -1)
+			throw std::invalid_argument(format("Register `{}` doesn't exist in `SUBR` instruction", parameters[0]));
+		if (getRegisterNum(parameters[1]) == -1)
+			throw std::invalid_argument(format("Register `{}` doesn't exist in `SUBR` instruction", parameters[1]));
+
 		return 0x8005 | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4);
-	if (instruction == "SUBL")
+	} if (instruction == "SUBL")
+	{
+		if (getRegisterNum(parameters[0]) == -1)
+			throw std::invalid_argument(format("Register `{}` doesn't exist in `SUBL` instruction", parameters[0]));
+		if (getRegisterNum(parameters[1]) == -1)
+			throw std::invalid_argument(format("Register `{}` doesn't exist in `SUBL` instruction", parameters[1]));
+
 		return 0x8007 | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4);
+	}
 	if (instruction == "RAND")
+	{
+		if (getRegisterNum(parameters[0]) == -1)
+			throw std::invalid_argument(format("Register `{}` doesn't exist in `RAND` instruction", parameters[0]));
+
 		return 0xC000 | (getRegisterNum(parameters[0]) << 8) | decodeNN(parameters[1]);
+	}
 	if (instruction == "DRAW")
+	{
+		if (getRegisterNum(parameters[0]) == -1)
+			throw std::invalid_argument(format("Register `{}` doesn't exist in `DRAW` instruction", parameters[0]));
+		if (getRegisterNum(parameters[1]) == -1)
+			throw std::invalid_argument(format("Register `{}` doesn't exist in `DRAW` instruction", parameters[1]));
+
 		return 0xD000 | (getRegisterNum(parameters[0]) << 8) | (getRegisterNum(parameters[1]) << 4) | decodeN(parameters[2]);
+	}
 	if (instruction == "SKK")
+	{
+		if (getRegisterNum(parameters[0]) == -1)
+			throw std::invalid_argument(format("Register `{}` doesn't exist in `SKK` instruction", parameters[0]));
+
 		return 0xE09E | (getRegisterNum(parameters[0]) << 8);
+	}
 	if (instruction == "SKNK")
+	{
+		if (getRegisterNum(parameters[0]) == -1)
+			throw std::invalid_argument(format("Register `{}` doesn't exist in `SKNK` instruction", parameters[0]));
+
 		return 0xE0A1 | (getRegisterNum(parameters[0]) << 8);
+	}
 	if (instruction == "KEY")
+	{
+		if (getRegisterNum(parameters[0]) == -1)
+			throw std::invalid_argument(format("Register `{}` doesn't exist in `KEY` instruction", parameters[0]));
+
 		return 0xF00A | (getRegisterNum(parameters[0]) << 8);
+	}
 	if (instruction == "CHAR")
+	{
+		if (getRegisterNum(parameters[0]) == -1)
+			throw std::invalid_argument(format("Register `{}` doesn't exist in `CHAR` instruction", parameters[0]));
+
 		return 0xF029 | (getRegisterNum(parameters[0]) << 8);
+	}
 	if (instruction == "BCD")
+	{
+		if (getRegisterNum(parameters[0]) == -1)
+			throw std::invalid_argument(format("Register `{}` doesn't exist in `BCD` instruction", parameters[0]));
+
 		return 0xF033 | (getRegisterNum(parameters[0]) << 8);
+	}
 	if (instruction == "SMEM")
+	{
+		if (getRegisterNum(parameters[0]) == -1)
+			throw std::invalid_argument(format("Register `{}` doesn't exist in `SMEM` instruction", parameters[0]));
+
 		return 0xF055 | (getRegisterNum(parameters[0]) << 8);
+	}
 	if (instruction == "LMEM")
+	{
+		if (getRegisterNum(parameters[0]) == -1)
+			throw std::invalid_argument(format("Register `{}` doesn't exist in `LMEM` instruction", parameters[0]));
+
 		return 0xF065 | (getRegisterNum(parameters[0]) << 8);
+	}
 	if (instruction == "BYTES")
 	{
-		// HACK: This is a mess but oh well
+		// HACK:
 		for (int ind = 0; ind < parameters.size()-1; ind++)
 			binary_program.push_back(decodeNN(parameters[ind]));
 
@@ -250,7 +400,7 @@ int Assembler::getLabelAddress(string label)
 			return get<1>(tup);
 	}
 
-	throw std::invalid_argument(format("Label doesn't exist: '{}'", label));
+	return -1;
 }
 
 int Assembler::getRegisterNum(string reg)
@@ -273,18 +423,28 @@ int Assembler::getRegisterNum(string reg)
 		return -1;
 }
 
+// TODO: probably don't have the error thing inside this function bc now idk the instruction being run
+// TODO: Add back the try catch statement to add better readability for the errors that might throw
 int Assembler::decodeNN(string num)
 {
 	unsigned int n;
+	size_t len = 0;
+
 	if (num.substr(0, 2) == "0x")
-		n = std::stoul(num, nullptr, 16);
+		n = std::stoul(num, &len, 16);
 	else if (num.substr(0, 2) == "0b")
-		n = std::stoul(num, nullptr, 2);
+		n = std::stoul(num, &len, 2);
 	else
-		n = std::stoul(num, nullptr, 10);
+		n = std::stoul(num, &len, 10);
+
+	if (len != num.size())
+		throw std::invalid_argument(format("`{}` cannot be decoded", num));
 
 	if (n > 0xFF)
-		throw std::invalid_argument(format("Number is over 2 bytes: '{}'", n));
+		throw std::invalid_argument(format("`{}` cannot be over 1 byte", num));
+
+	if (n < 0)
+		throw std::invalid_argument(format("`{}` cannot be negative", num));
 
 	return n;
 }
@@ -292,15 +452,23 @@ int Assembler::decodeNN(string num)
 int Assembler::decodeN(string num)
 {
 	unsigned int n;
+	size_t len = 0;
+
 	if (num.substr(0, 2) == "0x")
-		n = std::stoul(num, nullptr, 16);
+		n = std::stoul(num, &len, 16);
 	else if (num.substr(0, 2) == "0b")
-		n = std::stoul(num, nullptr, 2);
+		n = std::stoul(num, &len, 2);
 	else
-		n = std::stoul(num, nullptr, 10);
+		n = std::stoul(num, &len, 10);
+
+	if (len != num.size())
+		throw std::invalid_argument(format("`{}` cannot be decoded", num));
 
 	if (n > 0xF)
-		throw std::invalid_argument(format("Number is over 1 byte: '{}'", n));
+		throw std::invalid_argument(format("`{}` cannot be over 4 bits", num));
+
+	if (n < 0)
+		throw std::invalid_argument(format("`{}` cannot be negative", num));
 
 	return n;
 }
