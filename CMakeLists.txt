@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 4.2)
 project(Chip_8)
-project(Debug_Chip_8)
+project(Debugger)
+project(Assembler)
 
 find_package(raylib 6.0 REQUIRED)
 
@@ -11,6 +12,7 @@ add_compile_definitions(SUPER_CHIP)
 
 set(CMAKE_CXX_STANDARD 20)
 
+# Emulator
 add_executable(Chip_8 src/emulator/main.cpp
         src/emulator/chip8.cpp
 		src/emulator/graphics.cpp
@@ -20,8 +22,10 @@ add_executable(Chip_8 src/emulator/main.cpp
 
 target_include_directories(Chip_8 PRIVATE include/emulator/)
 target_link_libraries(Chip_8 raylib)
+target_include_directories(Chip_8 PRIVATE include/emulator/)
 
-add_executable(Debug_Chip_8 src/emulator/main.cpp
+# Debugger
+add_executable(Debugger src/emulator/main.cpp
         src/emulator/chip8.cpp
 		src/emulator/graphics.cpp
 		src/emulator/debugger.cpp
@@ -30,8 +34,14 @@ add_executable(Debug_Chip_8 src/emulator/main.cpp
 		include/emulator/debugger.hpp
 	)
 
+target_link_libraries(Debugger raylib)
+target_include_directories(Debugger PRIVATE include/emulator/)
+target_compile_definitions(Debugger PRIVATE DEBUGGER)
 
-target_include_directories(Debug_Chip_8 PRIVATE include/emulator/)
-target_link_libraries(Debug_Chip_8 raylib)
+# Assembler
+add_executable(Assembler src/assembler/main.cpp
+		src/assembler/assembler.cpp
+		include/assembler/assembler.hpp
+	)
 
-target_compile_definitions(Debug_Chip_8 PRIVATE DEBUGGER)
+target_include_directories(Assembler PRIVATE include/assembler/)

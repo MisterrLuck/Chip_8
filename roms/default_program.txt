@@ -67,7 +67,7 @@ A204 # The first letter
 # {
 D01F # draw a letter in CHIP
 8024 # move the x to the next position
-F41E # offset the index by 16
+F41E # offset the index by 15
 8355 # decrement V3, the counter
 3300 # Skip if counter is at 0
 1282 # Loop
