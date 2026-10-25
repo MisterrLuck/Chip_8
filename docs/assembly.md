@@ -24,6 +24,7 @@ Here is the assembly language.
 | 8XY7 | SUBL  VX, VY  | VX = VY - VX |
 | 9XY0 | SKNE  VX, VY  | |
 | ANNN | STOR   I, NNN | I = NNN |
+| BNNN | JUMPO  NNN    | JMP V0 + NNN |
 | CXNN | RAND   VX, NN | VX = rand(NN)| 
 | DXYN | DRAW  VX, VY, N  | |
 | EX9E | SKK   VX      | |
@@ -47,7 +48,5 @@ These opcodes depend on the [settings you have configured](configuration.md).
 | 8XY6 | SHR  VX     | VX = VX >> 1 | 
 | 8XYE | SHL  VX, VY | VX = VY << 1 |
 | 8XYE | SHL  VX     | VX = VX << 1 |
-| BNNN | JUMPO  VX, NNN| JMP VX + NNN |
-| BNNN | JUMPO  NNN    | JMP V0 + NNN |
 
 
