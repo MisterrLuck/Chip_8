@@ -3,6 +3,8 @@
 #include <thread>
 #include <string>
 
+#include "CLI11.hpp"
+
 #ifdef DEBUGGER
 #include "debugger.hpp"
 #endif
@@ -12,29 +14,73 @@
 using std::cout, std::string, std::cerr;
 
 
+const int INST_PER_SECOND = 700; // 700 instructions per second
+const int MICROSECONDS_PER_INST = 1000000 / INST_PER_SECOND;
+
+const int CLOCK_TICK_PER_SECOND = 60; // 60 Hz (60 times per second)
+const int MICROSECONDS_PER_CLOCK_TICK = 1000000 / CLOCK_TICK_PER_SECOND;
+
+
 // TODO: Use raygui when combining the debugger such into one window (https://github.com/raysan5/raygui)
 // TODO: Interesting chip 8 binary thing (https://github.com/Timendus/chip8-binary-format)
 // TODO: Aseprite to binary data addon
 int main(int argc, char *argv[])
 {
-
-	Chip8 chip8;
-	Graphics graphics;
-	
-// #ifndef DEBUGGER
-	// Get rid of raylib output
 	SetTraceLogLevel(LOG_ERROR); 
-// #endif
 	
-	const int INST_PER_SECOND = 700; // 700 instructions per second
-	const int MICROSECONDS_PER_INST = 1000000 / INST_PER_SECOND;
+	// Argument Parser
+	CLI::App app{"Chip 8: v2.1"};
+	argv = app.ensure_utf8(argv);
 
-	const int CLOCK_TICK_PER_SECOND = 60; // 60 Hz (60 times per second)
-	const int MICROSECONDS_PER_CLOCK_TICK = 1000000 / CLOCK_TICK_PER_SECOND;
+	string file_name = "";
+	app.add_option("file", file_name, "Program to run")
+		->required();
+
+	// Main Options
+	bool debug_flag = false;
+	app.add_flag("-d,--debug", debug_flag, "Run the debugger")
+		->group("Main Options");
+
+
+	// Configuration Options
+	bool cosmic_flag = false;
+	app.add_flag("--cosmic", cosmic_flag, "Run in COSMIC configuration")
+		->group("Configuration Options")
+		->ignore_case();
+
+	bool super_flag = false;
+	app.add_flag("--super,--super-chip", super_flag, "Run in SUPER_CHIP configuration")
+		->group("Configuration Options")
+		->ignore_case();
+
+
+	// Extra Options
+	string background = "#000000";
+	app.add_option("--background", background, "Change the background color")
+		->group("Extra Options")
+		->capture_default_str();
+
+	string foreground = "#FFFFFF";
+	app.add_option("--foreground", foreground, "Change the foreground color")
+		->group("Extra Options")
+		->capture_default_str();
+
+	int pixel_size = 20;
+	app.add_option("--size,--pixel-size", pixel_size, "Change the pixel size")
+		->group("Extra Options")
+		->capture_default_str();
+
+	CLI11_PARSE(app, argc, argv);
+
+	return 0;
 
 	// Initialization
+	Chip8 chip8;
 	chip8.init();
+
+	Graphics graphics;
 	graphics.init(20, ORANGE, MAROON);
+
 
 	if (argc > 1)
 	{
@@ -58,10 +104,6 @@ int main(int argc, char *argv[])
 
 	while (!WindowShouldClose())
 	{
-		// TODO: Cap everything to 60Hz, makes it easier to update timers.
-		// 15 IPF for the draw wait quirk
-		//
-		// pythons time.time()
 		std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
 		chip8.emulateCycle();
