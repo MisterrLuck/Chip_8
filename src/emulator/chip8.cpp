@@ -309,7 +309,6 @@ void Chip8::emulateCycle()
 				case 0x000A: // 0xFX0A : Wait until key is pressed
 				{
 					int key = keyPressed();
-					// cout << "Key: " << key << "\n";
 					if (key != -1)
 						V[X] = key;
 					else
@@ -360,10 +359,6 @@ void Chip8::emulateCycle()
 			}
 		break;
 	}
-
-#ifdef DEBUG
-	cout << "[" << std::format("{:x}", pc) << "]: " << std::format("{:x}", opcode) << endl;
-#endif
 
 	if (inc_pc)
 		pc += 2;

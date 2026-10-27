@@ -2,16 +2,14 @@
 #include <chrono>
 #include <thread>
 #include <string>
+#include <vector>
 
 #include "CLI11.hpp"
 
-#ifdef DEBUGGER
 #include "debugger.hpp"
-#endif
-
 #include "chip8.hpp"
 #include "graphics.hpp"
-using std::cout, std::string, std::cerr;
+using std::cout, std::string, std::cerr, std::vector;
 
 
 const int INST_PER_SECOND = 700; // 700 instructions per second
@@ -19,6 +17,20 @@ const int MICROSECONDS_PER_INST = 1000000 / INST_PER_SECOND;
 
 const int CLOCK_TICK_PER_SECOND = 60; // 60 Hz (60 times per second)
 const int MICROSECONDS_PER_CLOCK_TICK = 1000000 / CLOCK_TICK_PER_SECOND;
+
+
+void argsSettings(CLI::App* app, int argc, char *argv[]);
+
+// Argument Variables
+string file_name = "";
+
+bool debug_flag = false;
+bool cosmic_flag = false;
+bool super_flag = false;
+
+vector<unsigned char> background = {0, 0, 0};
+vector<unsigned char> foreground = {0xFF, 0xFF, 0xFF};
+int pixel_size = 20;
 
 
 // TODO: Use raygui when combining the debugger such into one window (https://github.com/raysan5/raygui)
@@ -29,82 +41,44 @@ int main(int argc, char *argv[])
 	SetTraceLogLevel(LOG_ERROR); 
 	
 	// Argument Parser
-	CLI::App app{"Chip 8: v2.1"};
-	argv = app.ensure_utf8(argv);
-
-	string file_name = "";
-	app.add_option("file", file_name, "Program to run")
-		->required();
-
-	// Main Options
-	bool debug_flag = false;
-	app.add_flag("-d,--debug", debug_flag, "Run the debugger")
-		->group("Main Options");
-
-
-	// Configuration Options
-	bool cosmic_flag = false;
-	app.add_flag("--cosmic", cosmic_flag, "Run in COSMIC configuration")
-		->group("Configuration Options")
-		->ignore_case();
-
-	bool super_flag = false;
-	app.add_flag("--super,--super-chip", super_flag, "Run in SUPER_CHIP configuration")
-		->group("Configuration Options")
-		->ignore_case();
-
-
-	// Extra Options
-	string background = "#000000";
-	app.add_option("--background", background, "Change the background color")
-		->group("Extra Options")
-		->capture_default_str();
-
-	string foreground = "#FFFFFF";
-	app.add_option("--foreground", foreground, "Change the foreground color")
-		->group("Extra Options")
-		->capture_default_str();
-
-	int pixel_size = 20;
-	app.add_option("--size,--pixel-size", pixel_size, "Change the pixel size")
-		->group("Extra Options")
-		->capture_default_str();
-
+	CLI::App app{"Chip 8: Ver 2.1"};
+	argsSettings(&app, argc, argv);
 	CLI11_PARSE(app, argc, argv);
 
-	return 0;
+	Color background_color = (Color) {background[0], background[1], background[2], 255};
+	Color foreground_color = (Color) {foreground[0], foreground[1], foreground[2], 255};
+
 
 	// Initialization
 	Chip8 chip8;
 	chip8.init();
 
 	Graphics graphics;
-	graphics.init(20, ORANGE, MAROON);
+	graphics.init(pixel_size, background_color, foreground_color);
+
+	// Debugger debugger;
 
 
-	if (argc > 1)
-	{
-		bool loaded = chip8.loadProgram(string(argv[1]));
+	// Load the Program
+	bool loaded = chip8.loadProgram(file_name);
 
-		if (!loaded)
-			return -1;
-	}
-	else
-	{
-		cerr << "No program provided\n";
+	if (!loaded)
 		return -1;
-	}
 	
-#ifdef DEBUGGER
-	Debugger debugger;
-	debugger.init(&chip8);
-	if (!debugger.prompt())
-		return 0;
-#endif
 
+	// Setup Debugger
+	if (debug_flag)
+	{
+		// debugger.init(&chip8);
+		// if (!debugger.prompt())
+		// 	return 0;
+	}
+
+	// Main Loop
 	while (!WindowShouldClose())
 	{
 		std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
 
 		chip8.emulateCycle();
 
@@ -112,13 +86,11 @@ int main(int argc, char *argv[])
 		if (chip8.draw_flag)
 			graphics.updateFrame(chip8.gfx);
 
-		// TODO: Without draw flag, there is a speed issue; which also affects the timers
-		// Timing for ~accurate speed of processing
+
 		std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 		int inst_duration = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
 
 		int remaining_inst_time = MICROSECONDS_PER_INST - inst_duration;
-		cout << remaining_inst_time << "\n";
 
 		// MICROSECONDS_PER_INST is just the amount of time that has passed
 		chip8.updateTimers(MICROSECONDS_PER_CLOCK_TICK, MICROSECONDS_PER_INST);
@@ -128,14 +100,51 @@ int main(int argc, char *argv[])
 			// Sleep for the remaining time to attempt ints per second
 			std::this_thread::sleep_for(std::chrono::microseconds(remaining_inst_time));
 
-		// cout << remaining_inst_time << "\n";
 
-#ifdef DEBUGGER
-		if (!debugger.prompt())
-			return 0;
-#endif
+		if (debug_flag)
+		{
+			// if (!debugger.prompt())
+			// 	return 0;
+		}
 	}
 	
 	return 0;
 }
 
+
+void argsSettings(CLI::App* app, int argc, char *argv[])
+{
+	argv = app->ensure_utf8(argv);
+
+	app->add_option("file_path", file_name, "Program to run")
+		->required();
+
+	// Main Options
+	app->add_flag("-d,--debug", debug_flag, "Run the program in debug");
+
+
+	// Configuration Options
+	app->add_flag("--cosmic", cosmic_flag, "Run in COSMIC configuration")
+		->group("Configuration Options")
+		->ignore_case();
+
+	app->add_flag("--super,--super-chip", super_flag, "Run in SUPER_CHIP configuration")
+		->group("Configuration Options")
+		->ignore_case();
+
+
+	// Extra Options
+	app->add_option("--background", background, "Change the background color")
+		->group("Extra Options")
+		->capture_default_str()
+		->expected(3);
+
+	app->add_option("--foreground", foreground, "Change the foreground color")
+		->group("Extra Options")
+		// ->capture_default_str()
+		->expected(3);
+
+	app->add_option("--size,--pixel-size", pixel_size, "Change the pixel size")
+		->group("Extra Options")
+		->capture_default_str();
+}
