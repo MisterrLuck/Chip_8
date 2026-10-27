@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "CLI11.hpp"
+#include "config.hpp"
 
 #include "debugger.hpp"
 #include "chip8.hpp"
@@ -50,8 +51,10 @@ int main(int argc, char *argv[])
 
 
 	// Initialization
+	Config config = flagsToConfig(cosmic_flag, super_flag);
+
 	Chip8 chip8;
-	chip8.init();
+	chip8.init(config);
 
 	Graphics graphics;
 	graphics.init(pixel_size, background_color, foreground_color);
@@ -124,24 +127,24 @@ void argsSettings(CLI::App* app, int argc, char *argv[])
 
 
 	// Configuration Options
+	#define CONFIG_GROUP_NAME "Configuration Options: Only one flag can be set"
+
 	app->add_flag("--cosmic", cosmic_flag, "Run in COSMIC configuration")
-		->group("Configuration Options")
+		->group(CONFIG_GROUP_NAME)
 		->ignore_case();
 
 	app->add_flag("--super,--super-chip", super_flag, "Run in SUPER_CHIP configuration")
-		->group("Configuration Options")
+		->group(CONFIG_GROUP_NAME)
 		->ignore_case();
 
 
 	// Extra Options
 	app->add_option("--background", background, "Change the background color")
 		->group("Extra Options")
-		->capture_default_str()
 		->expected(3);
 
 	app->add_option("--foreground", foreground, "Change the foreground color")
 		->group("Extra Options")
-		// ->capture_default_str()
 		->expected(3);
 
 	app->add_option("--size,--pixel-size", pixel_size, "Change the pixel size")

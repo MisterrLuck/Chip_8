@@ -2,22 +2,11 @@
 #define SCREEN_WIDTH 64
 #define SCREEN_HEIGHT 32
 
+#include "config.hpp"
+
 #include <string>
 using std::string;
 
-#ifdef COSMIC
-#define SHIFT
-#define JUMP_OFFSET
-#define REG_MEMORY_INDEX
-#define BOOLEAN_RESET
-#endif
-
-#ifdef SUPER_CHIP
-#undef SHIFT
-#undef JUMP_OFFSET
-#undef REG_MEMORY_INDEX
-#undef BOOLEAN_RESET
-#endif
 
 class Chip8
 {
@@ -27,7 +16,8 @@ public:
 	// TODO: Include sha hash thingy with metadata about the program (https://github.com/chip-8/chip-8-database)
 	bool loadProgram(string program);
 
-	void init();
+	void init(Config config);
+	void setConfig(Config config);
 	void emulateCycle();
 
 	void clearScreen();
@@ -84,24 +74,8 @@ public:
 	// TODO: Change names based on the 'standard' (https://github.com/chip-8/chip-8-database)
 
 	// Configurations / Quirks
-#ifdef SHIFT
-	bool OG_SHIFT = true;
-#else
-	bool OG_SHIFT = false;
-#endif
-#ifdef JUMP_OFFSET
-	bool OG_JUMP_OFFSET = true;
-#else
-	bool OG_JUMP_OFFSET = false;
-#endif
-#ifdef REG_MEMORY_INDEX
-	bool OG_REG_MEMORY_INDEX = true;
-#else
-	bool OG_REG_MEMORY_INDEX = false;
-#endif
-#ifdef BOOLEAN_RESET
-	bool OG_BOOLEAN_RESET = true;
-#else
-	bool OG_BOOLEAN_RESET = false;
-#endif
+	bool OG_SHIFT;
+	bool OG_JUMP_OFFSET;
+	bool OG_REG_MEMORY_INDEX;
+	bool OG_BOOLEAN_RESET;
 };

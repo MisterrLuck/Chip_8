@@ -15,8 +15,10 @@
 // using namespace std;
 using std::cout, std::endl;
 
-void Chip8::init()
+void Chip8::init(Config config)
 {
+	setConfig(config);
+
 	// Reset variables
 	pc = 0x200;
 	opcode = 0;
@@ -48,6 +50,26 @@ void Chip8::init()
 		memory[ind + 0x50] = chip8_fontset[ind];
 }
 
+void Chip8::setConfig(Config config)
+{
+	switch (config)
+	{
+		case Config::COSMIC:
+			OG_SHIFT = true;
+			OG_JUMP_OFFSET = true;
+			OG_REG_MEMORY_INDEX = true;
+			OG_BOOLEAN_RESET = true;
+		break;
+
+		case Config::SUPER_CHIP:
+			OG_SHIFT = false;
+			OG_JUMP_OFFSET = false;
+			OG_REG_MEMORY_INDEX = false;
+			OG_BOOLEAN_RESET = false;
+		break;
+	}
+}
+
 // TODO: split into two functions; one for the debugger to read, and one for the emulator to fetch
 // TODO: Also in the fetch; increment pc, and then decrement if needed in the instruction. Jumps wont need to decrement bc its already overwritten
 int Chip8::getOpcode(int address) {
@@ -60,11 +82,7 @@ void Chip8::emulateCycle()
 {
 	// TODO: Add reset button to reset the program as it never ends
 	// TODO: Also a stop button obv
-	
-	// NOTE: Timing can vary; standard speed is 700 instructions per second
-	// TODO: Slow down timing to 700 ins/sec
 
-	// NOTE: memory[pc, pc+1] = 0xA520 : (0xA5 << 8) | 0x20 = 0xA520
 	// TODO: Add error manager
 	// with errors for accessing memory out of bounds
 	opcode = getOpcode();
