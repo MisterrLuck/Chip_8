@@ -26,8 +26,7 @@ void argsSettings(CLI::App* app, int argc, char *argv[]);
 string file_name = "";
 
 bool debug_flag = false;
-bool cosmic_flag = false;
-bool super_flag = false;
+Config config = Config::COSMIC;
 
 vector<unsigned char> background = {0, 0, 0};
 vector<unsigned char> foreground = {0xFF, 0xFF, 0xFF};
@@ -51,8 +50,6 @@ int main(int argc, char *argv[])
 
 
 	// Initialization
-	Config config = flagsToConfig(cosmic_flag, super_flag);
-
 	Chip8 chip8;
 	chip8.init(config);
 
@@ -127,15 +124,9 @@ void argsSettings(CLI::App* app, int argc, char *argv[])
 
 
 	// Configuration Options
-	#define CONFIG_GROUP_NAME "Configuration Options: Only one flag can be set"
-
-	app->add_flag("--cosmic", cosmic_flag, "Run in COSMIC configuration")
-		->group(CONFIG_GROUP_NAME)
-		->ignore_case();
-
-	app->add_flag("--super,--super-chip", super_flag, "Run in SUPER_CHIP configuration")
-		->group(CONFIG_GROUP_NAME)
-		->ignore_case();
+    app->add_option("-c,--config", config, "Configuration Version")
+        ->required()
+        ->transform(CLI::CheckedTransformer(CONFIG_CLI_MAP, CLI::ignore_case));
 
 
 	// Extra Options

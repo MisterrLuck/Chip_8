@@ -1,5 +1,9 @@
 #pragma once
 
+#include <string>
+#include <map>
+using std::string, std::map;
+
 // NOTE: This is where to add more configs
 enum class Config
 {
@@ -7,13 +11,7 @@ enum class Config
 	SUPER_CHIP
 };
 
-inline Config flagsToConfig(bool cosmic_flag, bool super_flag)
-{
-	if (cosmic_flag)
-		return Config::COSMIC;
-	if (super_flag)
-		return Config::SUPER_CHIP;
-
-	// NOTE: COSMIC is the default
-	return Config::COSMIC;
-}
+const map<string, Config> CONFIG_CLI_MAP{
+	{"cosmic", Config::COSMIC},
+	{"super_chip", Config::SUPER_CHIP}
+};

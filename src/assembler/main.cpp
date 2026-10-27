@@ -13,8 +13,7 @@ void argsSettings(CLI::App* app, int argc, char *argv[]);
 string input_file = "";
 string output_file = "out.ch8";
 
-bool cosmic_flag = false;
-bool super_flag = false;
+Config config = Config::COSMIC;
 
 
 // TODO: Use std::filesystem to have default output be the input without .asm -> .ch8
@@ -26,8 +25,6 @@ int main(int argc, char *argv[])
 	CLI11_PARSE(app, argc, argv);
 
 	// Init
-	Config config = flagsToConfig(cosmic_flag, super_flag);
-
 	Assembler assembler(config);
 
 	// Loading the Program
@@ -59,11 +56,7 @@ void argsSettings(CLI::App* app, int argc, char *argv[])
 	// Configuration Options
 	#define CONFIG_GROUP_NAME "Configuration Options: Only one flag can be set"
 
-	app->add_flag("--cosmic", cosmic_flag, "Run in COSMIC configuration")
-		->group(CONFIG_GROUP_NAME)
-		->ignore_case();
-
-	app->add_flag("--super,--super-chip", super_flag, "Run in SUPER_CHIP configuration")
-		->group(CONFIG_GROUP_NAME)
-		->ignore_case();
+    app->add_option("-c,--config", config, "Configuration Version")
+        ->required()
+        ->transform(CLI::CheckedTransformer(CONFIG_CLI_MAP, CLI::ignore_case));
 }
