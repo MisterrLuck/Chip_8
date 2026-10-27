@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 	Graphics graphics;
 	graphics.init(pixel_size, background_color, foreground_color);
 
-	// Debugger debugger;
+	Debugger debugger;
 
 
 	// Load the Program
@@ -69,9 +69,9 @@ int main(int argc, char *argv[])
 	// Setup Debugger
 	if (debug_flag)
 	{
-		// debugger.init(&chip8);
-		// if (!debugger.prompt())
-		// 	return 0;
+		debugger.init(&chip8);
+		if (!debugger.prompt())
+			return 0;
 	}
 
 	// Main Loop
@@ -103,8 +103,8 @@ int main(int argc, char *argv[])
 
 		if (debug_flag)
 		{
-			// if (!debugger.prompt())
-			// 	return 0;
+			if (!debugger.prompt())
+				return 0;
 		}
 	}
 	

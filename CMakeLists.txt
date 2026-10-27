@@ -17,8 +17,10 @@ set(CMAKE_CXX_STANDARD 20)
 add_executable(Chip_8 src/emulator/main.cpp
         src/emulator/chip8.cpp
 		src/emulator/graphics.cpp
+		src/emulator/debugger.cpp
         include/emulator/chip8.hpp
 		include/emulator/graphics.hpp
+		include/emulator/debugger.hpp
 	)
 
 target_link_libraries(Chip_8 raylib)
