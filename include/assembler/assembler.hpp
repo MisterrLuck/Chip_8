@@ -2,6 +2,9 @@
 #include <string>
 #include <vector>
 #include <tuple>
+
+#include "CLI11.hpp"
+#include "config.hpp"
 using std::string, std::vector, std::tuple;
 
 
@@ -26,6 +29,9 @@ string strip(const string& str, const string& whitespace = " \t");
 class Assembler
 {
 public:
+	Assembler(Config config);
+	void setConfig(Config config);
+
 	bool loadProgram(string file_name);
 	void assemble();
 	void writeProgram(string file_name);
@@ -61,20 +67,8 @@ public:
 
 
 	// Configurations
-#ifdef SHIFT
-	bool OG_SHIFT = true;
-#else
-	bool OG_SHIFT = false;
-#endif
-#ifdef JUMP_OFFSET
-	bool OG_JUMP_OFFSET = true;
-#else
-	bool OG_JUMP_OFFSET = false;
-#endif
-#ifdef BOOLEAN_RESET
-	bool OG_BOOLEAN_RESET = true;
-#else
-	bool OG_BOOLEAN_RESET = false;
-#endif
+	bool OG_SHIFT;
+	bool OG_JUMP_OFFSET;
+	bool OG_BOOLEAN_RESET;
 };
 

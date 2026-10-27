@@ -8,6 +8,29 @@
 #include <sstream>
 using std::string, std::format, std::cout;
 
+Assembler::Assembler(Config config)
+{
+	setConfig(config);
+}
+
+void Assembler::setConfig(Config config)
+{
+	switch (config)
+	{
+		case Config::COSMIC:
+			OG_SHIFT = true;
+			OG_JUMP_OFFSET = true;
+			OG_BOOLEAN_RESET = true;
+		break;
+
+		case Config::SUPER_CHIP:
+			OG_SHIFT = false;
+			OG_JUMP_OFFSET = false;
+			OG_BOOLEAN_RESET = false;
+		break;
+	}
+}
+
 bool Assembler::loadProgram(string file_name)
 {
 	std::ifstream file(file_name);
