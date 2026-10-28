@@ -362,17 +362,19 @@ void Chip8::emulateCycle()
 				case 0x0055: // 0xFX55 : Loads registers 0-X inclusive in memory at I
 					for (size_t ind = 0; ind <= X; ind++)
 						memory[I + ind] = V[ind];
+					I = I + X;
 
 					if (OG_REG_MEMORY_INDEX)
-						I = I + X + 1;
+						I++;
 				break;
 
 				case 0x0065: // 0xFX65 : Store the memory from I into registers 0-X
 					for (size_t ind = 0; ind <= X; ind++)
 						V[ind] = memory[I + ind];
+					I = I + X;
 
 					if (OG_REG_MEMORY_INDEX)
-						I = I + X + 1;
+						I++;
 				break;
 			}
 		break;

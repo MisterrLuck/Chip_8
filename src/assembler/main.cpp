@@ -54,8 +54,6 @@ void argsSettings(CLI::App* app, int argc, char *argv[])
 
 
 	// Configuration Options
-	#define CONFIG_GROUP_NAME "Configuration Options: Only one flag can be set"
-
     app->add_option("-c,--config", config, "Configuration Version")
         ->required()
         ->transform(CLI::CheckedTransformer(CONFIG_CLI_MAP, CLI::ignore_case));
