@@ -13,7 +13,7 @@ void argsSettings(CLI::App* app, int argc, char *argv[]);
 string input_file = "";
 string output_file = "out.ch8";
 
-Config config = Config::COSMIC;
+Config config = Config::CHIP_8;
 
 
 // TODO: Use std::filesystem to have default output be the input without .asm -> .ch8

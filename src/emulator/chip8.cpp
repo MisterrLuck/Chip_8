@@ -54,14 +54,14 @@ void Chip8::setConfig(Config config)
 {
 	switch (config)
 	{
-		case Config::COSMIC:
+		case Config::CHIP_8:
 			OG_SHIFT = true;
 			OG_JUMP_OFFSET = true;
 			OG_REG_MEMORY_INDEX = true;
 			OG_BOOLEAN_RESET = true;
 		break;
 
-		case Config::SUPER_CHIP:
+		case Config::CHIP_48:
 			OG_SHIFT = false;
 			OG_JUMP_OFFSET = false;
 			OG_REG_MEMORY_INDEX = false;

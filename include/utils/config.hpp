@@ -7,11 +7,11 @@ using std::string, std::map;
 // NOTE: This is where to add more configs
 enum class Config
 {
-	COSMIC,
-	SUPER_CHIP
+	CHIP_8,
+	CHIP_48
 };
 
 const map<string, Config> CONFIG_CLI_MAP{
-	{"cosmic", Config::COSMIC},
-	{"super_chip", Config::SUPER_CHIP}
+	{"chip-8", Config::CHIP_8},
+	{"chip-48", Config::CHIP_48}
 };

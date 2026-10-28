@@ -26,7 +26,7 @@ void argsSettings(CLI::App* app, int argc, char *argv[]);
 string file_name = "";
 
 bool debug_flag = false;
-Config config = Config::COSMIC;
+Config config = Config::CHIP_8;
 
 vector<unsigned char> background = {0, 0, 0};
 vector<unsigned char> foreground = {0xFF, 0xFF, 0xFF};
