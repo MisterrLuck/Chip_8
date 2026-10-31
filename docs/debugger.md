@@ -1,48 +1,51 @@
 # Debugger
 
-This custom debugger allows for viewing code easier, with a distinct separation between opcodes and sprite data.
+The custom debugger allows for command inputs after every instruction.
+
+The debugger employs a custom algorithm to search through the program and classify each byte as either code or sprite data.
+When printing out the program, there is a distinct separation between opcodes and sprite data.
+
+> This doesn't work with the BNNN instruction, so issues may arise.
 
 
-## Usage
+## Prompt
 
-By default, the CMakeLists file will compile both a debugger and non debugger version of the emulator. Run the debugger version just like you would the normal version.
+When the prompt appears, enter a character corresponding to the command you are trying to do.
+Some commands involve a parameter, which you can enter right after the character.
 
-```bash
-./Debug_Chip_8 ../roms/myRom.ch8
+All of these are correct ways to enter a parameter.
+
+```
+>>b 290
+```
+```
+>>b340
+```
+```
+>>d
+31A
 ```
 
-It will then prompt you for commands at every instruction.
+Each parameter is listed as either decimal or hexadecimal. You don't need to add any identifiers to the beginning like `0x`.
 
 
 ## List of commands
 
-You can only enter one character for commands.
-
 
 | Command | Description | Parameter |
 |:-------:|-----------|-------------|
-| d       | Delete a breakpoint                                   | Address to delete in hexadecimal |
-| l       | Print number of instructions from the current address | How many lines to print |
-| b       | Add a breakpoint                                      | Breakpoint address to add |
-| m       | Address in memory to print                            | Print the value in memory at a given address |
-| i       | Print out all current breakpoints                     | None |
-| p       | print out the entire program                          | None |
-| n       |  run the next opcode                                  | None |
-| o       | Print opcode that just ran                            | None |
-| v       | Print all registers (V + I)                           | None |
-| a       | Print current address and current opcode about to run | None |
-| t       | Print both timers                                     | None |
-| c       | Continue the program to the end or until a breakpoint | None |
-| e       | exit the program                                      | None |
+| p       | Print out the entire program                          | N/A |
+| l       | Print number of instructions from the current address | How many lines to print (decimal) |
+| a       | Print current opcode about to run                     | N/A |
+| o       | Print opcode that just ran                            | N/A |
+| v       | Print all registers (V0-VF, I)                        | N/A |
+| t       | Print both timers                                     | N/A |
+| m       | Print address in memory to                            | Print the value in memory at a given address (hexadecimal) |
+| i       | Print all breakpoints                                 | N/A |
+| b       | Add a breakpoint                                      | Address to add (hexadecimal) |
+| d       | Delete a breakpoint                                   | Address to delete (hexadecimal) |
+| n       | Run just the next opcode                              | N/A |
+| c       | Continue the program to the end or until a breakpoint | N/A |
+| e       | exit the program                                      | N/A |
 
 
-
-## Specs?
-
-The debugger will disassemble the given code to make it easier to debug. It first branches through the program to see which bytes are opcodes, and which is sprite data.
-
-> This may be wrong because of the BNNN instruction, which allows for different jump locations depending on the current state.
-
-It then has a list of locations of the program, and for the data. When printing out the program, it uses these locations for different formatting.
-
-There is also a lookup table where it will convert each opcode to the corrosponding assembly. The assembly documentation can be found [here](assembly.md).

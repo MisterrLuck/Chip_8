@@ -2,44 +2,43 @@
 
 These are the configuration settings for the Chip 8 emulator. Throughout the years there have been many different versions which change the way some instructions work. Depending on the game you are trying to run, you may have to change the settings.
 
+This needs to be updated
+
 
 ## Changing the Configuration
 
-To change a configuration, add this line to the CMakeLists.txt file, replacing the macro name with the setting you want to set
+When running the emulator or assembler, pass the desired configuration as a command line argument.
 
-```CMakeLists.txt
-add_compile_definitions(MACRO_NAME)
+```
+./Chip_8 program.ch8 -c chip-48
 ```
 
+## Implemented Versions
 
-## All Configuration Options
+Here is a list of the current supported implementations of the Chip 8.
 
-Here is a list of all the possible settings changes.
+* Chip 8
+* Chip 48
 
 
-| Macro | Instruction | Defined (Old) | Not Defined (New) |
+## Quirks
+
+Here are all the possible settings that each configuration could change.
+
+
+| Macro | Instruction | Undefined | Defined |
 |-------|-------------|---------|-------------|
 | SHIFT | 8XY6, 8XYE | `VX = VY >> 1`, `VX = VY << 1` | `VX = VX >> 1`, `VX = VX << 1` |
 | JUMP_OFFSET | BNNN | The address offset will be in V0 | The address offset will be in `VX` (BXNN) |
-| REG_MEMORY_INDEX | FX55, FX65 | Index will update to `I + X + 1` by the end | Index will not change |
+| REG_MEMORY_INDEX | FX55, FX65 | Index will update to `I + X + 1` by the end | Index will update to `I + X` by the end |
 | BOOLEAN_RESET| 8XY1, 8XY2, 8XY3 | Will reset the VF register on boolean instructions | Will not reset the VF register on boolean instuctions |
 
 
-When defined, the setting will be the original implementation. When not defined, the setting will be the newer implementation, usually from the CHIP-48 or SUPER-CHIP.
+
+## Quirks in Versions
 
 
-## Recomended Settings
-
-You can define each change individually or you can set the COSMIC or SUPER_CHIP macro to change the settings to a specific version.
-Any other macros that you add will be ignored, and SUPER_CHIP takes priority.
-
-More information on the different version of Chip 8 can be found [here](https://en.wikipedia.org/wiki/CHIP-8#CHIP-8_extensions_and_variations)
-
-## Notes
-
-Most of these changes were changed with the CHIP-48 and the SUPER-CHIP.
-
-
-## Contributing
-
-If you have any examples of which settings certain games need to run, please help out.
+| Version | CLI Flag | Quirks Defined |
+|---------|----------|----------------|
+| Chip 8  | chip-8   | N/A            |
+| Chip 48 | chip-48  | SHIFT, JUMP_OFFSET, REG_MEMORY_INDEX, BOOLEAN_RESET |
