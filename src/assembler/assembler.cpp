@@ -355,8 +355,7 @@ int Assembler::assembleInstruction(string instruction)
 		single_byte = true;
 		return decodeNN(parameters[parameters.size()-1]);
 	}
-
-	return 0;
+	throw std::invalid_argument(format("Unknown instruction `{}`", instruction));
 }
 
 tuple<string, vector<string>> Assembler::splitInstruction(string instruction)
