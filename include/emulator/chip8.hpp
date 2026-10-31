@@ -1,6 +1,7 @@
 #pragma once
 #define SCREEN_WIDTH 64
 #define SCREEN_HEIGHT 32
+#define MEM_SIZE 4096
 
 #include "config.hpp"
 
@@ -31,7 +32,7 @@ public:
 
 	unsigned short opcode;
 
-	unsigned char memory[4096];
+	unsigned char memory[MEM_SIZE];
 	unsigned short gfx[SCREEN_WIDTH * SCREEN_HEIGHT];
 
 	unsigned char V[16];

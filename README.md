@@ -39,7 +39,7 @@ You can also change the Chip 8 version with the configuration flag.
 
 #### Configuration
 
-A list of all the current configuration options can be found [here](docs/configuration.md)
+A list of all the current configuration options can be found [here](docs/configuration.md).
 
 ### Debugger
 
@@ -56,9 +56,9 @@ A list of all the instructions for the debugger can be found [here](docs/debugge
 
 An assembler is also provided separately from the emulator.
 
-It is a custom made assembly language and **not** an octo assembler. The reference can be found [here](docs/assembly.md)
+It is a custom made assembly language and **not** an octo assembler. The reference can be found [here](docs/assembly.md).
 
-When it's run with only an input file, the output will default to `out.ch8`
+When it's run with only an input file, the output will default to `out.ch8`.
 
 ```
 ./Assembler myRom.asm
@@ -97,7 +97,7 @@ Or even better, if you want them to have the same name, just provide the input f
 python code_to_rom.py myRom.txt
 ```
 
-This will write to myRom.ch8
+This will write to myRom.ch8.
 
 The converter also allows you to document your code with comments, using `#`.
 

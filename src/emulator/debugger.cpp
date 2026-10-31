@@ -1,4 +1,5 @@
 #include "debugger.hpp"
+#include "chip8.hpp"
 
 #include <iostream>
 #include <string>
@@ -130,7 +131,7 @@ bool Debugger::prompt()
 				
 				unsigned int mem_index = std::stoul(str_index, nullptr, 16);
 				
-				if (mem_index >= 4096)
+				if (mem_index >= MEM_SIZE)
 					cout << "Out of bounds\n";
 				else
 					cout << format("Mem{{0x{:x}}}: {}\n", mem_index, static_cast<unsigned int>(chip8->memory[mem_index]));
@@ -288,7 +289,7 @@ void Debugger::printProgram()
 
 void Debugger::getProgramEnd()
 {
-	const int MEMORY_END = 4096;
+	const int MEMORY_END = MEM_SIZE;
 	int curr_address = 0x200;
 	program_end = curr_address;
 

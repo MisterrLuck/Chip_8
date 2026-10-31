@@ -13,7 +13,7 @@
 #include <cmath>
 
 // using namespace std;
-using std::cout, std::endl;
+using std::cout, std::endl, std::format;
 
 void Chip8::init(Config config)
 {
@@ -42,7 +42,7 @@ void Chip8::init(Config config)
 		V[ind] = 0;
 
 	// Clear memory
-	for (ind = 0; ind < 4096; ind++)
+	for (ind = 0; ind < MEM_SIZE; ind++)
 		memory[ind] = 0;
 
 	// Load fontset:
@@ -107,7 +107,9 @@ void Chip8::emulateCycle()
 				break;
 
 				case 0x00EE: // 0x00EE: Return from subroutine
-					// WARNING: Idk if that will work
+					if (sp <= 0)
+						throw std::invalid_argument(format("Error at 0x{:04x}, opcode `00EE`: No address on the stack", pc));
+
 					pc = stack[--sp]; // Should decrement and then access the stack
 				break;
 			}
@@ -119,6 +121,9 @@ void Chip8::emulateCycle()
 		break;
 
 		case 0x2000: // 0x2NNN : jump to subroutine at address
+			if (sp == 16)
+				throw std::invalid_argument(format("Error at 0x{:04x}, opcode `2NNN`: Stack overflow", pc));
+
 			stack[sp++] = pc; // save the current position, and increment sp
 			pc = NNN;
 			inc_pc = false;
@@ -354,12 +359,18 @@ void Chip8::emulateCycle()
 				break;
 
 				case 0x0033: // 0xFX33 : stores value in VX as BCD
+					if (I + 2 >= MEM_SIZE)
+						throw std::invalid_argument(format("Error at 0x{:04x}, opcode `FX33`: Index register out of memory bounds", pc));
+
 					memory[I] = V[X] / 100;
 					memory[I+1] = (V[X] / 10) % 10;
 					memory[I+2] = (V[X] % 100) % 10;
 				break;
 
 				case 0x0055: // 0xFX55 : Loads registers 0-X inclusive in memory at I
+					if (I + X >= MEM_SIZE)
+						throw std::invalid_argument(format("Error at 0x{:04x}, opcode `FX55`: Index register out of memory bounds", pc));
+					
 					for (size_t ind = 0; ind <= X; ind++)
 						memory[I + ind] = V[ind];
 					I = I + X;
@@ -369,6 +380,9 @@ void Chip8::emulateCycle()
 				break;
 
 				case 0x0065: // 0xFX65 : Store the memory from I into registers 0-X
+					if (I + X >= MEM_SIZE)
+						throw std::invalid_argument(format("Error at 0x{:04x}, opcode `FX65`: Index register out of memory bounds", pc));
+
 					for (size_t ind = 0; ind <= X; ind++)
 						V[ind] = memory[I + ind];
 					I = I + X;
@@ -521,7 +535,7 @@ bool Chip8::loadProgram(string program)
 	std::ifstream input(program, std::ios::binary);
 	if (!input.is_open())
 	{
-		std::cerr << "Unable to find program\n";
+		std::cerr << "Unable to load program\n";
 		return false;
 	}
 
@@ -532,7 +546,7 @@ bool Chip8::loadProgram(string program)
 	input.close();
 
 	// Too big of a program
-	if (bytes.size() + 0x200 > 4096)
+	if (bytes.size() + 0x200 > MEM_SIZE)
 	{
 		std::cerr << "Program is too large\n";
 		return false;
