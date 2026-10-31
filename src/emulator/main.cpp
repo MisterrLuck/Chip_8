@@ -125,7 +125,6 @@ void argsSettings(CLI::App* app, int argc, char *argv[])
 
 	// Configuration Options
     app->add_option("-c,--config", config, "Configuration Version")
-        ->required()
         ->transform(CLI::CheckedTransformer(CONFIG_CLI_MAP, CLI::ignore_case));
 
 
