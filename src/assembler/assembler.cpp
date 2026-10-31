@@ -90,7 +90,6 @@ int Assembler::assembleInstruction(string instruction)
 
 	// TODO: Add to lower for the instruction and parameters
 	// TODO: Add line number or address number probably 
-	// TODO: Add SHL, SHR, and JUMPO
 	// TODO: Move this around to check for each case exactly (param[0] is register && param[1] is NN), and then have general error if no cases
 	if (instruction == "CLS")
 	{
@@ -348,7 +347,7 @@ int Assembler::assembleInstruction(string instruction)
 		return 0xB000 | getLabelAddress(parameters[0]);
 	} if (instruction == "BYTES")
 	{
-		// HACK:
+		// HACK: The single byte thing
 		for (int ind = 0; ind < parameters.size()-1; ind++)
 			binary_program.push_back(decodeNN(parameters[ind]));
 
@@ -383,14 +382,16 @@ tuple<string, vector<string>> Assembler::splitInstruction(string instruction)
 string Assembler::cleanLine(string line)
 {
 	// Removing comments
-	// TODO: Make this work for semicolon comments as well
 	int hash_ind = line.find('#');
-	// int semi_ind = line.find(';');
+	int semi_ind = line.find(';');
 	// std::cout << hash_ind << " " << semi_ind << "\n";
 
 	// int ind = std::min(hash_ind, semi_ind);
-
-	if (hash_ind != string::npos)
+	if (hash_ind != string::npos && semi_ind != string::npos)
+		line = line.substr(0, std::min(hash_ind, semi_ind));
+	else if (semi_ind != string::npos)
+		line = line.substr(0, semi_ind);
+	else if (hash_ind != string::npos)
 		line = line.substr(0, hash_ind);
 
 	// Remove excess whitespace

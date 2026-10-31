@@ -1,6 +1,8 @@
 JUMP start
 
 start:
+	# Make comments with `#`
+	; Or even with `;`
 	CLS
 
 	STOR V0, 0x10
@@ -19,7 +21,7 @@ label:
 	STOR ST, V5
 	STOR V5, DT
 
-	# Any opcode with NNN can be replaced with a label
+	; Any opcode with NNN can be replaced with a label
 	# Can still use direct address probably?
 	STOR I, data_1
 
