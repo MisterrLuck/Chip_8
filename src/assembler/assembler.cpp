@@ -384,9 +384,7 @@ string Assembler::cleanLine(string line)
 	// Removing comments
 	int hash_ind = line.find('#');
 	int semi_ind = line.find(';');
-	// std::cout << hash_ind << " " << semi_ind << "\n";
 
-	// int ind = std::min(hash_ind, semi_ind);
 	if (hash_ind != string::npos && semi_ind != string::npos)
 		line = line.substr(0, std::min(hash_ind, semi_ind));
 	else if (semi_ind != string::npos)
@@ -402,18 +400,26 @@ string Assembler::cleanLine(string line)
 
 void Assembler::locateLabels()
 {
+	string dc(" !@#$%^&*()-+={}[]\\|;:'\"<>,.?/`~");
+	vector<char> disallowed_chars(dc.begin(), dc.end());
+
 	int pc = 0x200;
 	for (int line_ind = 0; line_ind < file_contents.size(); line_ind++)
 	{
 		string line = file_contents[line_ind];
 
-		// HACK: Add more checking to prove this is a label!!!!!
+		// Check if current line is a label
 		if (*(line.end()-1) == ':')
-		// check if current line is a label
 		{
-			// TODO: Add Error checking for the label names
+			// Make sure the name is allowed
+			string label_name = line.substr(0, line.size()-1);
+			for (char c : disallowed_chars)
+			{
+			if (label_name.find(c) != std::string::npos)
+				throw std::invalid_argument(format("Label `{}` is not allowed: contains `{}`", label_name, c));
+			}
 
-			tuple<string, int> label_tuple(line.substr(0, line.size()-1), pc);
+			tuple<string, int> label_tuple(label_name, pc);
 			label_locations.push_back(label_tuple);
 
 			// Remove the label in the file
