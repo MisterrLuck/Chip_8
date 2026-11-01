@@ -32,8 +32,6 @@ private:
 
 
 	// NOTE: Should only be run once bc it's probably expensive
-	// TODO: Store the program directly instead of grabbing from memory?
-	// so that it can run seperately from the debugger
 	void disassemble();
 	string disassembleOpcode(int opcode);
 	

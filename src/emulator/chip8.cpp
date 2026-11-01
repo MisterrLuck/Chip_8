@@ -55,17 +55,23 @@ void Chip8::setConfig(Config config)
 	switch (config)
 	{
 		case Config::CHIP_8:
-			OG_SHIFT = true;
-			OG_JUMP_OFFSET = true;
-			OG_REG_MEMORY_INDEX = true;
-			OG_BOOLEAN_RESET = true;
+			Quirk::shiftOnlyVX = false;
+			Quirk::memoryIncrementByX = false;
+			Quirk::memoryLeaveIUnchanged = false;
+			Quirk::drawWrap = false;
+			Quirk::jumpOffsetVX = false;
+			Quirk::drawWait = true;
+			Quirk::bitwiseResetVF = true;
 		break;
 
 		case Config::CHIP_48:
-			OG_SHIFT = false;
-			OG_JUMP_OFFSET = false;
-			OG_REG_MEMORY_INDEX = false;
-			OG_BOOLEAN_RESET = false;
+			Quirk::shiftOnlyVX = true;
+			Quirk::memoryIncrementByX = true;
+			Quirk::memoryLeaveIUnchanged = false;
+			Quirk::drawWrap = false;
+			Quirk::jumpOffsetVX = true;
+			Quirk::drawWait = false;
+			Quirk::bitwiseResetVF = false;
 		break;
 	}
 }
@@ -83,8 +89,6 @@ void Chip8::emulateCycle()
 	// TODO: Add reset button to reset the program as it never ends
 	// TODO: Also a stop button obv
 
-	// TODO: Add error manager
-	// with errors for accessing memory out of bounds
 	opcode = getOpcode();
 
 	int X = (opcode >> 8) & 0xF;
@@ -160,21 +164,21 @@ void Chip8::emulateCycle()
 				break;
 
 				case 0x0001: // 0x8XY1 : VX = VX OR VY
-					if (OG_BOOLEAN_RESET)
-						V[0xF] = 0;
 					V[X] = V[X] | V[Y];
+					if (Quirk::bitwiseResetVF)
+						V[0xF] = 0;
 				break;
 
 				case 0x0002: // 0x8XY2 : VX = VX AND VY
-					if (OG_BOOLEAN_RESET)
-						V[0xF] = 0;
 					V[X] = V[X] & V[Y];
+					if (Quirk::bitwiseResetVF)
+						V[0xF] = 0;
 				break;
 
 				case 0x0003: // 0x8XY3 : VX = VX XOR VY
-					if (OG_BOOLEAN_RESET)
-						V[0xF] = 0;
 					V[X] = V[X] ^ V[Y];
+					if (Quirk::bitwiseResetVF)
+						V[0xF] = 0;
 				break;
 
 				case 0x0004: // 0x8XY4 : VX = VX + VY with carry
@@ -202,15 +206,15 @@ void Chip8::emulateCycle()
 				break;
 
 				case 0x0006: // 0x8XY6 : shift VX right one, move bit to VF
-					if (OG_SHIFT)
-					{
-						int flag = V[Y] & 0b1;
-						V[X] = V[Y] >> 1;
-						V[0xF] = flag;
-					} else
+					if (Quirk::shiftOnlyVX)
 					{
 						int flag = V[X] & 0b1;
 						V[X] >>= 1;
+						V[0xF] = flag;
+					} else
+					{
+						int flag = V[Y] & 0b1;
+						V[X] = V[Y] >> 1;
 						V[0xF] = flag;
 					}
 				break;
@@ -228,15 +232,15 @@ void Chip8::emulateCycle()
 				break;
 
 				case 0x000E: // 0x8XYE : shift VX left one, move bit to VF
-					if (OG_SHIFT)
-					{
-						int flag = (V[Y] & 0x80) >> 7; // leading bit is 1
-						V[X] = V[Y] << 1;
-						V[0xF] = flag;
-					} else
+					if (Quirk::shiftOnlyVX)
 					{
 						int flag = (V[X] & 0x80) >> 7;
 						V[X] <<= 1;
+						V[0xF] = flag;
+					} else
+					{
+						int flag = (V[Y] & 0x80) >> 7; // leading bit is 1
+						V[X] = V[Y] << 1;
 						V[0xF] = flag;
 					}
 				break;
@@ -253,10 +257,10 @@ void Chip8::emulateCycle()
 		break;
 
 		case 0xB000: // 0xBNNN or 0xBXNN : jumps to NNN/XNN with an offset of V0/VX
-			if (OG_JUMP_OFFSET)
-				pc = NNN + V[0];
-			else
+			if (Quirk::jumpOffsetVX)
 				pc = NNN + V[X];
+			else
+				pc = NNN + V[0];
 			inc_pc = false;
 		break;
 
@@ -270,32 +274,47 @@ void Chip8::emulateCycle()
 			draw_flag = true;
 
 			// Sprite data is located at address I, N is the number of bytes / rows
-			int x = V[X] % SCREEN_WIDTH;
-			int y = V[Y] % SCREEN_HEIGHT;
-			
-			V[0xF] = 0; // For collision detection
-			// The height of the sprite
+			int sprite_x_pos = V[X] % SCREEN_WIDTH;
+			int sprite_y_pos = V[Y] % SCREEN_HEIGHT;
+
+			// Reset flag for collision detection
+			V[0xF] = 0;
+
+			// Every row in the sprite
 			for (size_t row = 0; row < N; row++)
 			{
-				// On the bottom of the screen
-				if (y + row >= SCREEN_HEIGHT)
-					break;
+				int pixel_y_pos = sprite_y_pos + row;
 
-				// Current byte of data
-				int byte = memory[I + row];
-				// each bit in byte
-				for (size_t bit_ind = 0; bit_ind < 8; bit_ind++)
-				{
-					// On the edge of the screen
-					if (x + bit_ind >= SCREEN_WIDTH)
+				// On the bottom of the screen
+				if (pixel_y_pos >= SCREEN_HEIGHT)
+					if (Quirk::drawWrap)
+						pixel_y_pos %= SCREEN_HEIGHT;
+					else
 						break;
 
-					// Get the bits from left to right
-					int pixel = (byte >> (7 - bit_ind)) & 0b1;
-					size_t ind = (SCREEN_WIDTH * (y + row)) + (x + bit_ind);
+				// Byte for the current row of the sprite
+				int byte = memory[I + row];
 
-					// WARNING: Idk if this can cause problems
-					// If the bit has flipped; ie both values are 1
+				// Each pixel in the row
+				for (size_t bit_ind = 0; bit_ind < 8; bit_ind++)
+				{
+					int pixel_x_pos = sprite_x_pos + bit_ind;
+
+					// On the edge of the screen
+					if (pixel_x_pos >= SCREEN_WIDTH)
+					{
+						if (Quirk::drawWrap)
+							pixel_x_pos %= SCREEN_WIDTH;
+						else
+							break;
+					}
+
+					// Get the value of the current pixel from the sprite data
+					int pixel = (byte >> (7 - bit_ind)) & 0b1;
+
+					size_t ind = (SCREEN_WIDTH * pixel_y_pos) + pixel_x_pos;
+
+					// If both pixels are on -> collision
 					if (gfx[ind] & pixel != 0)
 						V[0xF] = 1;
 
@@ -373,10 +392,13 @@ void Chip8::emulateCycle()
 					
 					for (size_t ind = 0; ind <= X; ind++)
 						memory[I + ind] = V[ind];
-					I = I + X;
 
-					if (OG_REG_MEMORY_INDEX)
-						I++;
+					if (!Quirk::memoryLeaveIUnchanged)
+					{
+						I += X;
+						if (!Quirk::memoryIncrementByX)
+							I++;
+					}
 				break;
 
 				case 0x0065: // 0xFX65 : Store the memory from I into registers 0-X
@@ -385,10 +407,13 @@ void Chip8::emulateCycle()
 
 					for (size_t ind = 0; ind <= X; ind++)
 						V[ind] = memory[I + ind];
-					I = I + X;
 
-					if (OG_REG_MEMORY_INDEX)
-						I++;
+					if (!Quirk::memoryLeaveIUnchanged)
+					{
+						I += X;
+						if (!Quirk::memoryIncrementByX)
+							I++;
+					}
 				break;
 			}
 		break;

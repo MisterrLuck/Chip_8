@@ -28,6 +28,7 @@ void Graphics::updateFrame(unsigned short *gfx)
 
 		ClearBackground(off_color);
 
+		// TODO: Add redrawing only for the changed pixels; remember to remove the clear background then
 		for (size_t x = 0; x < SCREEN_WIDTH; x++)
 		{
 			for (size_t y = 0; y < SCREEN_HEIGHT; y++)

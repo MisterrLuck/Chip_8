@@ -18,15 +18,11 @@ void Assembler::setConfig(Config config)
 	switch (config)
 	{
 		case Config::CHIP_8:
-			OG_SHIFT = true;
-			OG_JUMP_OFFSET = true;
-			OG_BOOLEAN_RESET = true;
+			Quirk::shiftOnlyVX = false;
 		break;
 
 		case Config::CHIP_48:
-			OG_SHIFT = false;
-			OG_JUMP_OFFSET = false;
-			OG_BOOLEAN_RESET = false;
+			Quirk::shiftOnlyVX = true;
 		break;
 	}
 }
@@ -305,7 +301,7 @@ int Assembler::assembleInstruction(string instruction)
 		return 0xF065 | (getRegisterNum(parameters[0]) << 8);
 	} if (instruction == "SHR")
 	{
-		if (OG_SHIFT)
+		if (Quirk::shiftOnlyVX)
 		{
 			if (getRegisterNum(parameters[0]) == -1)
 				throw std::invalid_argument(format("Register `{}` doesn't exist in `SHR` instruction", parameters[0]));
@@ -322,7 +318,7 @@ int Assembler::assembleInstruction(string instruction)
 		}
 	} if (instruction == "SHL")
 	{
-		if (OG_SHIFT)
+		if (Quirk::shiftOnlyVX)
 		{
 			if (getRegisterNum(parameters[0]) == -1)
 				throw std::invalid_argument(format("Register `{}` doesn't exist in `SHL` instruction", parameters[0]));

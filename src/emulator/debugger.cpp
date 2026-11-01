@@ -8,7 +8,7 @@
 #include <climits>
 using std::cin, std::cout, std::string;
 
-// TODO: Add prompt before the first opcode has run, especially to see if the person wants to run it yet; like in gdb
+
 void Debugger::init(Chip8* chip)
 {
 	chip8 = chip;
@@ -17,7 +17,6 @@ void Debugger::init(Chip8* chip)
 	// Add the location branching functions here
 	locationBranch();
 }
-
 
 bool Debugger::prompt()
 {
@@ -36,11 +35,6 @@ bool Debugger::prompt()
 
 	while (true)
 	{
-		// cin.clear();
-		// cin.ignore(INT_MAX);
-
-		// NOTE: Add breakpoint at 0x4de
-		// Or address 0x508 for key press
 		char command;
 		cout << ">>";
 		cin >> command;
@@ -400,10 +394,10 @@ string Debugger::disassembleOpcode(int opcode)
 				break;
 
 				case 0x0006: // 0x8XY6 : shift VX right one, move bit to VF
-					if (chip8->OG_SHIFT)
-						return format("SHR V{:X}, V{:X}", X, Y);
-					else
+					if (Quirk::shiftOnlyVX)
 						return format("SHR V{:X}", X);
+					else
+						return format("SHR V{:X}, V{:X}", X, Y);
 				break;
 
 				case 0x0007: // 0x8XY7 : VY - VX with underflow
@@ -411,10 +405,10 @@ string Debugger::disassembleOpcode(int opcode)
 				break;
 
 				case 0x000E: // 0x8XYE : shift VX left one, move bit to VF
-					if (chip8->OG_SHIFT)
-						return format("SHL V{:X}, V{:X}", X, Y);
-					else
+					if (Quirk::shiftOnlyVX)
 						return format("SHL V{:X}", X);
+					else
+						return format("SHL V{:X}, V{:X}", X, Y);
 				break;
 			}
 		break;
@@ -428,7 +422,7 @@ string Debugger::disassembleOpcode(int opcode)
 		break;
 
 		case 0xB000: // 0xBNNN or 0xBXNN : jumps to NNN/XNN with an offset of V0/VX
-			if (chip8->OG_JUMP_OFFSET)
+			if (Quirk::jumpOffsetVX)
 				return format("JMPO {:x}", NNN);
 			else
 				return format("JMPO V{:X}, {:x}", X, NNN);
