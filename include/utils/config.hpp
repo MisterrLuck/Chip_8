@@ -17,7 +17,6 @@ const map<string, Config> CONFIG_CLI_MAP{
 	{"chip-48", Config::CHIP_48}
 };
 
-
 // NOTE: Configuration reference (https://chip-8.github.io/extensions/)
 
 // Quirks
@@ -45,9 +44,35 @@ namespace Quirk
 
 	// On  : Opcode `DXYN` waits for vertical blank (so max 60 sprites drawn per second),
 	// Off : Opcode `DXYN` draws immediately (number of sprites drawn per second only limited to number of CPU cycles per frame)
-	static bool drawWait = false; // TODO: To implement
+	static bool drawWait = false;
 
 	// On  : Opcodes `8XY1`, `8XY2` and `8XY3` (OR, AND and XOR) will set `vF` to zero after execution (even if `vF` is the parameter `X`),
 	// Off : Opcodes `8XY1`, `8XY2` and `8XY3` (OR, AND and XOR) will leave `vF` unchanged (unless `vF` is the parameter `X`)
 	static bool bitwiseResetVF = false;
+}
+
+inline void setConfig(Config config)
+{
+	switch (config)
+	{
+		case Config::CHIP_8:
+			Quirk::shiftOnlyVX = false;
+			Quirk::memoryIncrementByX = false;
+			Quirk::memoryLeaveIUnchanged = false;
+			Quirk::drawWrap = false;
+			Quirk::jumpOffsetVX = false;
+			Quirk::drawWait = true;
+			Quirk::bitwiseResetVF = true;
+		break;
+
+		case Config::CHIP_48:
+			Quirk::shiftOnlyVX = true;
+			Quirk::memoryIncrementByX = true;
+			Quirk::memoryLeaveIUnchanged = false;
+			Quirk::drawWrap = false;
+			Quirk::jumpOffsetVX = true;
+			Quirk::drawWait = false;
+			Quirk::bitwiseResetVF = false;
+		break;
+	}
 }

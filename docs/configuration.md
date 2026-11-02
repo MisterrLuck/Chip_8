@@ -26,19 +26,25 @@ Here is a list of the current supported implementations of the Chip 8.
 Here are all the possible settings that each configuration could change.
 
 
-| Macro | Instruction | Undefined | Defined |
+| Name | Affected Instructions | Off | On |
 |-------|-------------|---------|-------------|
-| SHIFT | 8XY6, 8XYE | `VX = VY >> 1`, `VX = VY << 1` | `VX = VX >> 1`, `VX = VX << 1` |
-| JUMP_OFFSET | BNNN | The address offset will be in V0 | The address offset will be in `VX` (BXNN) |
-| REG_MEMORY_INDEX | FX55, FX65 | Index will update to `I + X + 1` by the end | Index will update to `I + X` by the end |
-| BOOLEAN_RESET| 8XY1, 8XY2, 8XY3 | Will reset the VF register on boolean instructions | Will not reset the VF register on boolean instuctions |
+| shiftOnlyVX | 8XY6, 8XYE | Shift instructions take `VY` as the input and `VX` as the output | Shift instructions take `VX` as both the input and output |
+| memoryIncrementByX | FX55, FX66 | Index register `I` will be incremented by `X + 1` by the end | Index register `I` will be incremented by `X` by the end |
+| memoryLeaveIUnchanged | FX55, FX66 | Index register `I` will be incremented | Index register `I` will remain unchanged |
+| drawWrap | DXYN | Sprites will be clipped if drawn on the edge | Sprites will wrap around to the other side when drawn on the edge |
+| jumpOffsetVX | BNNN/BXNN | The address offset will be in `V0` (BNNN) | The address offset will be in `VX` (BXNN) |
+| drawWait | DXYN, 00E0 | Sprites will always be drawn immediately | Only one sprite can be drawn per frame |
+| bitwiseResetVF | 8XY1, 8XY2, 8XY3 | Will not reset the `VF` register on boolean instuctions | Will reset the `VF` register on boolean instructions |
 
 
 
 ## Quirks in Versions
 
+Here are what quirks each version will change.
+
 
 | Version | CLI Flag | Quirks Defined |
 |---------|----------|----------------|
-| Chip 8  | chip-8   | N/A            |
-| Chip 48 | chip-48  | SHIFT, JUMP_OFFSET, REG_MEMORY_INDEX, BOOLEAN_RESET |
+| Chip 8  | chip-8   | drawWait, bitwiseResetVF |
+| Chip 48 | chip-48  | shiftOnlyVX, memoryIncrementByX, jumpOffsetVX |
+

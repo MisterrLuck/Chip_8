@@ -15,10 +15,8 @@
 // using namespace std;
 using std::cout, std::endl, std::format;
 
-void Chip8::init(Config config)
+void Chip8::init()
 {
-	setConfig(config);
-
 	// Reset variables
 	pc = 0x200;
 	opcode = 0;
@@ -50,31 +48,6 @@ void Chip8::init(Config config)
 		memory[ind + 0x50] = chip8_fontset[ind];
 }
 
-void Chip8::setConfig(Config config)
-{
-	switch (config)
-	{
-		case Config::CHIP_8:
-			Quirk::shiftOnlyVX = false;
-			Quirk::memoryIncrementByX = false;
-			Quirk::memoryLeaveIUnchanged = false;
-			Quirk::drawWrap = false;
-			Quirk::jumpOffsetVX = false;
-			Quirk::drawWait = true;
-			Quirk::bitwiseResetVF = true;
-		break;
-
-		case Config::CHIP_48:
-			Quirk::shiftOnlyVX = true;
-			Quirk::memoryIncrementByX = true;
-			Quirk::memoryLeaveIUnchanged = false;
-			Quirk::drawWrap = false;
-			Quirk::jumpOffsetVX = true;
-			Quirk::drawWait = false;
-			Quirk::bitwiseResetVF = false;
-		break;
-	}
-}
 
 // TODO: split into two functions; one for the debugger to read, and one for the emulator to fetch
 // TODO: Also in the fetch; increment pc, and then decrement if needed in the instruction. Jumps wont need to decrement bc its already overwritten

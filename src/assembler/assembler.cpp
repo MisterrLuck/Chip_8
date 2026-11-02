@@ -8,25 +8,6 @@
 #include <sstream>
 using std::string, std::format, std::cout;
 
-Assembler::Assembler(Config config)
-{
-	setConfig(config);
-}
-
-void Assembler::setConfig(Config config)
-{
-	switch (config)
-	{
-		case Config::CHIP_8:
-			Quirk::shiftOnlyVX = false;
-		break;
-
-		case Config::CHIP_48:
-			Quirk::shiftOnlyVX = true;
-		break;
-	}
-}
-
 bool Assembler::loadProgram(string file_name)
 {
 	std::ifstream file(file_name);

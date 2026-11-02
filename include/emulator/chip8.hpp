@@ -17,8 +17,7 @@ public:
 	// TODO: Include sha hash thingy with metadata about the program (https://github.com/chip-8/chip-8-database)
 	bool loadProgram(string program);
 
-	void init(Config config);
-	void setConfig(Config config);
+	void init();
 	void emulateCycle();
 
 	void clearScreen();

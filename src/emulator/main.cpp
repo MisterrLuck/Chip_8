@@ -50,8 +50,10 @@ int main(int argc, char *argv[])
 
 
 	// Initialization
+	setConfig(config);
+
 	Chip8 chip8;
-	chip8.init(config);
+	chip8.init();
 
 	Graphics graphics;
 	graphics.init(pixel_size, background_color, foreground_color);

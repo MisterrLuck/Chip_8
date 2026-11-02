@@ -25,7 +25,9 @@ int main(int argc, char *argv[])
 	CLI11_PARSE(app, argc, argv);
 
 	// Init
-	Assembler assembler(config);
+	setConfig(config);
+
+	Assembler assembler;
 
 	// Loading the Program
 	bool loaded = assembler.loadProgram(input_file);
