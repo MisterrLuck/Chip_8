@@ -102,6 +102,9 @@ int main(int argc, char *argv[])
 				begin += std::chrono::duration_cast<std::chrono::microseconds>(midpoint - std::chrono::steady_clock::now());
 			}
 
+			if (chip8.draw_flag && Quirk::drawWait)
+				break;
+
 			if (WindowShouldClose())
 			{
 				opened = false;
