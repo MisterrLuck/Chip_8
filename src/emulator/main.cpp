@@ -13,12 +13,10 @@
 using std::cout, std::string, std::cerr, std::vector;
 
 
-const int INST_PER_SECOND = 700; // 700 instructions per second
-const int MICROSECONDS_PER_INST = 1000000 / INST_PER_SECOND;
-
-const int CLOCK_TICK_PER_SECOND = 60; // 60 Hz (60 times per second)
-const int MICROSECONDS_PER_CLOCK_TICK = 1000000 / CLOCK_TICK_PER_SECOND;
-
+// Everything is run at 60Hz
+const int FPS = 60;
+const int MSPF = 1000000 / FPS; // Micro Seconds per Frame
+int IPF = 11; // 15 with the wait quirk I think
 
 void argsSettings(CLI::App* app, int argc, char *argv[]);
 
@@ -41,7 +39,7 @@ int main(int argc, char *argv[])
 	SetTraceLogLevel(LOG_ERROR); 
 	
 	// Argument Parser
-	CLI::App app{"Chip 8: Ver 2.1"};
+	CLI::App app{"Chip 8: Ver 2.2"};
 	argsSettings(&app, argc, argv);
 	CLI11_PARSE(app, argc, argv);
 
@@ -52,6 +50,8 @@ int main(int argc, char *argv[])
 	// Initialization
 	Chip8 chip8;
 	chip8.init(config);
+	if (Quirk::drawWait)
+		IPF = 15;
 
 	Graphics graphics;
 	graphics.init(pixel_size, background_color, foreground_color);
@@ -75,37 +75,48 @@ int main(int argc, char *argv[])
 	}
 
 	// Main Loop
-	while (!WindowShouldClose())
+	bool opened = true;
+	while (!WindowShouldClose() && opened)
 	{
 		std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
+		chip8.decrementTimers();
 
-		chip8.emulateCycle();
-
-		PollInputEvents();
-		if (chip8.draw_flag)
-			graphics.updateFrame(chip8.gfx);
-
-
-		std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-		int inst_duration = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
-
-		int remaining_inst_time = MICROSECONDS_PER_INST - inst_duration;
-
-		// MICROSECONDS_PER_INST is just the amount of time that has passed
-		chip8.updateTimers(MICROSECONDS_PER_CLOCK_TICK, MICROSECONDS_PER_INST);
-
-		// Have a small range instead of just 0
-		if (remaining_inst_time > 5)
-			// Sleep for the remaining time to attempt ints per second
-			std::this_thread::sleep_for(std::chrono::microseconds(remaining_inst_time));
-
-
-		if (debug_flag)
+		for (int i = 0; i < IPF; i++)
 		{
-			if (!debugger.prompt())
-				return 0;
+			// NOTE: Should this be inside the loop?
+			PollInputEvents();
+
+			chip8.emulateCycle();
+
+			if (debug_flag)
+			{
+				std::chrono::steady_clock::time_point midpoint = std::chrono::steady_clock::now();
+
+				if (!debugger.prompt())
+					return 0;
+
+				// Offset the start time with how long the debugging prompt was
+				begin += std::chrono::duration_cast<std::chrono::microseconds>(midpoint - std::chrono::steady_clock::now());
+			}
+
+			if (WindowShouldClose())
+			{
+				opened = false;
+				break;
+			}
 		}
+
+		graphics.updateFrame(chip8.gfx);
+
+		// Clamp to 60 Hz
+		std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+		int frame_duration = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
+
+		int remaining_frame_time = MSPF - frame_duration;
+
+		if (remaining_frame_time > 5)
+			std::this_thread::sleep_for(std::chrono::microseconds(remaining_frame_time));
 	}
 	
 	return 0;

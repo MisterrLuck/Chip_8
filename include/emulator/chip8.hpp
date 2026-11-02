@@ -26,7 +26,7 @@ public:
 	int keyPressed();
 	int keyFromInt(char val);
 
-	void updateTimers(int time_per_tick, int time_passed);
+	void decrementTimers();
 
 	int getOpcode(int address=-1);
 
