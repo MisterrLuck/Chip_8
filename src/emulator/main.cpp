@@ -8,6 +8,7 @@
 #include "config.hpp"
 
 #include "debugger.hpp"
+#include "sound.hpp"
 #include "chip8.hpp"
 #include "graphics.hpp"
 using std::cout, std::string, std::cerr, std::vector;
@@ -58,6 +59,8 @@ int main(int argc, char *argv[])
 	Graphics graphics;
 	graphics.init(pixel_size, background_color, foreground_color);
 
+	SoundManager sound_manager;
+
 	Debugger debugger;
 
 
@@ -86,8 +89,12 @@ int main(int argc, char *argv[])
 
 		for (int i = 0; i < IPF; i++)
 		{
-			// NOTE: Should this be inside the loop?
+			// WARNING: Should this be inside the loop?
 			PollInputEvents();
+			if (chip8.isSoundPlaying())
+				sound_manager.playSound();
+			else
+				sound_manager.stopSound();
 
 			chip8.emulateCycle();
 

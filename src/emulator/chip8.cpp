@@ -406,10 +406,6 @@ void Chip8::clearScreen()
 
 void Chip8::decrementTimers()
 {
-	if (sound_timer > 0)
-		// TODO: Add actual beeps to the sound timer
-		cout << "\a";
-
 	if (delay_timer - 1 < 0)
 		delay_timer = 0;
 	else
@@ -418,7 +414,12 @@ void Chip8::decrementTimers()
 	if (sound_timer - 1 < 0)
 		sound_timer = 0;
 	else
-		delay_timer--;
+		sound_timer--;
+}
+
+bool Chip8::isSoundPlaying()
+{
+	return sound_timer > 0;
 }
 
 // WARNING: This will keep a queue of pressed keys I think

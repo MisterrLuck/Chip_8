@@ -17,10 +17,12 @@ add_executable(Chip_8 src/emulator/main.cpp
         src/emulator/chip8.cpp
         src/emulator/debugger.cpp
         src/emulator/graphics.cpp
+		src/emulator/sound.cpp
 
         include/emulator/chip8.hpp
         include/emulator/debugger.hpp
         include/emulator/graphics.hpp
+		include/emulator/sound.hpp
 
 		${UTILS}
 	)

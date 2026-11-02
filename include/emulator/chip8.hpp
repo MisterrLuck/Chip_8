@@ -22,10 +22,12 @@ public:
 
 	void clearScreen();
 
+	// TODO: Update key functions to separate from the graphics library
 	int keyPressed();
 	int keyFromInt(char val);
 
 	void decrementTimers();
+	bool isSoundPlaying();
 
 	int getOpcode(int address=-1);
 
