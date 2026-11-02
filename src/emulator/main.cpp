@@ -13,13 +13,13 @@
 #include "graphics.hpp"
 using std::cout, std::string, std::cerr, std::vector;
 
+void argsSettings(CLI::App* app, int argc, char *argv[]);
+
 
 // Everything is run at 60Hz
 const int FPS = 60;
 const int MSPF = 1000000 / FPS; // Micro Seconds per Frame
 int IPF = 11; // 15 with the wait quirk I think
-
-void argsSettings(CLI::App* app, int argc, char *argv[]);
 
 // Argument Variables
 string file_name = "";
@@ -29,7 +29,7 @@ Config config = Config::CHIP_8;
 
 vector<unsigned char> background = {0, 0, 0};
 vector<unsigned char> foreground = {0xFF, 0xFF, 0xFF};
-int pixel_size = 20;
+int scale = 20;
 
 
 // TODO: Use raygui when combining the debugger such into one window (https://github.com/raysan5/raygui)
@@ -47,22 +47,16 @@ int main(int argc, char *argv[])
 	Color background_color = (Color) {background[0], background[1], background[2], 255};
 	Color foreground_color = (Color) {foreground[0], foreground[1], foreground[2], 255};
 
-
-	// Initialization
+	// Set configuration
 	setConfig(config);
-
-	Chip8 chip8;
-	chip8.init();
 	if (Quirk::drawWait)
 		IPF = 15;
 
-	Graphics graphics;
-	graphics.init(pixel_size, background_color, foreground_color);
-
+	// Initialization
+	Chip8 chip8;
+	GraphicsManager graphics_manager(scale, background_color, foreground_color);
 	SoundManager sound_manager;
-
 	Debugger debugger;
-
 
 	// Load the Program
 	bool loaded = chip8.loadProgram(file_name);
@@ -91,6 +85,7 @@ int main(int argc, char *argv[])
 		{
 			// WARNING: Should this be inside the loop?
 			PollInputEvents();
+
 			if (chip8.isSoundPlaying())
 				sound_manager.playSound();
 			else
@@ -119,7 +114,7 @@ int main(int argc, char *argv[])
 			}
 		}
 
-		graphics.updateFrame(chip8.gfx);
+		graphics_manager.updateFrame(chip8.gfx);
 
 		// Clamp to 60 Hz
 		std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
@@ -153,14 +148,14 @@ void argsSettings(CLI::App* app, int argc, char *argv[])
 
 	// Extra Options
 	app->add_option("--background", background, "Change the background color")
-		->group("Extra Options")
+		->group("EXTRAS")
 		->expected(3);
 
 	app->add_option("--foreground", foreground, "Change the foreground color")
-		->group("Extra Options")
+		->group("EXTRAS")
 		->expected(3);
 
-	app->add_option("--size,--pixel-size", pixel_size, "Change the pixel size")
-		->group("Extra Options")
+	app->add_option("--size,--scale", scale, "Change the pixel scale")
+		->group("EXTRAS")
 		->capture_default_str();
 }

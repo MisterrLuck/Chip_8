@@ -1,15 +1,15 @@
 #pragma once
 #include "raylib.h"
 
-class Graphics
+class GraphicsManager
 {
 public:
-	void init(unsigned int scale = 20, Color off=BLACK, Color on=WHITE);
+	GraphicsManager(unsigned int scale = 20, Color off=BLACK, Color on=WHITE);
 
 	void updateFrame(unsigned short *gfx);
 	void drawPixel(int x, int y);
 
-	~Graphics();
+	~GraphicsManager();
 
 private:
 	int scale;

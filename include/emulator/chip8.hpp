@@ -12,12 +12,13 @@ using std::string;
 class Chip8
 {
 public:
+	Chip8();
+
 	bool draw_flag = false;
 
 	// TODO: Include sha hash thingy with metadata about the program (https://github.com/chip-8/chip-8-database)
 	bool loadProgram(string program);
 
-	void init();
 	void emulateCycle();
 
 	void clearScreen();

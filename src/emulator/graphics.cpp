@@ -3,12 +3,12 @@
 #include "raylib.h"
 #include <cstddef>
 
-Graphics::~Graphics()
+GraphicsManager::~GraphicsManager()
 {
     CloseWindow();
 }
 
-void Graphics::init(unsigned int pixel_scale, Color off, Color on)
+GraphicsManager::GraphicsManager(unsigned int pixel_scale, Color off, Color on)
 {
 	off_color = off;
 	on_color = on;
@@ -22,7 +22,7 @@ void Graphics::init(unsigned int pixel_scale, Color off, Color on)
     SetTargetFPS(60);
 }
 
-void Graphics::updateFrame(unsigned short *gfx)
+void GraphicsManager::updateFrame(unsigned short *gfx)
 {
 	BeginDrawing();
 

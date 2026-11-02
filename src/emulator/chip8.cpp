@@ -15,7 +15,7 @@
 // using namespace std;
 using std::cout, std::endl, std::format;
 
-void Chip8::init()
+Chip8::Chip8()
 {
 	// Reset variables
 	pc = 0x200;
