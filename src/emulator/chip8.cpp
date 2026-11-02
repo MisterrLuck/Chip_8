@@ -404,33 +404,21 @@ void Chip8::clearScreen()
 	}
 }
 
-void Chip8::updateTimers(int time_per_tick, int time_passed)
+void Chip8::decrementTimers()
 {
-	int delay_time = time_passed + leftover_delay_time;
-	int sound_time = time_passed + leftover_sound_time;
-
-	// If enough for one clock tick has passed
-	int delay_subtraction_amount = (int) (delay_time / time_per_tick);
-	int sound_subtraction_amount = (int) (sound_time / time_per_tick);
-
-	leftover_delay_time = delay_time % time_per_tick;
-	leftover_sound_time = sound_time % time_per_tick;
-
-	if (sound_subtraction_amount >= sound_timer)
-	{
-		sound_timer = 0;
-		leftover_sound_time = 0;
-	}
-	else
-	{
-		sound_timer -= sound_subtraction_amount;
+	if (sound_timer > 0)
 		// TODO: Add actual beeps to the sound timer
 		cout << "\a";
-	}
 
-	delay_timer = std::max(0, delay_timer - delay_subtraction_amount);
-	if (delay_timer == 0)
-		leftover_delay_time = 0;
+	if (delay_timer - 1 < 0)
+		delay_timer = 0;
+	else
+		delay_timer--;
+
+	if (sound_timer - 1 < 0)
+		sound_timer = 0;
+	else
+		delay_timer--;
 }
 
 // WARNING: This will keep a queue of pressed keys I think
