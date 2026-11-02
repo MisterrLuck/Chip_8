@@ -100,7 +100,7 @@ bool Debugger::prompt()
 
 			case 'a': // next opode to run
 			{
-				int opcode = chip8->getOpcode(chip8->pc);
+				int opcode = chip8->readOpcode(chip8->pc);
 
 				cout << format("{{0x{:04x}}}: {:04X} : {}\n", chip8->pc, opcode, disassembleOpcode(opcode));
 			}
@@ -176,7 +176,7 @@ void Debugger::locationBranch()
 	{
 		unsigned short curr_address = unvisited_locations[0];
 
-		int opcode = chip8->getOpcode(curr_address);
+		int opcode = chip8->readOpcode(curr_address);
 		// cout << format("Opcode: 0x{:x}\n", opcode);
 
 		// HACK: This might not be good
@@ -239,7 +239,7 @@ void Debugger::listProgram(int lines, int start_address)
 		if (line_count >= lines && lines != -1)
 			return;
 
-		cout << format("{{0x{:04x}}}: {:04X} : {}\n", opcode_address, chip8->getOpcode(opcode_address), disassembleOpcode(chip8->getOpcode(opcode_address)));
+		cout << format("{{0x{:04x}}}: {:04X} : {}\n", opcode_address, chip8->readOpcode(opcode_address), disassembleOpcode(chip8->readOpcode(opcode_address)));
 		line_count++;
 	}
 }
@@ -249,7 +249,7 @@ void Debugger::printProgram()
 	cout << "Program:\n\n";
 	for (auto opcode_address : opcode_locations)
 	{
-		cout << format("{{0x{:04x}}}: {:04X} : {}\n", opcode_address, chip8->getOpcode(opcode_address), disassembleOpcode(chip8->getOpcode(opcode_address)));
+		cout << format("{{0x{:04x}}}: {:04X} : {}\n", opcode_address, chip8->readOpcode(opcode_address), disassembleOpcode(chip8->readOpcode(opcode_address)));
 	}
 
 	cout << "\nData:\n";

@@ -12,7 +12,6 @@
 #include <vector>
 #include <cmath>
 
-// using namespace std;
 using std::cout, std::endl, std::format;
 
 Chip8::Chip8()
@@ -48,13 +47,16 @@ Chip8::Chip8()
 		memory[ind + 0x50] = chip8_fontset[ind];
 }
 
-
-// TODO: split into two functions; one for the debugger to read, and one for the emulator to fetch
-// TODO: Also in the fetch; increment pc, and then decrement if needed in the instruction. Jumps wont need to decrement bc its already overwritten
-int Chip8::getOpcode(int address) {
-	if (address < 0)
-		return memory[pc] << 8 | memory[pc + 1];
+int Chip8::readOpcode(int address)
+{
 	return memory[address] << 8 | memory[address + 1];
+}
+
+int Chip8::fetchOpcode()
+{
+	int op= memory[pc] << 8 | memory[pc + 1];
+	pc += 2;
+	return op;
 }
 
 void Chip8::emulateCycle()
@@ -62,7 +64,7 @@ void Chip8::emulateCycle()
 	// TODO: Add reset button to reset the program as it never ends
 	// TODO: Also a stop button obv
 
-	opcode = getOpcode();
+	opcode = fetchOpcode();
 
 	int X = (opcode >> 8) & 0xF;
 	int Y = (opcode >> 4) & 0xF;
@@ -71,7 +73,6 @@ void Chip8::emulateCycle()
 	int NNN  = opcode & 0x0FFF;
 
 	draw_flag = false;
-	bool inc_pc = true;
 
 	switch (opcode & 0xF000)
 	{
@@ -94,7 +95,6 @@ void Chip8::emulateCycle()
 
 		case 0x1000: // 0x1NNN : jump to address 
 			pc = NNN;
-			inc_pc = false;
 		break;
 
 		case 0x2000: // 0x2NNN : jump to subroutine at address
@@ -103,7 +103,6 @@ void Chip8::emulateCycle()
 
 			stack[sp++] = pc; // save the current position, and increment sp
 			pc = NNN;
-			inc_pc = false;
 		break;
 
 		case 0x3000: // 0x3XNN : skip next instruction if VX == NN
@@ -234,7 +233,6 @@ void Chip8::emulateCycle()
 				pc = NNN + V[X];
 			else
 				pc = NNN + V[0];
-			inc_pc = false;
 		break;
 
 		case 0xC000: // 0xCXNN : sets VX to a random number between 0 and 255 ANDED with NN
@@ -327,7 +325,7 @@ void Chip8::emulateCycle()
 					if (key != -1)
 						V[X] = key;
 					else
-						inc_pc = false; // wont increment instruction until its pressed
+						pc -= 2;
 				}
 				break;
 
@@ -391,9 +389,6 @@ void Chip8::emulateCycle()
 			}
 		break;
 	}
-
-	if (inc_pc)
-		pc += 2;
 }
 
 void Chip8::clearScreen()
@@ -544,7 +539,7 @@ bool Chip8::loadProgram(string program)
 		memory[ind + 0x200] = bytes[ind];
 	}
 
-	opcode = getOpcode();
+	opcode = readOpcode(pc);
 
 	return true;
 }

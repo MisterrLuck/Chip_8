@@ -30,7 +30,8 @@ public:
 	void decrementTimers();
 	bool isSoundPlaying();
 
-	int getOpcode(int address=-1);
+	int fetchOpcode();
+	int readOpcode(int address);
 
 	unsigned short opcode;
 
