@@ -7,6 +7,7 @@
 #include "CLI11.hpp"
 #include "config.hpp"
 
+#include "keyboard.hpp"
 #include "debugger.hpp"
 #include "sound.hpp"
 #include "chip8.hpp"
@@ -84,7 +85,7 @@ int main(int argc, char *argv[])
 		for (int i = 0; i < IPF; i++)
 		{
 			// WARNING: Should this be inside the loop?
-			PollInputEvents();
+			chip8.updateKeys(pollKeyboard());
 
 			if (chip8.isSoundPlaying())
 				sound_manager.playSound();
@@ -92,6 +93,7 @@ int main(int argc, char *argv[])
 				sound_manager.stopSound();
 
 			chip8.emulateCycle();
+
 
 			if (debug_flag)
 			{
@@ -104,7 +106,7 @@ int main(int argc, char *argv[])
 				begin += std::chrono::duration_cast<std::chrono::microseconds>(midpoint - std::chrono::steady_clock::now());
 			}
 
-			if (chip8.draw_flag && Quirk::drawWait)
+			if ((chip8.draw_flag && Quirk::drawWait) || chip8.key_wait_flag)
 				break;
 
 			if (WindowShouldClose())

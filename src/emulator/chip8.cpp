@@ -73,6 +73,7 @@ void Chip8::emulateCycle()
 	int NNN  = opcode & 0x0FFF;
 
 	draw_flag = false;
+	key_wait_flag = false;
 
 	switch (opcode & 0xF000)
 	{
@@ -300,13 +301,12 @@ void Chip8::emulateCycle()
 			switch (opcode & 0x00FF)
 			{
 				case 0x009E: // EX9E : skips next instruction if key in VX is pressed
-					// TODO: Improve this somehow I don't like this method
-					if (IsKeyDown(keyFromInt(V[X])))
+					if (isKeyPressed(V[X]))
 						pc += 2;
 				break;
 
 				case 0x00A1: // EXA1 : skips next instruction if key in VX is not pressed
-					if (!IsKeyDown(keyFromInt(V[X])))
+					if (!isKeyPressed(V[X]))
 						pc += 2;
 				break;
 			}
@@ -321,11 +321,12 @@ void Chip8::emulateCycle()
 
 				case 0x000A: // 0xFX0A : Wait until key is pressed
 				{
-					int key = keyPressed();
+					char key = getKey();
 					if (key != -1)
 						V[X] = key;
 					else
 						pc -= 2;
+					key_wait_flag = true;
 				}
 				break;
 
@@ -417,99 +418,27 @@ bool Chip8::isSoundPlaying()
 	return sound_timer > 0;
 }
 
-// WARNING: This will keep a queue of pressed keys I think
-int Chip8::keyPressed()
+bool Chip8::isKeyPressed(char key, bool prev)
 {
-	int key = GetKeyPressed();
+	if (prev)
+		return (prevKeys >> (key & 0xF)) & 1;
+	return (keys >> (key & 0xF)) & 1;
+}
 
-	while (key != 0)
+char Chip8::getKey()
+{
+	for (char key = 0; key <= 0xF; key++)
 	{
-		// If the key pressed is one from our list
-		for (size_t val = 0; val <= 0xF; val++)
-		{
-			if (key == keyFromInt(val))
-				return val;
-		}
-		key = GetKeyPressed();
+		if (isKeyPressed(key, true) && !isKeyPressed(key))
+			return key;
 	}
-
 	return -1;
 }
 
-int Chip8::keyFromInt(char val)
+void Chip8::updateKeys(uint16_t newKeys)
 {
-	val = val & 0xF;
-	switch(val)
-	{
-		// Row 1
-		case 1:
-			return KEY_ONE;
-		break;
-
-		case 2:
-			return KEY_TWO;
-		break;
-
-		case 3:
-			return KEY_THREE;
-		break;
-
-		case 0xc:
-			return KEY_FOUR;
-		break;
-
-		// Row 2
-		case 4:
-			return KEY_Q;
-		break;
-
-		case 5:
-			return KEY_W;
-		break;
-
-		case 6:
-			return KEY_E;
-		break;
-
-		case 0xd:
-			return KEY_R;
-		break;
-
-		// Row 3
-		case 7:
-			return KEY_A;
-		break;
-
-		case 8:
-			return KEY_S;
-		break;
-
-		case 9:
-			return KEY_D;
-		break;
-
-		case 0xe:
-			return KEY_F;
-		break;
-
-		// Row 4
-		case 0xa:
-			return KEY_Z;
-		break;
-
-		case 0:
-			return KEY_X;
-		break;
-
-		case 0xb:
-			return KEY_C;
-		break;
-
-		case 0xf:
-			return KEY_V;
-		break;
-	}
-	return KEY_NULL;
+	prevKeys = keys;
+	keys = newKeys;
 }
 
 bool Chip8::loadProgram(string program)

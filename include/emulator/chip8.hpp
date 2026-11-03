@@ -6,6 +6,7 @@
 #include "config.hpp"
 
 #include <string>
+#include <cstdint>
 using std::string;
 
 
@@ -15,17 +16,21 @@ public:
 	Chip8();
 
 	bool draw_flag = false;
+	// End the frame early if FX0A; wait key instruction
+	bool key_wait_flag = false;
 
+	uint16_t keys = 0;
+	uint16_t prevKeys = 0;
+
+	void emulateCycle();
 	// TODO: Include sha hash thingy with metadata about the program (https://github.com/chip-8/chip-8-database)
 	bool loadProgram(string program);
 
-	void emulateCycle();
-
 	void clearScreen();
 
-	// TODO: Update key functions to separate from the graphics library
-	int keyPressed();
-	int keyFromInt(char val);
+	bool isKeyPressed(char key, bool prev=false);
+	char getKey();
+	void updateKeys(uint16_t newKeys);
 
 	void decrementTimers();
 	bool isSoundPlaying();
