@@ -30,8 +30,6 @@ private:
 	vector<unsigned short> opcode_locations;
 	vector<unsigned short> data_locations;
 
-
-	// NOTE: Should only be run once bc it's probably expensive
 	void disassemble();
 	string disassembleOpcode(int opcode);
 	

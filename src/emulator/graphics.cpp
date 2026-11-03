@@ -35,7 +35,6 @@ void GraphicsManager::updateFrame(unsigned short *gfx)
 			{
 				size_t ind = (SCREEN_WIDTH * y) + x;
 
-				// WARNING: The only two numbers should be 1 and 0
 				if (gfx[ind] == 1)
 				{
 					Vector2 pos = {(float) (x * scale), (float) (y * scale)};

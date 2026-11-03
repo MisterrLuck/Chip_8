@@ -4,14 +4,12 @@
 #include <map>
 using std::string, std::map;
 
-// NOTE: This is where to add more configs
 enum class Config
 {
 	CHIP_8,
 	CHIP_48
 };
 
-// NOTE: This is for the command line option
 const map<string, Config> CONFIG_CLI_MAP{
 	{"chip-8", Config::CHIP_8},
 	{"chip-48", Config::CHIP_48}

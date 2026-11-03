@@ -35,7 +35,6 @@ int scale = 20;
 
 // TODO: Use raygui when combining the debugger such into one window (https://github.com/raysan5/raygui)
 // TODO: Interesting chip 8 binary thing (https://github.com/Timendus/chip8-binary-format)
-// TODO: Aseprite to binary data addon
 int main(int argc, char *argv[])
 {
 	SetTraceLogLevel(LOG_ERROR); 
@@ -80,17 +79,9 @@ int main(int argc, char *argv[])
 	{
 		std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
-		chip8.decrementTimers();
-
 		for (int i = 0; i < IPF; i++)
 		{
-			// WARNING: Should this be inside the loop?
 			chip8.updateKeys(pollKeyboard());
-
-			if (chip8.isSoundPlaying())
-				sound_manager.playSound();
-			else
-				sound_manager.stopSound();
 
 			chip8.emulateCycle();
 
@@ -117,6 +108,13 @@ int main(int argc, char *argv[])
 		}
 
 		graphics_manager.updateFrame(chip8.gfx);
+
+		if (chip8.isSoundPlaying())
+			sound_manager.playSound();
+		else
+			sound_manager.stopSound();
+
+		chip8.decrementTimers();
 
 		// Clamp to 60 Hz
 		std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
