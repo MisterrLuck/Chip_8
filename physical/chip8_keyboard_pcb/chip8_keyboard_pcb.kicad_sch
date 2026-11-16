@@ -3526,7 +3526,7 @@
 			(uuid "c42a12bd-03d6-4f88-84d0-2c832dbdf7b5")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "SW_7")
 					(unit 1)
@@ -3606,7 +3606,7 @@
 			(uuid "0d44daf2-679a-4bc9-95a6-db06bd061968")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "SW_D1")
 					(unit 1)
@@ -3684,7 +3684,7 @@
 			(uuid "f454e9a1-90fd-4680-b395-fd99a6975b63")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "#PWR06")
 					(unit 1)
@@ -3764,7 +3764,7 @@
 			(uuid "12c0bb37-91b8-4102-bdbc-27718557896b")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "SW_4")
 					(unit 1)
@@ -3842,7 +3842,7 @@
 			(uuid "4bb821f0-bdd3-41fd-9f3c-b3d6933f7e62")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "#PWR05")
 					(unit 1)
@@ -3918,7 +3918,7 @@
 			)
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "H1")
 					(unit 1)
@@ -3998,7 +3998,7 @@
 			(uuid "e08454e7-c55e-4242-ae41-6775a6e6e4b1")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "R_0")
 					(unit 1)
@@ -4079,7 +4079,7 @@
 			(uuid "9af0ee76-d506-4471-9755-049a20830b91")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "R_RESET1")
 					(unit 1)
@@ -4159,7 +4159,7 @@
 			(uuid "c8d786f6-7c40-474a-9eac-e495d7f3b74e")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "R_C1")
 					(unit 1)
@@ -4239,7 +4239,7 @@
 			(uuid "6d296961-af80-4cc9-97fc-ddcf34da7ccf")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "SW_A1")
 					(unit 1)
@@ -4319,7 +4319,7 @@
 			(uuid "87874d89-6143-41ea-a26b-0322319cdd46")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "SW_F1")
 					(unit 1)
@@ -4399,7 +4399,7 @@
 			(uuid "acbc3974-6482-4dbb-8612-3cf1cbc28c68")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "SW_B1")
 					(unit 1)
@@ -4475,7 +4475,7 @@
 			)
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "H4")
 					(unit 1)
@@ -4555,7 +4555,7 @@
 			(uuid "2bb2127b-e533-4352-889f-fd9616a0a5c7")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "R_2")
 					(unit 1)
@@ -4635,7 +4635,7 @@
 			(uuid "75cfbe2e-52b9-4e5d-8ae7-40b9fad81bc0")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "R_3")
 					(unit 1)
@@ -4715,7 +4715,7 @@
 			(uuid "0719bb86-d03a-4513-912d-0f589276e827")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "R_B1")
 					(unit 1)
@@ -4795,7 +4795,7 @@
 			(uuid "c75d9084-4ce4-4ca3-a7de-e9a395fedf9d")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "SW_6")
 					(unit 1)
@@ -4875,7 +4875,7 @@
 			(uuid "da4e7102-db57-4e30-a08b-fcd21d5adadd")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "R_8")
 					(unit 1)
@@ -4954,7 +4954,7 @@
 			(uuid "25277ab0-0281-42e3-ae89-e3c1f0eb2ab1")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "#PWR01")
 					(unit 1)
@@ -5034,7 +5034,7 @@
 			(uuid "0295c56a-0aab-4397-bd6b-85a9dba0951f")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "R_9")
 					(unit 1)
@@ -5114,7 +5114,7 @@
 			(uuid "c51ebd44-a8d1-4e75-b099-a31f53f0cd06")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "R_1")
 					(unit 1)
@@ -5190,7 +5190,7 @@
 			)
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "H3")
 					(unit 1)
@@ -5270,7 +5270,7 @@
 			(uuid "03773774-4bd3-4e29-9f21-5a511a433da1")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "SW_0")
 					(unit 1)
@@ -5350,7 +5350,7 @@
 			(uuid "92f01688-6a58-47f5-96e4-30124df7f8dd")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "R_D1")
 					(unit 1)
@@ -5430,7 +5430,7 @@
 			(uuid "8dd526fb-a8a9-4f77-864f-06f68dbbda85")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "R_5")
 					(unit 1)
@@ -5510,7 +5510,7 @@
 			(uuid "8cb70edf-2897-4f90-a0b5-d48965eec1d9")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "SW_1")
 					(unit 1)
@@ -5590,7 +5590,7 @@
 			(uuid "57995d39-21a9-4129-8aba-601ec9ac98aa")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "R_6")
 					(unit 1)
@@ -5670,7 +5670,7 @@
 			(uuid "d2982f78-40ef-4c7a-90ce-937fb7ccb2d7")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "R_4")
 					(unit 1)
@@ -5750,7 +5750,7 @@
 			(uuid "54a2de94-ffc5-4c18-8c5b-490214e3c979")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "R_E1")
 					(unit 1)
@@ -5830,7 +5830,7 @@
 			(uuid "48684e37-89ee-470c-a9b0-a34f74963e26")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "R_F1")
 					(unit 1)
@@ -5906,7 +5906,7 @@
 			)
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "H2")
 					(unit 1)
@@ -6040,7 +6040,7 @@
 			(uuid "ce1acc86-cfe1-4a22-9783-c0509d5eb0fe")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "J1")
 					(unit 1)
@@ -6118,7 +6118,7 @@
 			(uuid "95e2f42d-3f6e-40fe-aad8-49c3a4f14cee")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "#PWR02")
 					(unit 1)
@@ -6198,7 +6198,7 @@
 			(uuid "7a3697b9-d04d-4232-9c7c-1525d711cf37")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "SW_2")
 					(unit 1)
@@ -6278,7 +6278,7 @@
 			(uuid "dc0cc980-2811-4c84-867d-cc1e7cd26cbe")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "R_A1")
 					(unit 1)
@@ -6356,7 +6356,7 @@
 			(uuid "0792ae7b-da72-4ab3-b4e4-11a1266bdd66")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "#PWR04")
 					(unit 1)
@@ -6436,7 +6436,7 @@
 			(uuid "2bab7cc6-342e-45b2-a964-22bdfa528dc4")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "SW_C1")
 					(unit 1)
@@ -6516,7 +6516,7 @@
 			(uuid "be095913-1c6d-4545-9132-376f1c60821f")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "SW_9")
 					(unit 1)
@@ -6596,7 +6596,7 @@
 			(uuid "7977620c-c415-4a34-b2da-c8d403f22243")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "SW_3")
 					(unit 1)
@@ -6676,7 +6676,7 @@
 			(uuid "3ee4a31e-235c-4c01-aa3c-d02059a04eca")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "SW_E1")
 					(unit 1)
@@ -6756,7 +6756,7 @@
 			(uuid "b5898344-b11d-4cce-a3a2-c87ee82308b2")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "SW_5")
 					(unit 1)
@@ -6836,7 +6836,7 @@
 			(uuid "90aaccfe-55f9-40cb-b419-6486b83c2114")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "SW_8")
 					(unit 1)
@@ -6916,7 +6916,7 @@
 			(uuid "f40b2ea6-20f3-4752-b6cc-37dfe11b47d4")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "R_7")
 					(unit 1)
@@ -6996,7 +6996,7 @@
 			(uuid "b77e27e6-abb3-4b19-971e-29af4c9314b8")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "SW_RESET1")
 					(unit 1)
@@ -7075,7 +7075,7 @@
 			(uuid "b17ddb90-11fe-429d-823d-674dc1a2a4e2")
 		)
 		(instances
-			(project "chip8_console_pcb"
+			(project "chip8_keyboard_pcb"
 				(path "/0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
 					(reference "#PWR03")
 					(unit 1)

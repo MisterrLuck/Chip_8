@@ -133,7 +133,7 @@
 		(descr "Cherry MX keyswitch, 1.25u, PCB mount, http://cherryamericas.com/wp-content/uploads/2014/12/mx_cat.pdf")
 		(tags "Cherry MX keyswitch 1.25u PCB")
 		(property "Reference" "SW_9"
-			(at -2.54 -2.794 0)
+			(at -7.54 -2.794 0)
 			(layer "F.SilkS")
 			(uuid "e9b4f21a-b8d3-42c0-9c1d-7218f95dd914")
 			(effects
@@ -182,7 +182,7 @@
 		)
 		(path "/cf3e5eb3-b051-4773-af19-7f272bd19188")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -312,7 +312,7 @@
 			(uuid "ef1a859e-6085-44de-a09e-aa2e16add091")
 		)
 		(fp_text user "${REFERENCE}"
-			(at -2.54 -2.794 0)
+			(at -7.54 -2.794 0)
 			(layer "F.Fab")
 			(uuid "f32e2bc9-42bf-4a58-9800-ce4eaa4e31ef")
 			(effects
@@ -385,7 +385,7 @@
 		(descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
 		(tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
 		(property "Reference" "R_9"
-			(at 2.54 -1.92 0)
+			(at 2.5 2 0)
 			(layer "F.SilkS")
 			(uuid "c8681033-e5cd-4398-912d-59b6d00ad856")
 			(effects
@@ -443,7 +443,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/78f3c8b8-d32c-47bc-b686-414246ad5087")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -565,7 +565,7 @@
 		(descr "Cherry MX keyswitch, 1.25u, PCB mount, http://cherryamericas.com/wp-content/uploads/2014/12/mx_cat.pdf")
 		(tags "Cherry MX keyswitch 1.25u PCB")
 		(property "Reference" "SW_2"
-			(at -2.54 -2.794 0)
+			(at -7.54 -2.794 0)
 			(layer "F.SilkS")
 			(uuid "0a9cbbcf-39e2-4e83-882e-aecd7cfd5332")
 			(effects
@@ -614,7 +614,7 @@
 		)
 		(path "/bfebf595-de11-44c9-b479-27d64c2f8de6")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -875,7 +875,7 @@
 		(property ki_fp_filters "MountingHole*")
 		(path "/869d0158-e9aa-413d-809d-e59c24028967")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -933,7 +933,7 @@
 		(descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
 		(tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
 		(property "Reference" "R_5"
-			(at 2.54 -1.92 0)
+			(at 2.5 2 0)
 			(layer "F.SilkS")
 			(uuid "9b34bf70-4083-4fbf-8e56-e09984ca761e")
 			(effects
@@ -991,7 +991,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/97868c7e-2fea-45a3-aaa8-71ee47684ad3")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -1109,11 +1109,11 @@
 	(footprint "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal"
 		(layer "F.Cu")
 		(uuid "16ce558d-dba9-4c21-ba29-4b3b738ca380")
-		(at 37.96 71.5)
+		(at 47.5 74.96 -90)
 		(descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
 		(tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
 		(property "Reference" "R_RESET1"
-			(at 2.54 -1.92 0)
+			(at 2.54 -1.92 90)
 			(layer "F.SilkS")
 			(uuid "040c68f1-b754-401c-810b-7660a2fa56ad")
 			(effects
@@ -1124,7 +1124,7 @@
 			)
 		)
 		(property "Value" "R_US"
-			(at 2.54 1.92 0)
+			(at 2.54 1.92 90)
 			(layer "F.Fab")
 			(uuid "0b8e647b-e851-4d80-9af7-622261d030a7")
 			(effects
@@ -1135,7 +1135,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 0 0 0)
+			(at 0 0 90)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "dd909dd4-ac62-4973-87b9-7c45616663a4")
@@ -1146,7 +1146,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 0 0 0)
+			(at 0 0 90)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "19ff1471-3d8f-4916-946f-0c335cbc9361")
@@ -1157,7 +1157,7 @@
 			)
 		)
 		(property "KiLib_Generator" "resistor/THT"
-			(at 0 0 0)
+			(at 0 0 90)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "4924f055-ca25-41a9-9fc3-f7a02c3392ff")
@@ -1171,7 +1171,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/23e76f71-3c5d-4120-b79b-a1bb1d1cddd6")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -1181,16 +1181,6 @@
 		(attr through_hole)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
-			(start 0.62 -0.92)
-			(end 4.46 -0.92)
-			(stroke
-				(width 0.12)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "7fe1562c-bef8-4808-90c6-f6e81313060e")
-		)
-		(fp_line
 			(start 0.62 0.92)
 			(end 4.46 0.92)
 			(stroke
@@ -1199,6 +1189,16 @@
 			)
 			(layer "F.SilkS")
 			(uuid "53a01524-2335-4d0e-ba17-7928477b06ae")
+		)
+		(fp_line
+			(start 0.62 -0.92)
+			(end 4.46 -0.92)
+			(stroke
+				(width 0.12)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "7fe1562c-bef8-4808-90c6-f6e81313060e")
 		)
 		(fp_rect
 			(start -0.95 -1.05)
@@ -1243,7 +1243,7 @@
 			(uuid "0ae0e663-1693-487f-b352-2fd61968938a")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 2.54 0 0)
+			(at 2.54 0 90)
 			(layer "F.Fab")
 			(uuid "b5e2b357-92cf-4c36-aebb-7fd8aefbc619")
 			(effects
@@ -1254,7 +1254,7 @@
 			)
 		)
 		(pad "1" thru_hole circle
-			(at 0 0)
+			(at 0 0 270)
 			(size 1.4 1.4)
 			(drill 0.7)
 			(layers "*.Cu" "*.Mask")
@@ -1264,7 +1264,7 @@
 			(uuid "1c1bf3c0-2a23-47f1-a390-c0f162e4a1b7")
 		)
 		(pad "2" thru_hole circle
-			(at 5.08 0)
+			(at 5.08 0 270)
 			(size 1.4 1.4)
 			(drill 0.7)
 			(layers "*.Cu" "*.Mask")
@@ -1351,7 +1351,7 @@
 		(property ki_fp_filters "MountingHole*")
 		(path "/a871c035-b5aa-4c59-a87a-90c72ce8975d")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -1409,7 +1409,7 @@
 		(descr "Cherry MX keyswitch, 1.25u, PCB mount, http://cherryamericas.com/wp-content/uploads/2014/12/mx_cat.pdf")
 		(tags "Cherry MX keyswitch 1.25u PCB")
 		(property "Reference" "SW_4"
-			(at -2.54 -2.794 0)
+			(at -7.54 -2.794 0)
 			(layer "F.SilkS")
 			(uuid "2002a50a-3e8e-4cdc-b1e9-52741a47e824")
 			(effects
@@ -1458,7 +1458,7 @@
 		)
 		(path "/17cecf63-741b-40ad-b0fd-48a31a6859d6")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -1588,7 +1588,7 @@
 			(uuid "d4f2440a-7892-43d5-98c1-d73ba44813f7")
 		)
 		(fp_text user "${REFERENCE}"
-			(at -2.54 -2.794 0)
+			(at -7.54 -2.794 0)
 			(layer "F.Fab")
 			(uuid "bd4e4114-c238-462a-a5b0-d5d7334ce879")
 			(effects
@@ -1661,7 +1661,7 @@
 		(descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
 		(tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
 		(property "Reference" "R_F1"
-			(at 2.54 -1.92 0)
+			(at 2.5 2 0)
 			(layer "F.SilkS")
 			(uuid "5a9aa2c9-a14b-4e6d-9779-388920834dcc")
 			(effects
@@ -1719,7 +1719,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/a16622d2-da8b-4b58-8477-14a44828dab1")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -1899,7 +1899,7 @@
 		(property ki_fp_filters "MountingHole*")
 		(path "/397a3863-2068-461d-83d6-e980f8036f71")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -1957,7 +1957,7 @@
 		(descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
 		(tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
 		(property "Reference" "R_2"
-			(at 2.54 -1.92 0)
+			(at 2.5 2 0)
 			(layer "F.SilkS")
 			(uuid "8e387efc-52c4-4157-a766-ab679bffb4f9")
 			(effects
@@ -2015,7 +2015,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/39ea8d5a-c8f0-4bf0-b19d-dc74aaa89490")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -2137,7 +2137,7 @@
 		(descr "Cherry MX keyswitch, 1.25u, PCB mount, http://cherryamericas.com/wp-content/uploads/2014/12/mx_cat.pdf")
 		(tags "Cherry MX keyswitch 1.25u PCB")
 		(property "Reference" "SW_7"
-			(at -2.54 -2.794 0)
+			(at -7.54 -2.794 0)
 			(layer "F.SilkS")
 			(uuid "71dba0f7-f1ac-475f-85ae-d5a639278702")
 			(effects
@@ -2186,7 +2186,7 @@
 		)
 		(path "/055b7dbe-d4c9-438d-ad61-a8c328477e9a")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -2316,7 +2316,7 @@
 			(uuid "102b7411-ffd6-4f1c-846f-ce2f1adbc4d7")
 		)
 		(fp_text user "${REFERENCE}"
-			(at -2.54 -2.794 0)
+			(at -7.54 -2.794 0)
 			(layer "F.Fab")
 			(uuid "fa033e85-761d-4ddc-bf06-9c9e8c025dee")
 			(effects
@@ -2389,7 +2389,7 @@
 		(descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
 		(tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
 		(property "Reference" "R_E1"
-			(at 2.54 -1.92 0)
+			(at 2.5 2 0)
 			(layer "F.SilkS")
 			(uuid "180ae5eb-5adc-4358-871d-4b5ab179ba72")
 			(effects
@@ -2447,7 +2447,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/a0623999-ee9b-4c44-ac10-3538fd183658")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -2569,7 +2569,7 @@
 		(descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
 		(tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
 		(property "Reference" "R_6"
-			(at 2.54 -1.92 0)
+			(at 2.5 2 0)
 			(layer "F.SilkS")
 			(uuid "e0895060-3fba-412d-8dec-880ff0392770")
 			(effects
@@ -2627,7 +2627,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/9e14dc2f-9fc4-4280-931c-1cf5de7ccdc1")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -2807,7 +2807,7 @@
 		(property ki_fp_filters "MountingHole*")
 		(path "/1f3e6cb7-0125-4b29-8a30-cbd19b36c676")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -2865,7 +2865,7 @@
 		(descr "Cherry MX keyswitch, 1.25u, PCB mount, http://cherryamericas.com/wp-content/uploads/2014/12/mx_cat.pdf")
 		(tags "Cherry MX keyswitch 1.25u PCB")
 		(property "Reference" "SW_3"
-			(at -2.54 -2.794 0)
+			(at -7.54 -2.794 0)
 			(layer "F.SilkS")
 			(uuid "f2102b17-c361-4704-ba24-6fa2de336f26")
 			(effects
@@ -2914,7 +2914,7 @@
 		)
 		(path "/dd50c3ef-71da-4ba8-b5cd-7d0a4ac7c2ae")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -3044,7 +3044,7 @@
 			(uuid "bc258191-92ed-45dd-bbd8-c393b4f1050f")
 		)
 		(fp_text user "${REFERENCE}"
-			(at -2.54 -2.794 0)
+			(at -7.54 -2.794 0)
 			(layer "F.Fab")
 			(uuid "92341487-3f75-47fd-92fa-10b0362557d5")
 			(effects
@@ -3117,7 +3117,7 @@
 		(descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
 		(tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
 		(property "Reference" "R_1"
-			(at 2.54 -1.92 0)
+			(at 2.5 2 0)
 			(layer "F.SilkS")
 			(uuid "3f259d1e-daee-4cd4-ac23-4403a9d677f7")
 			(effects
@@ -3175,7 +3175,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/806009cc-0152-47fe-893f-326aa5f7989d")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -3297,7 +3297,7 @@
 		(descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
 		(tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
 		(property "Reference" "R_3"
-			(at 2.54 -1.92 0)
+			(at 2.5 2 0)
 			(layer "F.SilkS")
 			(uuid "e9c70068-3d50-4f35-8681-650922d2dfee")
 			(effects
@@ -3355,7 +3355,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/43dc0229-6232-4a9b-bc2c-3e5d2af64f0f")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -3526,7 +3526,7 @@
 		)
 		(path "/f82bad6f-ebef-4b6f-bb46-e45f1df9818f")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -3831,7 +3831,7 @@
 		(descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
 		(tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
 		(property "Reference" "R_B1"
-			(at 2.54 -1.92 0)
+			(at 2.5 2 0)
 			(layer "F.SilkS")
 			(uuid "5735823e-b273-43e8-8e8e-07d281862cd3")
 			(effects
@@ -3889,7 +3889,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/4feb4481-f441-44b8-9160-89bcd821617d")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -4011,7 +4011,7 @@
 		(descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
 		(tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
 		(property "Reference" "R_D1"
-			(at 2.54 -1.92 0)
+			(at 2.54 2 0)
 			(layer "F.SilkS")
 			(uuid "c4dfe92f-70a1-4081-b332-90abf2b4d1e7")
 			(effects
@@ -4069,7 +4069,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/94febe80-c074-4354-97b0-5bfbb54c1504")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -4191,7 +4191,7 @@
 		(descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
 		(tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
 		(property "Reference" "R_7"
-			(at 2.54 -1.92 0)
+			(at 2.5 2 0)
 			(layer "F.SilkS")
 			(uuid "5ecf6951-9cbb-4d32-a0d6-cc22f5b456c6")
 			(effects
@@ -4249,7 +4249,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/f20fc9e3-ac30-4c40-bb48-0c16e76d7cef")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -4371,7 +4371,7 @@
 		(descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
 		(tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
 		(property "Reference" "R_8"
-			(at 2.54 -1.92 0)
+			(at 2.5 2 0)
 			(layer "F.SilkS")
 			(uuid "3070761a-d13b-4526-ba67-ed3c07ca6eca")
 			(effects
@@ -4429,7 +4429,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/72177df2-2721-4545-8218-036c5ea73e04")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -4551,7 +4551,7 @@
 		(descr "Cherry MX keyswitch, 1.25u, PCB mount, http://cherryamericas.com/wp-content/uploads/2014/12/mx_cat.pdf")
 		(tags "Cherry MX keyswitch 1.25u PCB")
 		(property "Reference" "SW_D1"
-			(at -2.54 -2.794 0)
+			(at -7.04 -2.794 0)
 			(layer "F.SilkS")
 			(uuid "6f38e7d8-aee8-41fe-97b9-b4453cc26327")
 			(effects
@@ -4600,7 +4600,7 @@
 		)
 		(path "/0fa37a79-99ba-48ba-8410-f7781af6f4d8")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -4730,7 +4730,7 @@
 			(uuid "385933b4-ee93-4dfd-80c6-9645cce7b584")
 		)
 		(fp_text user "${REFERENCE}"
-			(at -2.54 -2.794 0)
+			(at -7.04 -2.794 0)
 			(layer "F.Fab")
 			(uuid "b6787b68-e438-4c11-9633-01f7477cb0ff")
 			(effects
@@ -4803,7 +4803,7 @@
 		(descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
 		(tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
 		(property "Reference" "R_0"
-			(at 2.54 -1.92 0)
+			(at 2.5 2 0)
 			(layer "F.SilkS")
 			(uuid "8cab39e2-8169-4439-bc73-cf96764165d5")
 			(effects
@@ -4861,7 +4861,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/21b15387-691d-4e92-8c1b-3f8a0e21ca7f")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -4983,7 +4983,7 @@
 		(descr "Cherry MX keyswitch, 1.25u, PCB mount, http://cherryamericas.com/wp-content/uploads/2014/12/mx_cat.pdf")
 		(tags "Cherry MX keyswitch 1.25u PCB")
 		(property "Reference" "SW_F1"
-			(at -2.54 -2.794 0)
+			(at -7.12 -2.794 0)
 			(layer "F.SilkS")
 			(uuid "72b659de-c23f-4901-b766-cc435207920a")
 			(effects
@@ -5032,7 +5032,7 @@
 		)
 		(path "/2d826fd0-92bc-4f02-8633-a555e98440e3")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -5162,7 +5162,7 @@
 			(uuid "268148a5-1117-454a-b2b6-35fb508db8b6")
 		)
 		(fp_text user "${REFERENCE}"
-			(at -2.54 -2.794 0)
+			(at -7.12 -2.794 0)
 			(layer "F.Fab")
 			(uuid "91577d9c-8aa4-40e6-8b3b-7fab56b06dcc")
 			(effects
@@ -5235,7 +5235,7 @@
 		(descr "Cherry MX keyswitch, 1.25u, PCB mount, http://cherryamericas.com/wp-content/uploads/2014/12/mx_cat.pdf")
 		(tags "Cherry MX keyswitch 1.25u PCB")
 		(property "Reference" "SW_B1"
-			(at -2.54 -2.794 0)
+			(at -7.04 -2.794 0)
 			(layer "F.SilkS")
 			(uuid "6142491b-de91-4705-b1d3-34d3a9c1b64e")
 			(effects
@@ -5284,7 +5284,7 @@
 		)
 		(path "/33bd8685-7e67-4e75-9277-2462318c4a5e")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -5414,7 +5414,7 @@
 			(uuid "81a17b71-5216-4e84-8439-f898f875d2f1")
 		)
 		(fp_text user "${REFERENCE}"
-			(at -2.54 -2.794 0)
+			(at -7.04 -2.794 0)
 			(layer "F.Fab")
 			(uuid "2649c05f-c978-47fa-9a81-9dbef2f3d24b")
 			(effects
@@ -5487,7 +5487,7 @@
 		(descr "Cherry MX keyswitch, 1.25u, PCB mount, http://cherryamericas.com/wp-content/uploads/2014/12/mx_cat.pdf")
 		(tags "Cherry MX keyswitch 1.25u PCB")
 		(property "Reference" "SW_6"
-			(at -2.54 -2.794 0)
+			(at -7.54 -2.92 0)
 			(layer "F.SilkS")
 			(uuid "8f861aa8-5641-4d49-95d1-c89df9a6a1d2")
 			(effects
@@ -5536,7 +5536,7 @@
 		)
 		(path "/622aba8e-b456-494e-a9f7-782f2b1d17f1")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -5666,7 +5666,7 @@
 			(uuid "c6a9ecb3-2464-4e69-85d9-98420ea73d6c")
 		)
 		(fp_text user "${REFERENCE}"
-			(at -2.54 -2.794 0)
+			(at -7.54 -2.92 0)
 			(layer "F.Fab")
 			(uuid "8481fa1b-1f13-42fd-94ec-1055bec3ba7b")
 			(effects
@@ -5739,7 +5739,7 @@
 		(descr "Cherry MX keyswitch, 1.25u, PCB mount, http://cherryamericas.com/wp-content/uploads/2014/12/mx_cat.pdf")
 		(tags "Cherry MX keyswitch 1.25u PCB")
 		(property "Reference" "SW_C1"
-			(at -2.54 -2.794 0)
+			(at -7.04 -2.794 0)
 			(layer "F.SilkS")
 			(uuid "0f545452-98b1-4fa2-880e-69edc3b5f95b")
 			(effects
@@ -5788,7 +5788,7 @@
 		)
 		(path "/cd9b4e3b-25aa-4937-bbaa-f8311eaf9ecc")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -5918,7 +5918,7 @@
 			(uuid "a4cd8096-c86f-438e-8ebc-61be5852b61d")
 		)
 		(fp_text user "${REFERENCE}"
-			(at -2.54 -2.794 0)
+			(at -7.04 -2.794 0)
 			(layer "F.Fab")
 			(uuid "446b2071-172e-47e2-8c2e-79be99c52776")
 			(effects
@@ -5991,7 +5991,7 @@
 		(descr "Cherry MX keyswitch, 1.25u, PCB mount, http://cherryamericas.com/wp-content/uploads/2014/12/mx_cat.pdf")
 		(tags "Cherry MX keyswitch 1.25u PCB")
 		(property "Reference" "SW_0"
-			(at -2.54 -2.794 0)
+			(at -7.54 -2.794 0)
 			(layer "F.SilkS")
 			(uuid "944317c4-df41-42ed-b8f9-4e325d776fe2")
 			(effects
@@ -6040,7 +6040,7 @@
 		)
 		(path "/8db343a5-e6d3-4513-b4a2-3e47bd460deb")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -6170,7 +6170,7 @@
 			(uuid "2932ae13-f3fb-4178-bb4a-b9981b7e201c")
 		)
 		(fp_text user "${REFERENCE}"
-			(at -2.54 -2.794 0)
+			(at -7.54 -2.794 0)
 			(layer "F.Fab")
 			(uuid "2c36afa6-85f3-463e-a12b-801b4d1cc68c")
 			(effects
@@ -6243,7 +6243,7 @@
 		(descr "Cherry MX keyswitch, 1.25u, PCB mount, http://cherryamericas.com/wp-content/uploads/2014/12/mx_cat.pdf")
 		(tags "Cherry MX keyswitch 1.25u PCB")
 		(property "Reference" "SW_5"
-			(at -2.54 -2.794 0)
+			(at -7.54 -2.794 0)
 			(layer "F.SilkS")
 			(uuid "bc903406-dbce-4797-ae61-d5eba3560a27")
 			(effects
@@ -6292,7 +6292,7 @@
 		)
 		(path "/e5867efe-e78e-44df-aa18-b637125f6b3d")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -6422,7 +6422,7 @@
 			(uuid "9204b217-89a9-491a-852a-dcd85a89c08d")
 		)
 		(fp_text user "${REFERENCE}"
-			(at -2.54 -2.794 0)
+			(at -7.54 -2.794 0)
 			(layer "F.Fab")
 			(uuid "c3648ba2-620b-4b0d-98c5-d5a389194c57")
 			(effects
@@ -6495,7 +6495,7 @@
 		(descr "Cherry MX keyswitch, 1.25u, PCB mount, http://cherryamericas.com/wp-content/uploads/2014/12/mx_cat.pdf")
 		(tags "Cherry MX keyswitch 1.25u PCB")
 		(property "Reference" "SW_E1"
-			(at -2.54 -2.794 0)
+			(at -7.04 -2.794 0)
 			(layer "F.SilkS")
 			(uuid "a60e483a-0dc9-42e5-80b3-90f19b3edebe")
 			(effects
@@ -6544,7 +6544,7 @@
 		)
 		(path "/e14580cb-a419-40aa-a851-6f4ee5ea2cc5")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -6674,7 +6674,7 @@
 			(uuid "09246ec3-0b51-458f-ae8f-e3c41a5f74bb")
 		)
 		(fp_text user "${REFERENCE}"
-			(at -2.54 -2.794 0)
+			(at -7.04 -2.794 0)
 			(layer "F.Fab")
 			(uuid "bbc080b2-3fd5-4514-8452-fc56c44fd7d9")
 			(effects
@@ -6747,7 +6747,7 @@
 		(descr "Cherry MX keyswitch, 1.25u, PCB mount, http://cherryamericas.com/wp-content/uploads/2014/12/mx_cat.pdf")
 		(tags "Cherry MX keyswitch 1.25u PCB")
 		(property "Reference" "SW_8"
-			(at -2.54 -2.794 0)
+			(at -7.54 -2.794 0)
 			(layer "F.SilkS")
 			(uuid "da0dd5a1-63ce-44ff-a34c-ae6dd3f37d07")
 			(effects
@@ -6796,7 +6796,7 @@
 		)
 		(path "/ecbd6d57-6be2-477b-b696-6d0d4cbaa784")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -6926,7 +6926,7 @@
 			(uuid "8274e147-ca78-4af3-8afa-ad084ee6c065")
 		)
 		(fp_text user "${REFERENCE}"
-			(at -2.54 -2.794 0)
+			(at -7.54 -2.794 0)
 			(layer "F.Fab")
 			(uuid "d31c05a8-af82-484a-aa1b-ce2ff79fb3ce")
 			(effects
@@ -6999,7 +6999,7 @@
 		(descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
 		(tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
 		(property "Reference" "R_A1"
-			(at 2.54 -1.92 0)
+			(at 2.5 2 0)
 			(layer "F.SilkS")
 			(uuid "2222bad8-8bfe-40a4-9d90-ba8884633af3")
 			(effects
@@ -7057,7 +7057,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/c3dd8274-210e-4d10-a985-78caf4e62f99")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -7179,7 +7179,7 @@
 		(descr "Cherry MX keyswitch, 1.25u, PCB mount, http://cherryamericas.com/wp-content/uploads/2014/12/mx_cat.pdf")
 		(tags "Cherry MX keyswitch 1.25u PCB")
 		(property "Reference" "SW_A1"
-			(at -2.54 -2.794 0)
+			(at -7.04 -2.794 0)
 			(layer "F.SilkS")
 			(uuid "609e9652-2436-4cf3-b2ec-10d8bff978f3")
 			(effects
@@ -7228,7 +7228,7 @@
 		)
 		(path "/2cf9773d-11f9-4add-b6ba-4761fdcc1eb1")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -7358,7 +7358,7 @@
 			(uuid "b5b221ae-252c-4173-b7c6-b6a870d374ad")
 		)
 		(fp_text user "${REFERENCE}"
-			(at -2.54 -2.794 0)
+			(at -7.04 -2.794 0)
 			(layer "F.Fab")
 			(uuid "2338673d-a57b-4e76-9124-4e9dc92530ca")
 			(effects
@@ -7431,7 +7431,7 @@
 		(descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
 		(tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
 		(property "Reference" "R_4"
-			(at 2.54 -1.92 0)
+			(at 2.5 2 0)
 			(layer "F.SilkS")
 			(uuid "97cdc057-48c0-4125-8f79-b0948979e53e")
 			(effects
@@ -7489,7 +7489,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/9f53f835-d145-40a8-93bf-a842b05002c0")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -7611,7 +7611,7 @@
 		(descr "Resistor, Axial_DIN0204 series, Axial, Horizontal, pin pitch=5.08mm, 0.167W, length*diameter=3.6*1.6mm^2, http://cdn-reichelt.de/documents/datenblatt/B400/1_4W%23YAG.pdf")
 		(tags "Resistor Axial_DIN0204 series Axial Horizontal pin pitch 5.08mm 0.167W length 3.6mm diameter 1.6mm")
 		(property "Reference" "R_C1"
-			(at 2.54 -1.92 0)
+			(at 2.5 2 0)
 			(layer "F.SilkS")
 			(uuid "92491d41-5070-4fa3-b1bc-c8ee88f7fd70")
 			(effects
@@ -7669,7 +7669,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/2823a2dd-fe7b-4b51-8c97-fea478e14078")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -7791,7 +7791,7 @@
 		(descr "Cherry MX keyswitch, 1.25u, PCB mount, http://cherryamericas.com/wp-content/uploads/2014/12/mx_cat.pdf")
 		(tags "Cherry MX keyswitch 1.25u PCB")
 		(property "Reference" "SW_1"
-			(at -2.54 -2.794 0)
+			(at -7.54 -2.794 0)
 			(layer "F.SilkS")
 			(uuid "5612899a-8dd2-48e5-b4c2-d07e214eda98")
 			(effects
@@ -7840,7 +7840,7 @@
 		)
 		(path "/98dda15a-5f5d-46b5-a023-267d5c4a4790")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -7970,7 +7970,7 @@
 			(uuid "115f4d1d-b14d-47f9-80a3-6fe3c33b3686")
 		)
 		(fp_text user "${REFERENCE}"
-			(at -2.54 -2.794 0)
+			(at -7.54 -2.794 0)
 			(layer "F.Fab")
 			(uuid "626ff8ae-1eb6-4891-b11a-a844d8b1cb56")
 			(effects
@@ -8106,7 +8106,7 @@
 		(property ki_fp_filters "Connector*:*_1x??_*")
 		(path "/b14afb5e-b5f1-45b0-bc4e-7bbcffa82a8f")
 		(sheetname "/")
-		(sheetfile "chip8_console_pcb.kicad_sch")
+		(sheetfile "chip8_keyboard_pcb.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -8513,8 +8513,20 @@
 		)
 	)
 	(gr_rect
+		(start 32.015 68.58)
+		(end 107.065 159.985)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "30d9446d-54a8-4238-b9a9-8292b3a4fa10")
+	)
+	(gr_rect
 		(start 24.015 53.23)
 		(end 115.065 167.985)
+		(radius 5)
 		(stroke
 			(width 0.05)
 			(type solid)
@@ -8522,44 +8534,6 @@
 		(fill no)
 		(layer "Edge.Cuts")
 		(uuid "bc7467f7-e1e4-4a87-8d1f-b08cbb162bc9")
-	)
-	(dimension
-		(type orthogonal)
-		(layer "Edge.Cuts")
-		(uuid "96342978-4e33-4f55-b848-af60e68501c8")
-		(pts
-			(xy 105.065 157.985) (xy 115.065 167.5)
-		)
-		(height -3.485)
-		(orientation 0)
-		(format
-			(prefix "")
-			(suffix "")
-			(units 3)
-			(units_format 0)
-			(precision 4)
-			(suppress_zeroes yes)
-		)
-		(style
-			(thickness 0.05)
-			(arrow_length 1.27)
-			(text_position_mode 0)
-			(arrow_direction outward)
-			(extension_height 0.58642)
-			(extension_offset 0.5)
-			(keep_text_aligned yes)
-		)
-		(gr_text "10"
-			(at 110.065 153.35 0)
-			(layer "Edge.Cuts")
-			(uuid "96342978-4e33-4f55-b848-af60e68501c8")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 	)
 	(dimension
 		(type orthogonal)
@@ -8602,87 +8576,11 @@
 	(dimension
 		(type orthogonal)
 		(layer "User.1")
-		(uuid "796691ed-b0ca-474f-b65e-90c52f0dda98")
+		(uuid "5d391f9c-91a4-45d0-9e78-691edd8c5eba")
 		(pts
-			(xy 29.015 162.985) (xy 24.015 167.985)
+			(xy 115.065 167.985) (xy 24.015 167.985)
 		)
-		(height -9)
-		(orientation 1)
-		(format
-			(prefix "")
-			(suffix "")
-			(units 3)
-			(units_format 0)
-			(precision 4)
-			(suppress_zeroes yes)
-		)
-		(style
-			(thickness 0.1)
-			(arrow_length 1.27)
-			(text_position_mode 0)
-			(arrow_direction outward)
-			(extension_height 0.58642)
-			(extension_offset 0.5)
-			(keep_text_aligned yes)
-		)
-		(gr_text "5"
-			(at 18.865 165.485 90)
-			(layer "User.1")
-			(uuid "796691ed-b0ca-474f-b65e-90c52f0dda98")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-	)
-	(dimension
-		(type orthogonal)
-		(layer "User.1")
-		(uuid "895e518e-3e09-4386-86cd-6fef8e733b71")
-		(pts
-			(xy 110.065 162.985) (xy 115.065 167.985)
-		)
-		(height 9)
-		(orientation 1)
-		(format
-			(prefix "")
-			(suffix "")
-			(units 3)
-			(units_format 0)
-			(precision 4)
-			(suppress_zeroes yes)
-		)
-		(style
-			(thickness 0.1)
-			(arrow_length 1.27)
-			(text_position_mode 0)
-			(arrow_direction outward)
-			(extension_height 0.58642)
-			(extension_offset 0.5)
-			(keep_text_aligned yes)
-		)
-		(gr_text "5"
-			(at 117.915 165.485 90)
-			(layer "User.1")
-			(uuid "895e518e-3e09-4386-86cd-6fef8e733b71")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
-	)
-	(dimension
-		(type orthogonal)
-		(layer "User.1")
-		(uuid "9aa45ab4-65b9-4775-9e42-b1fdf1494e6b")
-		(pts
-			(xy 29.015 162.985) (xy 24.015 167.985)
-		)
-		(height 9)
+		(height 10.015)
 		(orientation 0)
 		(format
 			(prefix "")
@@ -8701,10 +8599,86 @@
 			(extension_offset 0.5)
 			(keep_text_aligned yes)
 		)
-		(gr_text "5"
-			(at 26.515 170.835 0)
+		(gr_text "91.05"
+			(at 69.54 176.85 0)
 			(layer "User.1")
-			(uuid "9aa45ab4-65b9-4775-9e42-b1fdf1494e6b")
+			(uuid "5d391f9c-91a4-45d0-9e78-691edd8c5eba")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+	)
+	(dimension
+		(type orthogonal)
+		(layer "User.1")
+		(uuid "6833a423-e55f-4999-b873-82725c77dc61")
+		(pts
+			(xy 107.065 159.985) (xy 107.065 68.58)
+		)
+		(height 13.935)
+		(orientation 1)
+		(format
+			(prefix "")
+			(suffix "")
+			(units 3)
+			(units_format 0)
+			(precision 4)
+			(suppress_zeroes yes)
+		)
+		(style
+			(thickness 0.1)
+			(arrow_length 1.27)
+			(text_position_mode 0)
+			(arrow_direction outward)
+			(extension_height 0.58642)
+			(extension_offset 0.5)
+			(keep_text_aligned yes)
+		)
+		(gr_text "91.405"
+			(at 119.85 114.2825 90)
+			(layer "User.1")
+			(uuid "6833a423-e55f-4999-b873-82725c77dc61")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+	)
+	(dimension
+		(type orthogonal)
+		(layer "User.1")
+		(uuid "6a2a9781-7146-4c83-8bd8-3add21eefd14")
+		(pts
+			(xy 107.065 159.985) (xy 32.095584 159.985)
+		)
+		(height 12.015)
+		(orientation 0)
+		(format
+			(prefix "")
+			(suffix "")
+			(units 3)
+			(units_format 0)
+			(precision 4)
+			(suppress_zeroes yes)
+		)
+		(style
+			(thickness 0.1)
+			(arrow_length 1.27)
+			(text_position_mode 0)
+			(arrow_direction outward)
+			(extension_height 0.58642)
+			(extension_offset 0.5)
+			(keep_text_aligned yes)
+		)
+		(gr_text "74.9694"
+			(at 69.580292 170.85 0)
+			(layer "User.1")
+			(uuid "6a2a9781-7146-4c83-8bd8-3add21eefd14")
 			(effects
 				(font
 					(size 1 1)
@@ -8830,12 +8804,12 @@
 	(dimension
 		(type orthogonal)
 		(layer "User.1")
-		(uuid "f771f658-6fb9-4099-981f-8662995d810a")
+		(uuid "b9e9652d-e313-4933-bef1-6c8728ff996c")
 		(pts
-			(xy 110.065 162.985) (xy 115.065 167.985)
+			(xy 115.065 167.985) (xy 115.065 53.23)
 		)
-		(height 8.5)
-		(orientation 0)
+		(height 12.435)
+		(orientation 1)
 		(format
 			(prefix "")
 			(suffix "")
@@ -8853,10 +8827,10 @@
 			(extension_offset 0.5)
 			(keep_text_aligned yes)
 		)
-		(gr_text "5"
-			(at 112.565 170.335 0)
+		(gr_text "114.755"
+			(at 126.35 110.6075 90)
 			(layer "User.1")
-			(uuid "f771f658-6fb9-4099-981f-8662995d810a")
+			(uuid "b9e9652d-e313-4933-bef1-6c8728ff996c")
 			(effects
 				(font
 					(size 1 1)
@@ -9554,6 +9528,14 @@
 		(uuid "16eedc0d-aa1f-492a-a29b-f52e456acff0")
 	)
 	(segment
+		(start 49 83)
+		(end 47.5 81.5)
+		(width 1)
+		(layer "F.Cu")
+		(net "GND")
+		(uuid "1b05d082-9d55-42dd-9cb9-6ad08e7725c1")
+	)
+	(segment
 		(start 47 123)
 		(end 49 121)
 		(width 1)
@@ -9576,14 +9558,6 @@
 		(layer "F.Cu")
 		(net "GND")
 		(uuid "23c016f7-9bbe-4a6d-afca-a7fd11705d08")
-	)
-	(segment
-		(start 45 71.5)
-		(end 43.04 71.5)
-		(width 1)
-		(layer "F.Cu")
-		(net "GND")
-		(uuid "2aa5ebec-4632-4286-9238-6ffdc08dea8a")
 	)
 	(segment
 		(start 87 140)
@@ -9682,12 +9656,12 @@
 		(uuid "56b4a8c8-cb0a-4b9a-bcfe-0781b145ebe2")
 	)
 	(segment
-		(start 49 83)
-		(end 49 75.5)
+		(start 47.5 81.5)
+		(end 47.5 80.04)
 		(width 1)
 		(layer "F.Cu")
 		(net "GND")
-		(uuid "58acc6e4-7de5-42f3-b7aa-757d5a53d3e5")
+		(uuid "57c023ac-e342-42e1-b4ad-91898e302362")
 	)
 	(segment
 		(start 68 87)
@@ -9792,14 +9766,6 @@
 		(layer "F.Cu")
 		(net "GND")
 		(uuid "9405324e-9fdf-4153-86ee-03afb1fb375a")
-	)
-	(segment
-		(start 49 75.5)
-		(end 45 71.5)
-		(width 1)
-		(layer "F.Cu")
-		(net "GND")
-		(uuid "95c1e8fc-ee77-44e3-bae9-fa30de1c4b30")
 	)
 	(segment
 		(start 102 83)
@@ -9962,6 +9928,14 @@
 		(uuid "0a54e235-cc40-4b2a-8dea-f347e7f2ddf3")
 	)
 	(segment
+		(start 54.5 104)
+		(end 52 101.5)
+		(width 0.5)
+		(layer "B.Cu")
+		(net "Net-(J1-Pin_10)")
+		(uuid "329bdc68-d2bc-4496-9c36-259662e2cf53")
+	)
+	(segment
 		(start 62.54 105.62)
 		(end 62.54 107.92)
 		(width 0.5)
@@ -9970,28 +9944,12 @@
 		(uuid "3b69dad2-b6be-4271-aace-2b356cdc4814")
 	)
 	(segment
-		(start 52 81.27)
-		(end 68.27 65)
+		(start 52 88.5)
+		(end 59.5 81)
 		(width 0.5)
 		(layer "B.Cu")
 		(net "Net-(J1-Pin_10)")
-		(uuid "4f373c20-542b-46b1-befe-dc7730f615ab")
-	)
-	(segment
-		(start 54.5 104)
-		(end 52 101.5)
-		(width 0.5)
-		(layer "B.Cu")
-		(net "Net-(J1-Pin_10)")
-		(uuid "56e0d390-b6d5-4499-ba13-54f469babdc1")
-	)
-	(segment
-		(start 52 101.5)
-		(end 52 81.27)
-		(width 0.5)
-		(layer "B.Cu")
-		(net "Net-(J1-Pin_10)")
-		(uuid "c420b485-ee33-4133-8326-4b54a679733b")
+		(uuid "44b5dda8-9d03-406b-be50-5c7983687d1a")
 	)
 	(segment
 		(start 60.92 104)
@@ -9999,55 +9957,55 @@
 		(width 0.5)
 		(layer "B.Cu")
 		(net "Net-(J1-Pin_10)")
-		(uuid "d0e9d276-f45e-45fa-a87e-327e58236d54")
+		(uuid "46a629d1-1434-426c-9ba3-5b2cf3e856c7")
 	)
 	(segment
-		(start 40.18 71.5)
-		(end 44.68 67)
-		(width 1)
-		(layer "F.Cu")
-		(net "Net-(J1-Pin_3)")
-		(uuid "482eebe1-355c-4f86-9913-90974fd0b495")
+		(start 59.5 73.77)
+		(end 68.27 65)
+		(width 0.5)
+		(layer "B.Cu")
+		(net "Net-(J1-Pin_10)")
+		(uuid "9d8ccf5d-b21e-4dfd-bc1c-ddb509ac559d")
 	)
 	(segment
-		(start 37.96 71.5)
-		(end 40.18 71.5)
-		(width 1)
-		(layer "F.Cu")
-		(net "Net-(J1-Pin_3)")
-		(uuid "5154449b-a88a-4112-8f93-3c5052ce8c37")
+		(start 52 101.5)
+		(end 52 88.5)
+		(width 0.5)
+		(layer "B.Cu")
+		(net "Net-(J1-Pin_10)")
+		(uuid "a4029309-5ff8-4440-b0c5-41c5632a792e")
 	)
 	(segment
-		(start 48.49 67)
+		(start 59.5 81)
+		(end 59.5 73.77)
+		(width 0.5)
+		(layer "B.Cu")
+		(net "Net-(J1-Pin_10)")
+		(uuid "d422834c-4b83-45d3-9432-965aa788b10c")
+	)
+	(segment
+		(start 44 71.49)
 		(end 50.49 65)
 		(width 1)
 		(layer "F.Cu")
 		(net "Net-(J1-Pin_3)")
-		(uuid "694ee11d-c12a-4922-b11d-214c5dcb3df3")
+		(uuid "c6b3d977-5d79-4c81-acd5-bde294f6e3e2")
 	)
 	(segment
-		(start 44.68 67)
-		(end 48.49 67)
+		(start 44 75.5)
+		(end 44 71.49)
 		(width 1)
 		(layer "F.Cu")
 		(net "Net-(J1-Pin_3)")
-		(uuid "bfd84ab5-7a2e-48ae-bf65-e4cc274c428c")
+		(uuid "ffb7ddcf-0c4b-4f95-ae6f-67bd66ed4aed")
 	)
 	(segment
-		(start 37.5 71.96)
-		(end 37.96 71.5)
+		(start 44 75.5)
+		(end 46.96 75.5)
 		(width 1)
 		(layer "B.Cu")
 		(net "Net-(J1-Pin_3)")
-		(uuid "8eb0b1d6-6c7f-4ace-9d40-683723bf46d5")
-	)
-	(segment
-		(start 37.5 75.5)
-		(end 37.5 71.96)
-		(width 1)
-		(layer "B.Cu")
-		(net "Net-(J1-Pin_3)")
-		(uuid "9f1a3e55-daeb-417b-a47d-d4095367c63d")
+		(uuid "bdb26492-e7b4-4453-8f9f-9f58a21c3023")
 	)
 	(segment
 		(start 37.5 75.5)
@@ -10056,6 +10014,14 @@
 		(layer "B.Cu")
 		(net "Net-(J1-Pin_3)")
 		(uuid "dcc836df-085b-4bd7-aaa4-40f91e2e755f")
+	)
+	(segment
+		(start 46.96 75.5)
+		(end 47.5 74.96)
+		(width 1)
+		(layer "B.Cu")
+		(net "Net-(J1-Pin_3)")
+		(uuid "fa47618f-70e5-49f6-9196-3f56be46635b")
 	)
 	(segment
 		(start 33 73.5)
@@ -10363,6 +10329,14 @@
 	)
 	(segment
 		(start 41.92 85)
+		(end 44.5 85)
+		(width 0.5)
+		(layer "B.Cu")
+		(net "Net-(J1-Pin_7)")
+		(uuid "10857436-e200-4f6a-bb9c-b61c7d40b8b0")
+	)
+	(segment
+		(start 41.92 85)
 		(end 41.92 87.3)
 		(width 0.5)
 		(layer "B.Cu")
@@ -10370,20 +10344,20 @@
 		(uuid "364c1ed5-5006-4b7a-b2a5-f352b78d276f")
 	)
 	(segment
-		(start 44.5 85)
-		(end 47.5 82)
+		(start 46 83.5)
+		(end 51 83.5)
 		(width 0.5)
 		(layer "B.Cu")
 		(net "Net-(J1-Pin_7)")
-		(uuid "7a4f4017-8516-47b1-8080-03c8058f9aa9")
+		(uuid "487f5cc9-f2c6-40dc-a133-7f0caaa509d2")
 	)
 	(segment
-		(start 41.92 85)
-		(end 44.5 85)
+		(start 51 83.5)
+		(end 55 79.5)
 		(width 0.5)
 		(layer "B.Cu")
 		(net "Net-(J1-Pin_7)")
-		(uuid "7dc5011f-596f-4d78-8946-c4f96ad95363")
+		(uuid "5591d987-001d-4eac-8590-03fc3e34b372")
 	)
 	(segment
 		(start 41.92 87.3)
@@ -10394,20 +10368,28 @@
 		(uuid "884081ea-ea93-4d3e-8d24-cc207f32f165")
 	)
 	(segment
-		(start 47.5 78.15)
+		(start 55 79.5)
+		(end 55 70.65)
+		(width 0.5)
+		(layer "B.Cu")
+		(net "Net-(J1-Pin_7)")
+		(uuid "afe72f28-d95b-4d08-816b-8d569deeb246")
+	)
+	(segment
+		(start 55 70.65)
 		(end 60.65 65)
 		(width 0.5)
 		(layer "B.Cu")
 		(net "Net-(J1-Pin_7)")
-		(uuid "886c2af0-3fbc-4a59-b292-b65cef089994")
+		(uuid "cebf3d05-95da-4cec-8e06-0f027a1c2a94")
 	)
 	(segment
-		(start 47.5 82)
-		(end 47.5 78.15)
+		(start 44.5 85)
+		(end 46 83.5)
 		(width 0.5)
 		(layer "B.Cu")
 		(net "Net-(J1-Pin_7)")
-		(uuid "c24e21dd-b785-475b-b6d1-572565586f19")
+		(uuid "e1b8e949-c151-4bc3-9515-042daa300b3a")
 	)
 	(segment
 		(start 79.92 142)
@@ -10506,6 +10488,22 @@
 		(uuid "c6467d47-e36e-4d0c-831f-22b56a0ecaf7")
 	)
 	(segment
+		(start 58 80.5)
+		(end 58 72.73)
+		(width 0.5)
+		(layer "B.Cu")
+		(net "Net-(J1-Pin_9)")
+		(uuid "35c80517-fd31-4534-8285-dfe485f94d5f")
+	)
+	(segment
+		(start 50.5 119.5)
+		(end 50.5 88)
+		(width 0.5)
+		(layer "B.Cu")
+		(net "Net-(J1-Pin_9)")
+		(uuid "63ce198f-1e7b-439c-9dbc-eb2a82ca0d79")
+	)
+	(segment
 		(start 62.54 124.62)
 		(end 62.54 126.92)
 		(width 0.5)
@@ -10514,36 +10512,28 @@
 		(uuid "8e08a667-c60c-419f-a78d-b940858eb727")
 	)
 	(segment
-		(start 60.92 123)
-		(end 54 123)
-		(width 0.5)
-		(layer "B.Cu")
-		(net "Net-(J1-Pin_9)")
-		(uuid "976cc25c-84e1-4de1-8698-8e90f2a7ea07")
-	)
-	(segment
-		(start 50.5 119.5)
-		(end 50.5 80.23)
-		(width 0.5)
-		(layer "B.Cu")
-		(net "Net-(J1-Pin_9)")
-		(uuid "9abe718a-b73e-4df1-8030-9ff906f761c0")
-	)
-	(segment
-		(start 50.5 80.23)
-		(end 65.73 65)
-		(width 0.5)
-		(layer "B.Cu")
-		(net "Net-(J1-Pin_9)")
-		(uuid "bfef54f9-5d19-4096-ad36-9f2bbfa941d7")
-	)
-	(segment
 		(start 54 123)
 		(end 50.5 119.5)
 		(width 0.5)
 		(layer "B.Cu")
 		(net "Net-(J1-Pin_9)")
-		(uuid "ceb95faf-b226-4a0c-b6fc-b0d4e8bf8058")
+		(uuid "956d0bb4-da6d-45bf-9419-f21931d17a96")
+	)
+	(segment
+		(start 50.5 88)
+		(end 58 80.5)
+		(width 0.5)
+		(layer "B.Cu")
+		(net "Net-(J1-Pin_9)")
+		(uuid "987daca2-0eab-4a1e-869e-08c5f6442022")
+	)
+	(segment
+		(start 58 72.73)
+		(end 65.73 65)
+		(width 0.5)
+		(layer "B.Cu")
+		(net "Net-(J1-Pin_9)")
+		(uuid "bd4fd4f8-627f-4f08-ba15-0cade359218f")
 	)
 	(segment
 		(start 60.92 123)
@@ -10554,6 +10544,22 @@
 		(uuid "de361943-49b9-4fd8-8340-d9e2fa947f17")
 	)
 	(segment
+		(start 60.92 123)
+		(end 54 123)
+		(width 0.5)
+		(layer "B.Cu")
+		(net "Net-(J1-Pin_9)")
+		(uuid "f5933cc3-122f-4f89-9c74-96e86a9ef1e6")
+	)
+	(segment
+		(start 52 142)
+		(end 49 139)
+		(width 0.5)
+		(layer "B.Cu")
+		(net "Net-(J1-Pin_8)")
+		(uuid "053ba38a-6e9a-4b25-bf8c-4680ce91433c")
+	)
+	(segment
 		(start 62.54 143.62)
 		(end 62.54 145.92)
 		(width 0.5)
@@ -10562,20 +10568,20 @@
 		(uuid "1b2b9a2d-6dcc-4ab2-bf14-40ce2d29de58")
 	)
 	(segment
-		(start 49 79.19)
-		(end 63.19 65)
+		(start 49 139)
+		(end 49 87.5)
 		(width 0.5)
 		(layer "B.Cu")
 		(net "Net-(J1-Pin_8)")
-		(uuid "3aaf1e44-15ff-4002-974a-2556712426f5")
+		(uuid "4d73cde6-e241-406f-b8fe-f8fd8caadf6c")
 	)
 	(segment
-		(start 60.92 142)
-		(end 52 142)
+		(start 56.5 80)
+		(end 56.5 71.69)
 		(width 0.5)
 		(layer "B.Cu")
 		(net "Net-(J1-Pin_8)")
-		(uuid "4f0126b4-bcbe-4290-8e4e-f4ea6b1f89f8")
+		(uuid "871530c1-836f-406e-a0d5-da1edf92a240")
 	)
 	(segment
 		(start 60.92 142)
@@ -10586,20 +10592,28 @@
 		(uuid "a6a2e17d-7316-4c08-b968-284be79fbda2")
 	)
 	(segment
-		(start 49 139)
-		(end 49 79.19)
+		(start 56.5 71.69)
+		(end 63.19 65)
 		(width 0.5)
 		(layer "B.Cu")
 		(net "Net-(J1-Pin_8)")
-		(uuid "a8bf9745-d901-4e55-9b00-4d99cdda84e6")
+		(uuid "d2fb7c92-c553-42e6-9ffa-9fa251248f42")
 	)
 	(segment
-		(start 52 142)
-		(end 49 139)
+		(start 60.92 142)
+		(end 52 142)
 		(width 0.5)
 		(layer "B.Cu")
 		(net "Net-(J1-Pin_8)")
-		(uuid "d812c74b-b135-44bd-92ac-5b42db3f4d29")
+		(uuid "ddb15445-1208-4f85-94ee-bd47df0f6904")
+	)
+	(segment
+		(start 49 87.5)
+		(end 56.5 80)
+		(width 0.5)
+		(layer "B.Cu")
+		(net "Net-(J1-Pin_8)")
+		(uuid "e0a8e9cf-42be-42bb-96fb-e3927028d23d")
 	)
 	(segment
 		(start 98.92 85)

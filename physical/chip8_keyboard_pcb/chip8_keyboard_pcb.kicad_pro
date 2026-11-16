@@ -516,7 +516,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "chip8_console_pcb.kicad_pro",
+    "filename": "chip8_keyboard_pcb.kicad_pro",
     "version": 3
   },
   "net_settings": {
@@ -687,8 +687,8 @@
     "subpart_id_separator": 0,
     "top_level_sheets": [
       {
-        "filename": "chip8_console_pcb.kicad_sch",
-        "name": "chip8_console_pcb",
+        "filename": "chip8_keyboard_pcb.kicad_sch",
+        "name": "chip8_keyboard_pcb",
         "uuid": "0cc01573-9c0d-4734-9e1e-cca0e4ed3991"
       }
     ],
